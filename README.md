@@ -40,4 +40,4 @@ Phù hợp nhất với yêu cầu sẽ là MVC truyền thống, cho phép tác
 
 # **TIẾN ĐỘ**
 
-Link github của dự án: 
+Link Github của dự án: [Quản lý thư viện](https://github.com/Kamii0909/library)
