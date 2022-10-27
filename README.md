@@ -15,6 +15,7 @@
 
 - **Trưởng nhóm:** Hà Trung Kiên - 20190078
 - **Thành viên:** Nguyễn Huy Hoàng - 20183749
+- **Thành viên:** Hà Trung Nam Hải - 20183913
  
 ## **PROJECT I: QUẢN LÝ THƯ VIỆN**
 
