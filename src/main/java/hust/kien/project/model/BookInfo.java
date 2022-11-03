@@ -1,14 +1,30 @@
 package hust.kien.project.model;
 
-import java.util.List;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.ManyToMany;
 
+import java.util.HashSet;
+import java.util.Set;
+
+@Embeddable
 public class BookInfo {
     private String bookName;
-    private List<BookGenre> bookGenres;
-    private List<Author> authors;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private final Set<BookGenre> bookGenres = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Set<Author> authors = new HashSet<>();
+
     private int releasedYear;
 
     public BookInfo() {
+    }
+
+    public BookInfo(String bookName, int releasedYear) {
+        this.bookName = bookName;
+        this.releasedYear = releasedYear;
     }
 
     public String getBookName() {
@@ -19,19 +35,11 @@ public class BookInfo {
         this.bookName = bookName;
     }
 
-    public List<BookGenre> getBookGenres() {
-        return bookGenres;
-    }
-
-    public void setBookGenres(List<BookGenre> bookGenres) {
-        this.bookGenres = bookGenres;
-    }
-
-    public List<Author> getAuthors() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
 
@@ -43,8 +51,8 @@ public class BookInfo {
         this.releasedYear = releasedYear;
     }
 
-    
 
-    
-    
+
+
+
 }

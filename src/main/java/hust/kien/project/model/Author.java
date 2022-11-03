@@ -3,40 +3,31 @@ package hust.kien.project.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Author {
     @Id
     @GeneratedValue
-    private int authorId;
+    private int id;
 
-    private String name;
-    private int birthYear;
+    private AuthorInfo authorInfo;
 
     public Author() {
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public Author(AuthorInfo authorInfo) {
+        this.authorInfo = authorInfo;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public int getId() {
+        return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getBirthYear() {
-        return birthYear;
-    }
-
-    public void setBirthYear(int birthYear) {
-        this.birthYear = birthYear;
+    public void setId(int authorId) {
+        this.id = authorId;
     }
 }

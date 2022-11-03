@@ -1,11 +1,21 @@
 package hust.kien.project.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
+@Entity
 public class Book {
+    @Id
+    @GeneratedValue
     private int bookId;
     private BookInfo bookInfo;
 
     public Book() {
+    }
+
+    public Book(BookInfo bookInfo) {
+        this.bookInfo = bookInfo;
     }
 
     public int getBookId() {
