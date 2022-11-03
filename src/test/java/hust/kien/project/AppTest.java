@@ -13,7 +13,8 @@ import org.junit.jupiter.api.*;
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AppTest {
@@ -60,7 +61,7 @@ public class AppTest {
 
     @Test
     @Order(2)
-    void testAddAuthorToBook() {
+    void testAddAuthorToBookAndCascadePersist() {
         Author author = new Author(new AuthorInfo("Author 3", 24));
 
         Book book = session
@@ -89,19 +90,32 @@ public class AppTest {
 
     @Test
     @Order(4)
-    void testRemoveAuthor() {
-        int i = session.createMutationQuery("delete from Author a where a.authorInfo.age = 22").executeUpdate();
-        assertEquals(1, i);
+    void testAutoUpdate() {
+        Author author2 = session
+            .createQuery("from Author a where a.authorInfo.age = 23", Author.class)
+            .getSingleResult();
+        assertEquals(23, author2.getAuthorInfo().getAge());
+        author2.getAuthorInfo().setAge(27);
+        assertEquals(27, author2.getAuthorInfo().getAge());
+    }
+
+    @Test
+    @Order(5)
+    void testGetAutoUpdatedAuthor() {
+        Author author2 = session
+            .createQuery("from Author a where a.authorInfo.age = 27", Author.class)
+            .getSingleResult();
+
+        assertNotNull(author2);
     }
 
     @Test
     @Order(5)
     void testGetBookFromAuthor() {
-
-        Book book =
-            session.createQuery("select b from Book b join b.bookInfo.authors a"
-                                + " where a.authorInfo.name like '%3'",
-                                Book.class).getSingleResult();
+        Book book = session
+            .createQuery("select b from Book b join b.bookInfo.authors a" + " where a.authorInfo.name like '%3'" ,
+                         Book.class)
+            .getSingleResult();
         assertNotNull(book);
         assertEquals("Book 1", book.getBookInfo().getBookName());
     }

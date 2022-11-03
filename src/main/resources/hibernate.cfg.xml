@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-configuration SYSTEM
+  "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <!-- Use HikariCP -->
+    <property name="connection.provider_class">
+      com.zaxxer.hikari.hibernate.HikariConnectionProvider
+    </property>
+
+    <!-- Hikari datasource configuration   -->
+    <property name="hikari.dataSourceClassName">
+      org.sqlite.SQLiteDataSource
+    </property>
+    <property name="hikari.dataSource.url">
+      jdbc:sqlite:database/library.db
+    </property>
+
+    <!-- HikariCP pooling configuration -->
+    <property name="hikari.minimumIdle">1</property>
+    <property name="hikari.maximumPoolSize">10</property>
+    <property name="hikari.idleTimeout">3000</property>
+
+    <!-- Hibernate dialect for SQLite -->
+    <property name="dialect">
+      org.hibernate.community.dialect.SQLiteDialect
+    </property>
+
+    <!--    Auto commit -->
+    <property name="hikari.autoCommit">false</property>
+
+    <!-- Show SQL -->
+    <property name="show_sql">true</property>
+
+    <!-- Drop schema, create new-->
+    <property name="hbm2ddl.auto">create</property>
+
+    <property name="hibernate.current_session_context_class">
+      org.hibernate.context.internal.ThreadLocalSessionContext
+    </property>
+
+  </session-factory>
+</hibernate-configuration>
