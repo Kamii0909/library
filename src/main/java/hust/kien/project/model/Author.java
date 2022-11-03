@@ -1,7 +1,15 @@
 package hust.kien.project.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class Author {
+    @Id
+    @GeneratedValue
     private int authorId;
+
     private String name;
     private int birthYear;
 

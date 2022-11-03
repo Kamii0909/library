@@ -1,5 +1,6 @@
 package hust.kien.project.model;
 
+
 public class Book {
     private int bookId;
     private BookInfo bookInfo;
