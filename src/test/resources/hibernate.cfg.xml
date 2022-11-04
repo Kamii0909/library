@@ -8,7 +8,7 @@
       com.zaxxer.hikari.hibernate.HikariConnectionProvider
     </property>
 
-    <!-- Hikari datasource configuration   -->
+    <!-- Hikari datasource configuration -->
     <property name="hikari.dataSourceClassName">
       org.sqlite.SQLiteDataSource
     </property>

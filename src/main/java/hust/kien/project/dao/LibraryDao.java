@@ -1,19 +1,26 @@
 package hust.kien.project.dao;
 
-import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.io.Serializable;
 import java.util.List;
 
 public interface LibraryDao<T, Id extends Serializable> {
+    //----------------------------
+    //  TRANSACTIONAL METHODS
+    //----------------------------
+    public Session getCurrentSession();
+
+    public Transaction beginTransaction();
+    public void commitTransaction();
 
     //----------------------------
     //  ACCESSOR METHODS
     //----------------------------
     public T findById(Id id);
     public List<T> fetch(int amount);
-    public List<T> findByName(String name);
-    public List<T> findByPredicate(Predicate predicate);
 
 
     //----------------------------

@@ -26,7 +26,7 @@
       org.hibernate.community.dialect.SQLiteDialect
     </property>
 
-    <!--    Auto commit -->
+    <!-- Auto commit -->
     <property name="hikari.autoCommit">false</property>
 
     <!-- Show SQL -->

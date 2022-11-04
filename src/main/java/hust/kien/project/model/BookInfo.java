@@ -44,8 +44,8 @@ public class BookInfo {
         this.bookName = bookName;
     }
 
-    public List<Author> getAuthors() {
-        return authors.stream().toList();
+    public Set<Author> getAuthors() {
+        return authors;
     }
 
     public void setAuthors(Set<Author> authors) {

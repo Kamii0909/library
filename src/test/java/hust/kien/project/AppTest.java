@@ -1,6 +1,10 @@
 package hust.kien.project;
 
 import hust.kien.project.model.*;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -13,8 +17,7 @@ import org.junit.jupiter.api.*;
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AppTest {
@@ -113,11 +116,44 @@ public class AppTest {
     @Order(5)
     void testGetBookFromAuthor() {
         Book book = session
-            .createQuery("select b from Book b join b.bookInfo.authors a" + " where a.authorInfo.name like '%3'" ,
+            .createQuery("select b from Book b join b.bookInfo.authors a" + " where a.authorInfo.name like '%3'",
                          Book.class)
             .getSingleResult();
         assertNotNull(book);
         assertEquals("Book 1", book.getBookInfo().getBookName());
+    }
+
+    //@Test
+    @Order(6)
+    void testGetBookFromAuthors() {
+        Author author3 = session.getReference(Author.class, 3L);
+        Author author2 = session.getReference(Author.class, 2L);
+        Author author1 = session.getReference(Author.class, 1L);
+
+        List<Book> booksWrittenByAuthor2And3 = session
+            .createQuery("select b from Book b join Author a on b.bookInfo.authors = :authors", Book.class)
+            .setParameterList("authors", List.of(author1, author2, author3))
+            .list();
+        System.out.println(booksWrittenByAuthor2And3);
+    }
+
+
+    @Test
+    @Order(7)
+    void testCriteria() {
+        CriteriaBuilder cb = sessionFactory.getCriteriaBuilder();
+        CriteriaQuery<Book> cq = cb.createQuery(Book.class);
+        Root<Book> root = cq.from(Book.class);
+
+        List<Author> authors = session.createQuery("from Author a where a.id in (1,2,3)", Author.class).getResultList();
+
+        for (Author author : authors) {
+            cq.where(cb.isMember(author, root.get(Book_.bookInfo).get(BookInfo_.authors)));
+        }
+
+        TypedQuery<Book> tq = session.createQuery(cq);
+        assertEquals(1, tq.getSingleResult().getBookId());
+        assertNotNull(tq.getSingleResult());
     }
 
     @BeforeEach
