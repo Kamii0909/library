@@ -1,4 +1,4 @@
-package hust.kien.project.model;
+package hust.kien.project.model.author;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

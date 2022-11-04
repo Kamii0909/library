@@ -1,10 +1,11 @@
-package hust.kien.project.model;
+package hust.kien.project.model.author;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.ManyToMany;
 
 import java.util.HashSet;
 import java.util.Set;
+import hust.kien.project.model.book.Book;
 
 @Embeddable
 public class AuthorInfo {

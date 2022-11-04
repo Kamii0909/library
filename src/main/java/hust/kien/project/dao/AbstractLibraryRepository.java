@@ -1,11 +1,8 @@
 package hust.kien.project.dao;
 
-import hust.kien.project.dao.authordao.AuthorLibraryDao;
-import hust.kien.project.dao.bookdao.BookLibraryDao;
-import hust.kien.project.model.Author;
-import hust.kien.project.model.Book;
-import hust.kien.project.model.BookGenre;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import hust.kien.project.model.author.Author;
+import hust.kien.project.model.book.Book;
+import hust.kien.project.model.book.BookGenre;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -13,11 +10,10 @@ import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
-public abstract class AbstractLibraryDao {
+public abstract class AbstractLibraryRepository {
     private SessionFactory sessionFactory;
-    private CriteriaBuilder cb;
     
-    protected AbstractLibraryDao() {
+    protected AbstractLibraryRepository() {
         ServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         Metadata metadata = new MetadataSources(registry)
             .addAnnotatedClasses(Book.class, Author.class, BookGenre.class)
@@ -26,7 +22,6 @@ public abstract class AbstractLibraryDao {
             .build();
         try {
             sessionFactory = metadata.getSessionFactoryBuilder().build();
-            cb = sessionFactory.getCriteriaBuilder();
         } catch (Exception e) {
             StandardServiceRegistryBuilder.destroy(registry);
         }

@@ -1,4 +1,4 @@
-package hust.kien.project.model;
+package hust.kien.project.model.book;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

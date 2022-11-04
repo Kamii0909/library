@@ -1,6 +1,11 @@
 package hust.kien.project;
 
-import hust.kien.project.model.*;
+import hust.kien.project.model.book.*;
+import hust.kien.project.model.author.Author;
+import hust.kien.project.model.author.AuthorInfo;
+import hust.kien.project.model.book.Book;
+import hust.kien.project.model.book.BookGenre;
+import hust.kien.project.model.book.BookInfo;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

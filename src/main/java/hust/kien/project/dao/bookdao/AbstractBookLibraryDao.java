@@ -1,6 +1,11 @@
 package hust.kien.project.dao.bookdao;
 
-import hust.kien.project.model.*;
+import hust.kien.project.model.author.Author;
+import hust.kien.project.model.book.Book;
+import hust.kien.project.model.book.BookGenre;
+import hust.kien.project.model.book.BookInfo;
+import hust.kien.project.model.book.BookInfo_;
+import hust.kien.project.model.book.Book_;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;

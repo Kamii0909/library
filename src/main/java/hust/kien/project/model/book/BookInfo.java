@@ -1,4 +1,4 @@
-package hust.kien.project.model;
+package hust.kien.project.model.book;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
@@ -6,8 +6,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import hust.kien.project.model.author.Author;
 
 @Embeddable
 public class BookInfo {

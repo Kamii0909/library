@@ -1,11 +1,10 @@
 package hust.kien.project.dao.bookdao;
 
 import hust.kien.project.dao.LibraryDao;
-import hust.kien.project.model.Author;
-import hust.kien.project.model.Book;
-import hust.kien.project.model.BookGenre;
-import hust.kien.project.model.BookInfo;
-
+import hust.kien.project.model.author.Author;
+import hust.kien.project.model.book.Book;
+import hust.kien.project.model.book.BookGenre;
+import hust.kien.project.model.book.BookInfo;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
