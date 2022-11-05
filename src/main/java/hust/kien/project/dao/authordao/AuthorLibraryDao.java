@@ -7,6 +7,7 @@ import hust.kien.project.dao.LibraryDao;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.author.AuthorInfo;
 import hust.kien.project.model.book.Book;
+import hust.kien.project.model.book.BookGenre;
 
 public interface AuthorLibraryDao extends LibraryDao<Author, Long> {
     //-------------------------
@@ -30,6 +31,12 @@ public interface AuthorLibraryDao extends LibraryDao<Author, Long> {
 
     public List<Author> findWroteAllOfBooks(Collection<Book> books);
     public Optional<Author> findAnyWroteAllOfBooks(Collection<Book> books);
+
+    public List<Author> findWroteAtLeastOfGenre(Collection<BookGenre> genres);
+    public Optional<Author> findAnyWroteAtLeastOneOfGenre(Collection<BookGenre> genres);
+
+    public List<Author> findWroteAllOfGenres(Collection<BookGenre> genres);
+    public Optional<Author> findAnyWroteAllOfGenres(Collection<BookGenre> genres);
 
     //---- Composite criteria ----
     /**

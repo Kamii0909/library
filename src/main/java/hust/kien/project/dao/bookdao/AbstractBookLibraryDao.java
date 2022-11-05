@@ -153,6 +153,9 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
         return findMatchAllGenres(genres).stream().findAny();
     }
 
+    /**
+     * TODO
+     */
     @Override
     public List<Book> findFromBookInfo(BookInfo bookInfoInfo) {
         //TODO
