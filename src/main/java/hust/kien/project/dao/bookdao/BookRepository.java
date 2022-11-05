@@ -19,8 +19,10 @@ public class BookRepository extends AbstractBookLibraryDao {
      */
     public static BookRepository getInstance(SessionFactory sessionFactory){
         assert Objects.nonNull(sessionFactory) : "sessionFactory should not be null";
-        if(singleton == null) return new BookRepository(sessionFactory);
-        else return singleton;
+        if(singleton == null){
+            singleton = new BookRepository(sessionFactory);
+        }
+        return singleton;
     }
 
 }

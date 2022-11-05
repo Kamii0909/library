@@ -10,10 +10,10 @@ import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
-public abstract class AbstractLibraryRepository {
+public abstract class AbstractRepository {
     private SessionFactory sessionFactory;
     
-    protected AbstractLibraryRepository() {
+    protected AbstractRepository() {
         ServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         Metadata metadata = new MetadataSources(registry)
             .addAnnotatedClasses(Book.class, Author.class, BookGenre.class)

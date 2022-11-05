@@ -128,7 +128,7 @@ public class AppTest {
         assertEquals("Book 1", book.getBookInfo().getBookName());
     }
 
-    //@Test
+    @Test
     @Order(6)
     void testGetBookFromAuthors() {
         Author author3 = session.getReference(Author.class, 3L);
@@ -136,7 +136,7 @@ public class AppTest {
         Author author1 = session.getReference(Author.class, 1L);
 
         List<Book> booksWrittenByAuthor2And3 = session
-            .createQuery("select b from Book b join Author a on b.bookInfo.authors = :authors", Book.class)
+            .createQuery("from Book b join b.bookInfo.authors a where a in :authors", Book.class)
             .setParameterList("authors", List.of(author1, author2, author3))
             .list();
         System.out.println(booksWrittenByAuthor2And3);

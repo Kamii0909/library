@@ -33,9 +33,8 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
     @Override
     public List<Book> findByBookName(String name) {
         return getCurrentSession()
-            .createQuery("from Book b where b.bookInfo.bookName like :bookName", Book.class)
-            .setParameter("bookName", "%" + name + "%")
-            .getResultList();
+                .createQuery("from Book b where b.bookInfo.bookName like :bookName", Book.class)
+                .setParameter("bookName", "%" + name + "%").getResultList();
     }
 
     @Override
@@ -46,9 +45,8 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
     @Override
     public List<Book> findByReleasedYear(int year) {
         return getCurrentSession()
-            .createQuery("from Book b where b.bookInfo.releasedYear = :year", Book.class)
-            .setParameter("year", year)
-            .getResultList();
+                .createQuery("from Book b where b.bookInfo.releasedYear = :year", Book.class)
+                .setParameter("year", year).getResultList();
     }
 
     @Override
@@ -58,7 +56,11 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
 
     @Override
     public List<Book> findByReleasedYearBetween(int from, int to) {
-        return null;
+        CriteriaQuery<Book> cq = cb.createQuery(Book.class);
+        Root<Book> root = cq.from(Book.class);
+
+        cq.where(cb.between(root.get(Book_.bookInfo).get(BookInfo_.releasedYear), from, to));
+        return getCurrentSession().createQuery(cq).getResultList();
     }
 
     @Override
@@ -69,9 +71,8 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
     @Override
     public List<Book> findByAuthor(Author author) {
         return getCurrentSession()
-            .createQuery("from Book b join b.bookInfo.authors a where a.id = :id ", Book.class)
-            .setParameter("id", author.getId())
-            .getResultList();
+                .createQuery("from Book b join b.bookInfo.authors a where a.id = :id ", Book.class)
+                .setParameter("id", author.getId()).getResultList();
     }
 
     @Override
@@ -82,9 +83,9 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
     @Override
     public List<Book> findWrittenByAtLeastOne(Collection<Author> authors) {
         return getCurrentSession()
-            .createQuery("from Book b join b.bookInfo.authors a where a.id in :ids", Book.class)
-            .setParameterList("ids", authors.stream().map(Author::getId).toList())
-            .getResultList();
+                .createQuery("from Book b join b.bookInfo.authors a where a in :authors", Book.class)
+                .setParameterList("authors", authors)
+                .getResultList();
     }
 
     @Override
@@ -111,9 +112,9 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
     @Override
     public List<Book> findFromGenre(BookGenre genre) {
         return getCurrentSession()
-            .createQuery("from Book b join b.bookInfo.bookGenres g where g.name = :name", Book.class)
-            .setParameter("name", genre.getName())
-            .getResultList();
+                .createQuery("from Book b join b.bookInfo.bookGenres g where g.name = :name",
+                        Book.class)
+                .setParameter("name", genre.getName()).getResultList();
     }
 
     @Override
@@ -124,9 +125,10 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
     @Override
     public List<Book> findMatchAtLeastOneGenre(Collection<BookGenre> genres) {
         return getCurrentSession()
-            .createQuery("from Book b join b.bookInfo.bookGenres g where g.name in :names", Book.class)
-            .setParameterList("names", genres.stream().map(BookGenre::getName).toList())
-            .getResultList();
+                .createQuery("from Book b join b.bookInfo.bookGenres g where g.name in :names",
+                        Book.class)
+                .setParameterList("names", genres.stream().map(BookGenre::getName).toList())
+                .getResultList();
     }
 
     @Override
@@ -153,7 +155,8 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
 
     @Override
     public List<Book> findFromBookInfo(BookInfo bookInfoInfo) {
-        return null;
+        //TODO
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -184,7 +187,8 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
 
     @Override
     public List<Book> fetch(int amount) {
-        return getCurrentSession().createQuery("from Book", Book.class).setMaxResults(amount).list();
+        return getCurrentSession().createQuery("from Book", Book.class).setMaxResults(amount)
+                .list();
     }
 
     @Override
@@ -194,8 +198,10 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
 
     @Override
     public void delete(Book entity) {
-        if (getCurrentSession().contains(entity)) getCurrentSession().remove(entity);
-        else throw new PersistentObjectException("Object is not a managed persistence");
+        if (getCurrentSession().contains(entity))
+            getCurrentSession().remove(entity);
+        else
+            throw new PersistentObjectException("Object is not a managed entity");
     }
 
     @Override
@@ -205,7 +211,9 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
 
     @Override
     public void update(Book entity) {
-        if (getCurrentSession().contains(entity)) getCurrentSession().merge(entity);
-        else throw new PersistentObjectException("Use save to save new Book");
+        if (getCurrentSession().contains(entity))
+            getCurrentSession().merge(entity);
+        else
+            throw new PersistentObjectException("Use save to save new Book");
     }
 }

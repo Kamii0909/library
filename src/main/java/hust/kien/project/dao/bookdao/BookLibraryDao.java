@@ -14,7 +14,7 @@ public interface BookLibraryDao extends LibraryDao<Book, Long> {
     // FIND BY BOOK INFO
     //-------------------------
 
-    //------- Optional<Book> Name -------
+    //------- Book Name -------
     public List<Book> findByBookName(String name);
     public Optional<Book> findAnyByBookName(String name);
 
@@ -58,7 +58,7 @@ public interface BookLibraryDao extends LibraryDao<Book, Long> {
     /**
      * A clunky method for composite criteria query
      * <p>
-     * {@code BookInfo} maybe null in some field, {@code authors} and {@code genres} field is necessary managed by
+     * {@code bookInfo} maybe null in some field, {@code authors} and {@code genres} field is necessary managed by
      * persistence context
      * </p>
      */
