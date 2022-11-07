@@ -12,16 +12,18 @@ import hust.kien.project.model.author.Author;
 @Embeddable
 public class BookInfo {
     private String bookName;
+    private int releasedYear;
+
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "Book_BookGenre")
     private Set<BookGenre> bookGenres = new HashSet<>();
+
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "Book_Author")
     private Set<Author> authors = new HashSet<>();
-    private int releasedYear;
 
-    public BookInfo() {
-    }
+
+    public BookInfo() {}
 
     public BookInfo(String bookName, int releasedYear) {
         this.bookName = bookName;

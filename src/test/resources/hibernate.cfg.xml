@@ -18,7 +18,7 @@
 
     <!-- HikariCP pooling configuration -->
     <property name="hikari.minimumIdle">1</property>
-    <property name="hikari.maximumPoolSize">10</property>
+    <property name="hikari.maximumPoolSize">2</property>
     <property name="hikari.idleTimeout">3000</property>
 
     <!-- Hibernate dialect for SQLite -->
@@ -34,6 +34,14 @@
 
     <!-- Drop schema, create new-->
     <property name="hbm2ddl.auto">create</property>
+
+    <!-- Get current session from thread context -->
+    <property name="hibernate.current_session_context_class">
+      org.hibernate.context.internal.ThreadLocalSessionContext
+    </property>
+
+    <!-- Disable second level cache -->
+    <property name="cache.use_second_level_cache">false</property>
 
   </session-factory>
 </hibernate-configuration>

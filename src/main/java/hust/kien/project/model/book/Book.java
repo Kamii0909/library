@@ -1,5 +1,6 @@
 package hust.kien.project.model.book;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,8 +9,9 @@ import jakarta.persistence.Id;
 public class Book {
     @Id
     @GeneratedValue
-    private int bookId;
-    private BookInfo bookInfo;
+    private int id;
+    @Embedded private BookInfo bookInfo;
+    @Embedded private BookStock bookStock;
 
     public Book() {
     }
@@ -18,19 +20,32 @@ public class Book {
         this.bookInfo = bookInfo;
     }
 
-    public int getBookId() {
-        return bookId;
+    public int getid() {
+        return id;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setid(int id) {
+        this.id = id;
     }
 
+    
     public BookInfo getBookInfo() {
         return bookInfo;
     }
 
+    
     public void setBookInfo(BookInfo bookInfo) {
         this.bookInfo = bookInfo;
     }
+    
+
+    
+    public BookStock getBookStock() {
+        return bookStock;
+    }
+
+    public void setBookStock(BookStock bookStock) {
+        this.bookStock = bookStock;
+    }
+    
 }
