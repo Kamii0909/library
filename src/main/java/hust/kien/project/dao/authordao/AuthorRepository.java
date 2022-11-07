@@ -16,9 +16,9 @@ public class AuthorRepository extends AbstractAuthorLibraryDao {
     /**
      * Factory method
      */
-    public static AuthorRepository getInstance(SessionFactory sessionFactory){
+    public static AuthorRepository getInstance(SessionFactory sessionFactory) {
         assert Objects.nonNull(sessionFactory) : "sessionFactory should not be null";
-        if(singleton == null) {
+        if (singleton == null) {
             singleton = new AuthorRepository(sessionFactory);
         }
         return singleton;

@@ -18,7 +18,7 @@
 
     <!-- HikariCP pooling configuration -->
     <property name="hikari.minimumIdle">1</property>
-    <property name="hikari.maximumPoolSize">10</property>
+    <property name="hikari.maximumPoolSize">1</property>
     <property name="hikari.idleTimeout">3000</property>
 
     <!-- Hibernate dialect for SQLite -->
