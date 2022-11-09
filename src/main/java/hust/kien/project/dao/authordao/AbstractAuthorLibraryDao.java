@@ -80,6 +80,10 @@ public abstract class AbstractAuthorLibraryDao implements AuthorLibraryDao {
         CriteriaQuery<Author> cq = cb.createQuery(Author.class);
         Root<Author> root = cq.from(Author.class);
 
+        if (!authorInfo.getName().isBlank())
+            cq.where(cb.like(root.get(Author_.authorInfo).get(AuthorInfo_.name),
+                "%" + authorInfo.getName() + "%"));
+                
         // TODO
         throw new UnsupportedOperationException();
     }
@@ -99,8 +103,7 @@ public abstract class AbstractAuthorLibraryDao implements AuthorLibraryDao {
     public List<Author> findWroteAtLeastOneOfBook(Collection<Book> books) {
         return getCurrentSession()
             .createQuery("from Author a join a.authorInfo.books b where b in :books", Author.class)
-            .setParameter("books", books)
-            .getResultList();
+            .setParameter("books", books).getResultList();
     }
 
     @Override

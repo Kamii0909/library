@@ -5,6 +5,7 @@ import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.model.book.BookInfo;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -63,6 +64,40 @@ public interface BookLibraryDao extends LibraryDao<Book, Long> {
      * </p>
      */
     public List<Book> findFromBookInfo(BookInfo bookInfo);
+
+
+    //-------------------------
+    // FIND BY BOOK STOCK
+    //-------------------------
+    
+    //- Current library stock -
+    public List<Book> findByStockBetween(int from, int to);
+    public Optional<Book> findAnyByStockBetween(int from, int to);
+
+    //---- Reimburse Cost -----
+    public List<Book> findByReimburseCostBetween(double from, double to);
+    public Optional<Book> findAnyByReimburseCostBetween(double from, double to);
+
+    //----- Contract date -----
+    /**
+     * Find all Book where at least one contract satisfy date requirements <p>
+     * <li> For completed contract,  {@code startDate > from} and {@code endDate < to}
+     * <li> For ongoing contract, {@code startDate > from} and {@code endDate} is not restricted
+     * 
+     * @see #findByAllContractDateFrom(LocalDate, LocalDate)
+     */
+    public List<Book> findByAtLeastOneContractDateFrom(LocalDate from, LocalDate to);
+    public Optional<Book> findAnyByAtLeastOneContractDateFrom(LocalDate from, LocalDate to);
+
+    /**
+     * Find all Book where all contracts satisfy date requirements <p>
+     * <li> For completed contract,  {@code startDate > from} and {@code endDate < to}
+     * <li> For ongoing contract, {@code startDate > from} and {@code endDate} is not restricted
+     * 
+     * @see #findByAtLeastOneContractDateFrom(LocalDate, LocalDate)
+     */
+    public List<Book> findByAllContractDateFrom(LocalDate from, LocalDate to);
+    public Optional<Book> findAnyByAllContractDateFrom(LocalDate from, LocalDate to);
 
 
 }

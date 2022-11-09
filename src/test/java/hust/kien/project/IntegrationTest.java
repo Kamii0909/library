@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,10 +28,19 @@ import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.model.book.BookInfo;
 import hust.kien.project.model.book.BookStock;
+import hust.kien.project.model.book.BookStock_;
+import hust.kien.project.model.book.Book_;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientContactInfo;
 import hust.kien.project.model.client.ClientTier;
 import hust.kien.project.model.rent.BookRentContract;
+import hust.kien.project.model.rent.BookRentContract_;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.SetJoin;
+import jakarta.persistence.criteria.Subquery;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class IntegrationTest {
@@ -41,9 +52,11 @@ public class IntegrationTest {
     @Test
     @Order(3)
     void verifyAddAuthorsToBooks() {
-        List<Author> authors = session.createQuery("from Author a", Author.class).getResultList();
+        List<Author> authors =
+            session.createQuery("from Author a", Author.class).getResultList();
 
-        List<Book> books = session.createQuery("from Book b", Book.class).getResultList();
+        List<Book> books =
+            session.createQuery("from Book b", Book.class).getResultList();
 
         assertEquals(5, authors.size());
         assertEquals(5, books.size());
@@ -54,32 +67,33 @@ public class IntegrationTest {
         assertEquals("Book 0", books.get(0).getBookInfo().getBookName());
 
         assertNotNull(books.stream()
-            .filter(book -> book.getBookInfo().getBookName().equals("Author 1")).findAny());
+            .filter(book -> book.getBookInfo().getBookName().equals("Author 1"))
+            .findAny());
     }
 
     @Test
     @Order(5)
     void verifyAddGenresToBooks() {
-        List<BookGenre> genres =
-            session.createQuery("from BookGenre bg", BookGenre.class).getResultList();
+        List<BookGenre> genres = session
+            .createQuery("from BookGenre bg", BookGenre.class).getResultList();
 
-        List<Book> books = session.createQuery("from Book b", Book.class).getResultList();
+        List<Book> books =
+            session.createQuery("from Book b", Book.class).getResultList();
 
         assertEquals(5, genres.size());
         assertEquals(5, books.size());
 
         assertEquals("Book 0", books.get(0).getBookInfo().getBookName());
 
-        assertNotNull(books.stream()
-            .filter(
-                book -> book.getBookInfo().getBookGenres().contains(new BookGenre("Book Genre")))
-            .findAny());
+        assertNotNull(books.stream().filter(book -> book.getBookInfo()
+            .getBookGenres().contains(new BookGenre("Book Genre"))).findAny());
     }
 
     @Test
     @Order(7)
     void verifyAddStockToBooks() {
-        List<Book> books = session.createQuery("from Book b", Book.class).getResultList();
+        List<Book> books =
+            session.createQuery("from Book b", Book.class).getResultList();
 
         assertEquals(5, books.size());
 
@@ -89,18 +103,50 @@ public class IntegrationTest {
     @Test
     @Order(9)
     void verifyAddContract() {
-        List<Book> books = session.createQuery("from Book b", Book.class).getResultList();
+        List<Book> books =
+            session.createQuery("from Book b", Book.class).getResultList();
 
-        int i  = books.get(0).getBookStock().getCompletedContracts().size();
-        assertEquals(1, i);
+        int i = books.get(0).getBookStock().getCompletedContracts().size();
+        assertEquals(2, i);
 
         int j = books.get(0).getBookStock().getOngoingContracts().size();
         assertEquals(1, j);
 
-        BookRentContract contract = books.get(2).getBookStock().getOngoingContracts().stream().findAny().get();
+        BookRentContract contract = books.get(2).getBookStock()
+            .getOngoingContracts().stream().findAny().get();
 
         assertTrue(contract.getStartDate().isAfter(LocalDate.of(2015, 1, 1)));
         assertTrue(contract.isActive());
+    }
+
+    @Test
+    @Order(10)
+    void complexQuery() {
+        // find all Books with all completed contracts start after 2016
+        CriteriaBuilder cb = sessionFactory.getCriteriaBuilder();
+
+        CriteriaQuery<Book> cq = cb.createQuery(Book.class);
+        Root<Book> root = cq.from(Book.class);
+
+        Subquery<BookRentContract> sq = cq.subquery(BookRentContract.class);
+        Root<BookRentContract> subRoot = sq.from(BookRentContract.class);
+
+
+
+        sq.select(subRoot).where(
+            cb.lessThan(subRoot.get(BookRentContract_.startDate),
+                LocalDate.of(2016, 2, 1)),
+            cb.equal(root, subRoot.get(BookRentContract_.book)));
+
+        cq.where(cb.not(cb.exists(sq)));
+
+        List<Book> books = session.createQuery(cq).getResultList();
+
+        for (Book book : books) {
+            System.out.println(book.getBookInfo().getBookName());
+        }
+
+        assertEquals(3, books.size());
     }
 
 
@@ -108,13 +154,15 @@ public class IntegrationTest {
     @Test
     @Order(2)
     void addAuthorsToBooks() {
-        List<Author> authors = session.createQuery("from Author a", Author.class).getResultList();
-        authors
-            .sort((a1, a2) -> a1.getAuthorInfo().getName().compareTo(a2.getAuthorInfo().getName()));
+        List<Author> authors =
+            session.createQuery("from Author a", Author.class).getResultList();
+        authors.sort((a1, a2) -> a1.getAuthorInfo().getName()
+            .compareTo(a2.getAuthorInfo().getName()));
 
-        List<Book> books = session.createQuery("from Book b", Book.class).getResultList();
-        books.sort(
-            (b1, b2) -> b1.getBookInfo().getBookName().compareTo(b2.getBookInfo().getBookName()));
+        List<Book> books =
+            session.createQuery("from Book b", Book.class).getResultList();
+        books.sort((b1, b2) -> b1.getBookInfo().getBookName()
+            .compareTo(b2.getBookInfo().getBookName()));
 
         assertEquals(5, authors.size());
         assertEquals(5, books.size());
@@ -131,13 +179,14 @@ public class IntegrationTest {
     @Test
     @Order(4)
     void addBookGenresToBooks() {
-        List<BookGenre> genres =
-            session.createQuery("from BookGenre bg", BookGenre.class).getResultList();
+        List<BookGenre> genres = session
+            .createQuery("from BookGenre bg", BookGenre.class).getResultList();
         genres.sort((bg1, bg2) -> bg1.getName().compareTo(bg2.getName()));
 
-        List<Book> books = session.createQuery("from Book b", Book.class).getResultList();
-        books.sort(
-            (b1, b2) -> b1.getBookInfo().getBookName().compareTo(b2.getBookInfo().getBookName()));
+        List<Book> books =
+            session.createQuery("from Book b", Book.class).getResultList();
+        books.sort((b1, b2) -> b1.getBookInfo().getBookName()
+            .compareTo(b2.getBookInfo().getBookName()));
 
         assertEquals(5, genres.size());
         assertEquals(5, books.size());
@@ -154,10 +203,11 @@ public class IntegrationTest {
     @Test
     @Order(6)
     void changeBookStockInfo() {
-        List<Book> books = session.createQuery("from Book b", Book.class).getResultList();
+        List<Book> books =
+            session.createQuery("from Book b", Book.class).getResultList();
 
-        books.sort(
-            (b1, b2) -> b1.getBookInfo().getBookName().compareTo(b2.getBookInfo().getBookName()));
+        books.sort((b1, b2) -> b1.getBookInfo().getBookName()
+            .compareTo(b2.getBookInfo().getBookName()));
 
         assertEquals(5, books.size());
 
@@ -170,9 +220,12 @@ public class IntegrationTest {
     @Order(8)
     void testAddContracts() {
 
-        List<Book> books = session.createSelectionQuery("from Book b", Book.class).getResultList();
+        List<Book> books = session
+            .createSelectionQuery("from Book b", Book.class).getResultList();
 
-        List<Client> clients = session.createSelectionQuery("from Client c", Client.class).getResultList();
+        List<Client> clients =
+            session.createSelectionQuery("from Client c", Client.class)
+                .getResultList();
 
         assertEquals(5, books.size());
         assertEquals(5, clients.size());
@@ -180,29 +233,36 @@ public class IntegrationTest {
         int[][] idC = {{1, 3}, {2, 4}, {3, 0}, {4, 1}, {0, 2}};
         int[][] idO = {{1, 4}, {2, 0}, {3, 1}, {4, 2}, {0, 3}};
 
-        BookRentContract[] completed = new BookRentContract[idC.length];
-        BookRentContract[] ongoing = new BookRentContract[idO.length];
+        BookRentContract[] completed = new BookRentContract[idC.length + 5];
+        BookRentContract[] ongoing = new BookRentContract[idO.length + 5];
 
         assertEquals(idC.length, idO.length);
 
         session.getTransaction().commit();
+        session.close();
 
+
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
 
-        assertTrue(session.contains(books.get(0)));
-
         for (int i = 0; i < idC.length; i++) {
-            completed[i] = new BookRentContract(books.get(idC[i][0]), clients.get(idC[i][1]),
-                LocalDate.now().minusDays(3), LocalDate.now().minusDays(1));
-            
-            session.persist(completed[i]);
+            completed[i] = new BookRentContract(books.get(idC[i][0]),
+                clients.get(idC[i][1]), LocalDate.now().minusDays(3),
+                LocalDate.now().minusDays(1));
+            completed[i + 5] = new BookRentContract(books.get(idC[i][0]),
+                clients.get(idC[i][0]), LocalDate.of(2015 + i, 1, 1),
+                LocalDate.of(2016 + i, 1, 1));
 
-            ongoing[i] = new BookRentContract(books.get(idO[i][0]), clients.get(idO[i][1]),
-                LocalDate.of(2015 + i, i + 3, i + 4));
+            session.persist(completed[i]);
+            session.persist(completed[i + 5]);
+
+            ongoing[i] = new BookRentContract(books.get(idO[i][0]),
+                clients.get(idO[i][1]), LocalDate.of(2015 + i, i + 3, i + 4));
             session.persist(ongoing[i]);
-            
+
         }
     }
+
 
 
     @Test
@@ -228,7 +288,8 @@ public class IntegrationTest {
         Client[] clients = new Client[5];
 
         for (int i = 0; i < clients.length; i++) {
-            clients[i] = new Client(new ClientContactInfo("Client " + i, "Client address " + i),
+            clients[i] = new Client(
+                new ClientContactInfo("Client " + i, "Client address " + i),
                 ClientTier.NORMAL);
             session.persist(clients[i]);
         }
@@ -256,16 +317,19 @@ public class IntegrationTest {
 
     @BeforeAll
     static void init() {
-        ServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+        ServiceRegistry registry =
+            new StandardServiceRegistryBuilder().configure().build();
 
         Metadata metadata = null;
         try {
-            metadata = new MetadataSources(registry)
-                .addAnnotatedClasses(Book.class, Author.class, BookGenre.class, Client.class,
-                    BookRentContract.class)
-                .getMetadataBuilder()
-                .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
-                .build();
+            metadata =
+                new MetadataSources(registry)
+                    .addAnnotatedClasses(Book.class, Author.class,
+                        BookGenre.class, Client.class, BookRentContract.class)
+                    .getMetadataBuilder()
+                    .applyImplicitNamingStrategy(
+                        ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
+                    .build();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -289,7 +353,7 @@ public class IntegrationTest {
 
     @BeforeEach
     void openTransaction() {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
     }
 
