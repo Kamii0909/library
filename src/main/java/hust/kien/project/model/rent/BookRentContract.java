@@ -6,14 +6,13 @@ import hust.kien.project.model.book.Book;
 import hust.kien.project.model.client.Client;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ConstraintMode;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
 public class BookRentContract {
@@ -25,17 +24,17 @@ public class BookRentContract {
     @JoinColumn(name = "book_id", foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT))
     private Book book;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_id", foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT))
     private Client client;
 
-    @Formula("strftime('%s', 'now') - endDate/1000 <= 0")
+    @Formula("endDate > date('now', 'localtime')")
     private boolean isActive;
 
-    @Temporal(TemporalType.DATE)
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate startDate;
 
-    @Temporal(TemporalType.DATE)
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate endDate;
 
     public BookRentContract() {}
@@ -45,7 +44,7 @@ public class BookRentContract {
         this.client = client;
         this.isActive = true;
         this.startDate = startDate;
-        this.endDate = LocalDate.of(9999, 12, 31);
+        this.endDate = LocalDate.of(2999, 12, 31);
     }
 
     public BookRentContract(Book book, Client client, LocalDate startDate, LocalDate endDate) {

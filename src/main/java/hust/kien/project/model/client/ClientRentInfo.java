@@ -16,11 +16,11 @@ public class ClientRentInfo {
     
 
     @OneToMany(mappedBy = "client")
-    @Where(clause = "strftime('%s', 'now') - endDate/1000 > 0")
+    @Where(clause = "endDate <= date('now', 'localtime')")
     private Set<BookRentContract> completedContracts;
     
     @OneToMany(mappedBy = "client")
-    @Where(clause = "strftime('%s', 'now') - endDate/1000 <= 0")
+    @Where(clause = "endDate > date('now', 'localtime')")
     private Set<BookRentContract> ongoingContracts;
     
 

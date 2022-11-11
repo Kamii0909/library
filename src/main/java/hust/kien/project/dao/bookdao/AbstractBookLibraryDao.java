@@ -1,29 +1,26 @@
 package hust.kien.project.dao.bookdao;
 
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import org.hibernate.PersistentObjectException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.model.book.BookInfo;
 import hust.kien.project.model.book.BookInfo_;
-import hust.kien.project.model.book.BookStock;
-import hust.kien.project.model.book.BookStock_;
 import hust.kien.project.model.book.Book_;
 import hust.kien.project.model.rent.BookRentContract;
 import hust.kien.project.model.rent.BookRentContract_;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import jakarta.persistence.criteria.SetJoin;
-import org.hibernate.PersistentObjectException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import jakarta.persistence.criteria.Subquery;
 
 public abstract class AbstractBookLibraryDao implements BookLibraryDao {
     private final SessionFactory sessionFactory;
@@ -174,7 +171,6 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
      */
     @Override
     public List<Book> findFromBookInfo(BookInfo bookInfoInfo) {
-        // TODO
         throw new UnsupportedOperationException();
     }
 
@@ -217,10 +213,8 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
 
     @Override
     public void delete(Book entity) {
-        if (getCurrentSession().contains(entity))
-            getCurrentSession().remove(entity);
-        else
-            throw new PersistentObjectException("Object is not a managed entity");
+        getCurrentSession().remove(entity);
+
     }
 
     @Override
@@ -230,10 +224,9 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
 
     @Override
     public void update(Book entity) {
-        if (getCurrentSession().contains(entity))
-            getCurrentSession().merge(entity);
-        else
-            throw new PersistentObjectException("Use save to save new Book");
+
+        getCurrentSession().merge(entity);
+
     }
 
     @Override
@@ -262,55 +255,43 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
         CriteriaQuery<Book> cq = cb.createQuery(Book.class);
         Root<Book> root = cq.from(Book.class);
 
-        Join<Book, BookStock> joinBookStock = root.join(Book_.bookStock);
+        Subquery<Book> sq = cq.subquery(Book.class);
+        Root<BookRentContract> subRoot = sq.from(BookRentContract.class);
 
-        Join<BookStock, BookRentContract> joinOngoing =
-            joinBookStock.join(BookStock_.ongoingContracts);
+        sq.select(subRoot.get(BookRentContract_.book)).where(
+            cb.equal(root, subRoot.get(BookRentContract_.book)),
+            cb.lessThan(subRoot.get(BookRentContract_.endDate), LocalDate.now()),
+            cb.or(
+                cb.greaterThanOrEqualTo(subRoot.get(BookRentContract_.endDate),
+                    LocalDate.ofYearDay(2023, 2)),
+                cb.lessThanOrEqualTo(subRoot.get(BookRentContract_.startDate),
+                    LocalDate.ofYearDay(2014, 2))));
 
-        Join<BookStock, BookRentContract> joinCompleted =
-            joinBookStock.join(BookStock_.completedContracts);
+        cq.where(cb.not(cb.exists(sq)));
 
-        Predicate predOngoingGreaterThan =
-            cb.greaterThan(joinOngoing.get(BookRentContract_.startDate), from);
 
-        Predicate predCompletedLessThan =
-            cb.lessThan(joinCompleted.get(BookRentContract_.endDate), to);
-        Predicate predCompletedGreaterThan =
-            cb.greaterThan(joinCompleted.get(BookRentContract_.startDate), from);
-
-        return getCurrentSession()
-            .createQuery(
-                cq.where(predOngoingGreaterThan, predCompletedLessThan, predCompletedGreaterThan))
-            .getResultList();
+        return getCurrentSession().createQuery(cq).getResultList();
     }
 
     @Override
     public List<Book> findByAtLeastOneContractDateFrom(LocalDate from, LocalDate to) {
-        CriteriaQuery<Book> cq = cb.createQuery(Book.class);
-        Root<Book> root = cq.from(Book.class);
-
-        Join<Book, BookStock> joinBookStock = root.join(Book_.bookStock);
-
-        Join<BookStock, BookRentContract> joinOngoing =
-            joinBookStock.join(BookStock_.ongoingContracts);
-
-        Join<BookStock, BookRentContract> joinCompleted =
-            joinBookStock.join(BookStock_.completedContracts);
-        
-        
-
-        return null;
+        return getCurrentSession().createQuery(
+            "from Book b join BookRentContract brc on b.id = brc.book where brc.startDate >= :from and brc.endDate <= :to",
+            Book.class).setParameter("from", from).setParameter("to", to).getResultList();
     }
 
     @Override
     public List<Book> findByReimburseCostBetween(double from, double to) {
-        // TODO Auto-generated method stub
-        return null;
+        return getCurrentSession()
+            .createQuery("from Book b where b.bookStock.reimburseCost between :from and :to",
+                Book.class)
+            .setParameter("from", from).setParameter("to", to).getResultList();
     }
 
     @Override
     public List<Book> findByStockBetween(int from, int to) {
-        // TODO Auto-generated method stub
-        return null;
+        return getCurrentSession()
+            .createQuery("from Book b where b.bookStock.stock between :from and :to", Book.class)
+            .setParameter("from", from).setParameter("to", to).getResultList();
     }
 }
