@@ -4,10 +4,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import org.hibernate.PersistentObjectException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import hust.kien.project.dao.AbstractGeneralRepository;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
@@ -17,13 +14,12 @@ import hust.kien.project.model.book.BookInfo_;
 import hust.kien.project.model.book.Book_;
 import hust.kien.project.model.rent.BookRentContract;
 import hust.kien.project.model.rent.BookRentContract_;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
 
-public abstract class AbstractBookRepository extends AbstractGeneralRepository<Book,Long> implements BookLibraryDao {
+public abstract class AbstractBookRepository extends AbstractGeneralRepository implements BookLibraryDao {
 
     /**
      * Should be a singleton
