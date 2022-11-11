@@ -5,7 +5,7 @@
   <session-factory>
     <!-- Use HikariCP -->
     <property name="connection.provider_class">
-      com.zaxxer.hikari.hibernate.HikariConnectionProvider
+      org.hibernate.hikaricp.internal.HikariCPConnectionProvider
     </property>
 
     <!-- Hikari datasource configuration -->
@@ -19,7 +19,7 @@
     <!-- HikariCP pooling configuration -->
     <property name="hikari.minimumIdle">1</property>
     <property name="hikari.maximumPoolSize">2</property>
-    <property name="hikari.idleTimeout">3000</property>
+    <property name="hikari.idleTimeout">10000</property>
 
     <!-- Hibernate dialect for SQLite -->
     <property name="dialect">
@@ -29,8 +29,9 @@
     <!--    Auto commit -->
     <property name="hikari.autoCommit">false</property>
 
-    <!-- Show SQL -->
+    <!-- Show SQL 
     <property name="show_sql">true</property>
+-->
 
     <!-- Drop schema, create new-->
     <property name="hbm2ddl.auto">update</property>

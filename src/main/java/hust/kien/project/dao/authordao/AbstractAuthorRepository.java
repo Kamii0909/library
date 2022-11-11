@@ -3,26 +3,20 @@ package hust.kien.project.dao.authordao;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import org.hibernate.PersistentObjectException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import hust.kien.project.dao.AbstractGeneralRepository;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.author.AuthorInfo;
 import hust.kien.project.model.author.AuthorInfo_;
 import hust.kien.project.model.author.Author_;
 import hust.kien.project.model.book.Book;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
-public abstract class AbstractAuthorRepository implements AuthorLibraryDao {
-    private final SessionFactory sessionFactory;
-    private final CriteriaBuilder cb;
+public abstract class AbstractAuthorRepository extends AbstractGeneralRepository implements AuthorLibraryDao {
 
     protected AbstractAuthorRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-        cb = sessionFactory.getCriteriaBuilder();
+        super(sessionFactory);
     }
 
     @Override
@@ -107,25 +101,6 @@ public abstract class AbstractAuthorRepository implements AuthorLibraryDao {
     }
 
     @Override
-    public Transaction beginTransaction() {
-        return getCurrentSession().beginTransaction();
-    }
-
-    @Override
-    public void commitTransaction() {
-        Transaction tx = getCurrentSession().getTransaction();
-        try {
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            getCurrentSession().close();
-        }
-
-    }
-
-    @Override
     public void delete(Author entity) {
         getCurrentSession().remove(entity);
     }
@@ -146,12 +121,7 @@ public abstract class AbstractAuthorRepository implements AuthorLibraryDao {
     public Author findById(Long id) {
         return getCurrentSession().find(Author.class, id);
     }
-
-    @Override
-    public Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
-    }
-
+    
     @Override
     public void save(Author entity) {
         getCurrentSession().persist(entity);

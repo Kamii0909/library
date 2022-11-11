@@ -8,14 +8,6 @@ import java.util.List;
 
 public interface LibraryDao<T, Id extends Serializable> {
     //----------------------------
-    //  TRANSACTIONAL METHODS
-    //----------------------------
-    public Session getCurrentSession();
-
-    public Transaction beginTransaction();
-    public void commitTransaction();
-
-    //----------------------------
     //  ACCESSOR METHODS
     //----------------------------
     public T findById(Id id);
