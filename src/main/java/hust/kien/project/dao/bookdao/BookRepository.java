@@ -4,7 +4,7 @@ import org.hibernate.SessionFactory;
 
 import java.util.Objects;
 
-public class BookRepository extends AbstractBookLibraryDao {
+public class BookRepository extends AbstractBookRepository {
     private static BookRepository singleton;
 
     /**

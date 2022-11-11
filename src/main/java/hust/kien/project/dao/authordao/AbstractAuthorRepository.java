@@ -16,11 +16,11 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
-public abstract class AbstractAuthorLibraryDao implements AuthorLibraryDao {
+public abstract class AbstractAuthorRepository implements AuthorLibraryDao {
     private final SessionFactory sessionFactory;
     private final CriteriaBuilder cb;
 
-    protected AbstractAuthorLibraryDao(SessionFactory sessionFactory) {
+    protected AbstractAuthorRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
         cb = sessionFactory.getCriteriaBuilder();
     }
