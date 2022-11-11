@@ -3,7 +3,7 @@ package hust.kien.project.dao.authordao;
 import java.util.Objects;
 import org.hibernate.SessionFactory;
 
-public class AuthorRepository extends AbstractAuthorLibraryDao {
+public class AuthorRepository extends AbstractAuthorRepository {
     private static AuthorRepository singleton;
 
     /**

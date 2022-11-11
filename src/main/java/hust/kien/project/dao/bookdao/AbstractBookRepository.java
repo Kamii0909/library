@@ -8,6 +8,7 @@ import org.hibernate.PersistentObjectException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import hust.kien.project.dao.AbstractGeneralRepository;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
@@ -22,16 +23,13 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
 
-public abstract class AbstractBookLibraryDao implements BookLibraryDao {
-    private final SessionFactory sessionFactory;
-    private final CriteriaBuilder cb;
+public abstract class AbstractBookRepository extends AbstractGeneralRepository<Book,Long> implements BookLibraryDao {
 
     /**
      * Should be a singleton
      */
-    protected AbstractBookLibraryDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-        cb = sessionFactory.getCriteriaBuilder();
+    protected AbstractBookRepository(SessionFactory sessionFactory) {
+        super(sessionFactory);
     }
 
     @Override
@@ -174,26 +172,6 @@ public abstract class AbstractBookLibraryDao implements BookLibraryDao {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
-    }
-
-    @Override
-    public Transaction beginTransaction() {
-        return getCurrentSession().beginTransaction();
-    }
-
-    @Override
-    public void commitTransaction() {
-        Transaction tx = getCurrentSession().getTransaction();
-        try {
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public Book findById(Long aLong) {
