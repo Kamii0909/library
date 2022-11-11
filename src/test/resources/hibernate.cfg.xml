@@ -33,7 +33,7 @@
     <property name="show_sql">true</property>
 
     <!-- Drop schema, create new-->
-    <property name="hbm2ddl.auto">create</property>
+    <property name="hbm2ddl.auto">update</property>
 
     <!-- Get current session from thread context -->
     <property name="hibernate.current_session_context_class">
@@ -42,6 +42,12 @@
 
     <!-- Disable second level cache -->
     <property name="cache.use_second_level_cache">false</property>
+
+    <!-- Create schema generation file 
+    <property name="javax.persistence.schema-generation.scripts.action">create</property>
+    <property name="javax.persistence.schema-generation.scripts.create-target">data.sql</property>
+    <property name="javax.persistence.schema-generation.scripts.create-source">metadata</property>   
+-->
 
   </session-factory>
 </hibernate-configuration>

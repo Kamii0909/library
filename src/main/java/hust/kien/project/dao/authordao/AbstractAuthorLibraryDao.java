@@ -83,7 +83,7 @@ public abstract class AbstractAuthorLibraryDao implements AuthorLibraryDao {
         if (!authorInfo.getName().isBlank())
             cq.where(cb.like(root.get(Author_.authorInfo).get(AuthorInfo_.name),
                 "%" + authorInfo.getName() + "%"));
-                
+
         // TODO
         throw new UnsupportedOperationException();
     }
@@ -119,17 +119,15 @@ public abstract class AbstractAuthorLibraryDao implements AuthorLibraryDao {
         } catch (Exception e) {
             tx.rollback();
             e.printStackTrace();
+        } finally {
+            getCurrentSession().close();
         }
 
     }
 
     @Override
     public void delete(Author entity) {
-        if (getCurrentSession().contains(entity)) {
-            getCurrentSession().remove(entity);
-        } else
-            throw new PersistentObjectException("Author " + entity + " is not a managed entity");
-
+        getCurrentSession().remove(entity);
     }
 
     @Override
@@ -161,11 +159,7 @@ public abstract class AbstractAuthorLibraryDao implements AuthorLibraryDao {
 
     @Override
     public void update(Author entity) {
-        if (getCurrentSession().contains(entity))
-            getCurrentSession().merge(entity);
-        else
-            throw new PersistentObjectException("Use save to save new Author");
-
+        getCurrentSession().merge(entity);
     }
 
 }
