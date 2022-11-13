@@ -1,8 +1,5 @@
 package hust.kien.project.dao;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import java.io.Serializable;
 import java.util.List;
 
