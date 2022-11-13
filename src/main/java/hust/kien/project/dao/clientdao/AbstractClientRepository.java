@@ -7,7 +7,8 @@ import hust.kien.project.dao.AbstractGeneralRepository;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientTier;
 
-public class AbstractClientRepository extends AbstractGeneralRepository implements ClientLibraryDao {
+public class AbstractClientRepository extends AbstractGeneralRepository
+    implements ClientLibraryDao {
 
     protected AbstractClientRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
@@ -15,74 +16,71 @@ public class AbstractClientRepository extends AbstractGeneralRepository implemen
 
     @Override
     public Client findById(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        return getCurrentSession().find(Client.class, id);
     }
 
     @Override
     public List<Client> fetch(int amount) {
-        // TODO Auto-generated method stub
-        return null;
+        return getCurrentSession().createQuery("from Client c", Client.class).setMaxResults(amount)
+            .getResultList();
     }
 
     @Override
     public void save(Client entity) {
-        // TODO Auto-generated method stub
-        
+        getCurrentSession().merge(entity);
     }
 
     @Override
     public void delete(Client entity) {
-        // TODO Auto-generated method stub
-        
+        getCurrentSession().remove(entity);
     }
 
     @Override
     public void deleteAll() {
-        // TODO Auto-generated method stub
-        
+        throw new UnsupportedOperationException("Don't delete all");
+
     }
 
     @Override
     public void update(Client entity) {
-        // TODO Auto-generated method stub
-        
+        getCurrentSession().merge(entity);
+
     }
 
     @Override
     public List<Client> findByName(String name) {
-        // TODO Auto-generated method stub
-        return null;
+        return getCurrentSession()
+            .createQuery("from Client c where c.name like :name", Client.class)
+            .setParameter("name", "%" + name + "%").getResultList();
     }
 
     @Override
     public Optional<Client> findAnyByName(String name) {
-        // TODO Auto-generated method stub
-        return Optional.empty();
+        return findByName(name).stream().findAny();
     }
 
     @Override
     public List<Client> findByAddress(String address) {
-        // TODO Auto-generated method stub
-        return null;
+        return getCurrentSession()
+            .createQuery("from Client c where c.address like :address", Client.class)
+            .setParameter("address", address).getResultList();
     }
 
     @Override
     public Optional<Client> findAnyByAddress(String address) {
-        // TODO Auto-generated method stub
-        return Optional.empty();
+        return findByAddress(address).stream().findAny();
     }
 
     @Override
     public List<Client> findByTier(ClientTier tier) {
-        // TODO Auto-generated method stub
-        return null;
+        return getCurrentSession()
+            .createQuery("from Client c where c.clientTier = :tier", Client.class)
+            .setParameter("tier", tier).getResultList();
     }
 
     @Override
     public Optional<Client> findAnyByTier(ClientTier tier) {
-        // TODO Auto-generated method stub
-        return Optional.empty();
+        return findByTier(tier).stream().findAny();
     }
-    
+
 }

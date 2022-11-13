@@ -22,7 +22,7 @@ public abstract class AbstractGeneralRepository {
     }
 
     public Transaction beginTransaction() {
-        return getCurrentSession().getTransaction();
+        return getCurrentSession().beginTransaction();
     }
 
     public void commitTransaction() {

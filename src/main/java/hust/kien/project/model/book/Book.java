@@ -18,6 +18,7 @@ public class Book {
 
     public Book(BookInfo bookInfo) {
         this.bookInfo = bookInfo;
+        this.bookStock = new BookStock();
     }
 
     public int getid() {

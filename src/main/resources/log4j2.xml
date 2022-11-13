@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" name="kien">
+
+    <Appenders>
+        <Console name="stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+
+        <File name="fout" fileName="database/log.log" append="false">
+
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="test" level="warn">
+            <AppenderRef ref="stdout" />
+        </Logger>
+
+        <Root level="warn">
+            <AppenderRef ref="fout" />
+        </Root>
+    </Loggers>
+</Configuration>
