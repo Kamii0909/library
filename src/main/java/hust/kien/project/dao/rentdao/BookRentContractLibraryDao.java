@@ -2,7 +2,6 @@ package hust.kien.project.dao.rentdao;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import hust.kien.project.dao.LibraryDao;
 import hust.kien.project.model.rent.BookRentContract;
 /**
@@ -18,8 +17,6 @@ public interface BookRentContractLibraryDao extends LibraryDao<BookRentContract,
      * <li> For ongoing contracts, {@code from &#8804; startDate}
      */
     public List<BookRentContract> findByDate(LocalDate from, LocalDate to);
-    public Optional<BookRentContract> findAnyByDate(LocalDate from, LocalDate to);
 
     public List<BookRentContract> findByStatus(boolean isActive);
-    public Optional<BookRentContract> findAnyByStatus(boolean isActive);
 }

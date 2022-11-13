@@ -2,7 +2,6 @@ package hust.kien.project.dao.rentdao;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import org.hibernate.SessionFactory;
 import hust.kien.project.dao.AbstractGeneralRepository;
 import hust.kien.project.model.rent.BookRentContract;
@@ -12,18 +11,6 @@ public abstract class AbstractBookRentContractRepository extends AbstractGeneral
 
     protected AbstractBookRentContractRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
-    }
-
-    @Override
-    public Optional<BookRentContract> findAnyByDate(LocalDate from, LocalDate to) {
-        // TODO Auto-generated method stub
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<BookRentContract> findAnyByStatus(boolean isActive) {
-        // TODO Auto-generated method stub
-        return Optional.empty();
     }
 
     @Override

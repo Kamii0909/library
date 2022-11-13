@@ -2,7 +2,6 @@ package hust.kien.project.dao.authordao;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import hust.kien.project.dao.LibraryDao;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.author.AuthorInfo;
@@ -15,21 +14,16 @@ public interface AuthorLibraryDao extends LibraryDao<Author, Long> {
 
     //------ Author Name ------
     public List<Author> findByAuthorName(String name);
-    public Optional<Author> findAnyByAuthorName(String name);
 
     //--------- Age -----------
     public List<Author> findByAgeExact(int age);
-    public Optional<Author> findAnyByAgeExact(int age);
 
     public List<Author> findByAgeBetween(int from, int to);
-    public Optional<Author> findAnyByAgeBetween(int from, int to);
 
     //-------- Book(s) ---------
     public List<Author> findWroteAtLeastOneOfBook(Collection<Book> books);
-    public Optional<Author> findAnyWroteAtLeastOneOfBook(Collection<Book> books);
 
     public List<Author> findWroteAllOfBooks(Collection<Book> books);
-    public Optional<Author> findAnyWroteAllOfBooks(Collection<Book> books);
 
     //---- Composite criteria ----
     /**

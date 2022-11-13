@@ -3,7 +3,6 @@ package hust.kien.project.dao.bookdao;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import org.hibernate.SessionFactory;
 import hust.kien.project.dao.AbstractGeneralRepository;
 import hust.kien.project.model.author.Author;
@@ -19,7 +18,8 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
 
-public abstract class AbstractBookRepository extends AbstractGeneralRepository implements BookLibraryDao {
+public abstract class AbstractBookRepository extends AbstractGeneralRepository
+    implements BookLibraryDao {
 
     /**
      * Should be a singleton
@@ -36,20 +36,10 @@ public abstract class AbstractBookRepository extends AbstractGeneralRepository i
     }
 
     @Override
-    public Optional<Book> findAnyByBookName(String name) {
-        return findByBookName(name).stream().findAny();
-    }
-
-    @Override
     public List<Book> findByReleasedYear(int year) {
         return getCurrentSession()
             .createQuery("from Book b where b.bookInfo.releasedYear = :year", Book.class)
             .setParameter("year", year).getResultList();
-    }
-
-    @Override
-    public Optional<Book> findAnyByReleasedYear(int year) {
-        return findAnyByReleasedYear(year).stream().findAny();
     }
 
     @Override
@@ -62,11 +52,6 @@ public abstract class AbstractBookRepository extends AbstractGeneralRepository i
     }
 
     @Override
-    public Optional<Book> findAnyByReleasedYearBetween(int from, int to) {
-        return findByReleasedYearBetween(from, to).stream().findAny();
-    }
-
-    @Override
     public List<Book> findByAuthor(Author author) {
         return getCurrentSession()
             .createQuery("from Book b join b.bookInfo.authors a where a.id = :id ", Book.class)
@@ -74,20 +59,10 @@ public abstract class AbstractBookRepository extends AbstractGeneralRepository i
     }
 
     @Override
-    public Optional<Book> findAnyByAuthor(Author author) {
-        return findByAuthor(author).stream().findAny();
-    }
-
-    @Override
     public List<Book> findWrittenByAtLeastOne(Collection<Author> authors) {
         return getCurrentSession()
             .createQuery("from Book b join b.bookInfo.authors a where a in :authors", Book.class)
             .setParameterList("authors", authors).getResultList();
-    }
-
-    @Override
-    public Optional<Book> findAnyWrittenByAtLeastOne(Collection<Author> authors) {
-        return findWrittenByAtLeastOne(authors).stream().findAny();
     }
 
     @Override
@@ -107,21 +82,11 @@ public abstract class AbstractBookRepository extends AbstractGeneralRepository i
     }
 
     @Override
-    public Optional<Book> findAnyWrittenByAll(Collection<Author> authors) {
-        return findWrittenByAll(authors).stream().findAny();
-    }
-
-    @Override
     public List<Book> findFromGenre(BookGenre genre) {
         return getCurrentSession()
             .createQuery("from Book b join b.bookInfo.bookGenres g where g.name = :name",
                 Book.class)
             .setParameter("name", genre.getName()).getResultList();
-    }
-
-    @Override
-    public Optional<Book> findAnyFromGenre(BookGenre genre) {
-        return findFromGenre(genre).stream().findAny();
     }
 
     @Override
@@ -131,11 +96,6 @@ public abstract class AbstractBookRepository extends AbstractGeneralRepository i
                 Book.class)
             .setParameterList("names", genres.stream().map(BookGenre::getName).toList())
             .getResultList();
-    }
-
-    @Override
-    public Optional<Book> findAnyMatchAtLeastOneGenre(Collection<BookGenre> genres) {
-        return findMatchAtLeastOneGenre(genres).stream().findAny();
     }
 
     @Override
@@ -153,11 +113,6 @@ public abstract class AbstractBookRepository extends AbstractGeneralRepository i
         }
 
         return getCurrentSession().createQuery(cq.where(predicates)).getResultList();
-    }
-
-    @Override
-    public Optional<Book> findAnyMatchAllGenres(Collection<BookGenre> genres) {
-        return findMatchAllGenres(genres).stream().findAny();
     }
 
     /**
@@ -188,7 +143,6 @@ public abstract class AbstractBookRepository extends AbstractGeneralRepository i
     @Override
     public void delete(Book entity) {
         getCurrentSession().remove(entity);
-
     }
 
     @Override
@@ -198,29 +152,7 @@ public abstract class AbstractBookRepository extends AbstractGeneralRepository i
 
     @Override
     public void update(Book entity) {
-
         getCurrentSession().merge(entity);
-
-    }
-
-    @Override
-    public Optional<Book> findAnyByAllContractDateFrom(LocalDate from, LocalDate to) {
-        return findByAllContractDateFrom(from, to).stream().findAny();
-    }
-
-    @Override
-    public Optional<Book> findAnyByAtLeastOneContractDateFrom(LocalDate from, LocalDate to) {
-        return findByAtLeastOneContractDateFrom(from, to).stream().findAny();
-    }
-
-    @Override
-    public Optional<Book> findAnyByReimburseCostBetween(double from, double to) {
-        return findByReimburseCostBetween(from, to).stream().findAny();
-    }
-
-    @Override
-    public Optional<Book> findAnyByStockBetween(int from, int to) {
-        return findByStockBetween(from, to).stream().findAny();
     }
 
 
