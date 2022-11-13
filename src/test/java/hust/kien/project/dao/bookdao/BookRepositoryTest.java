@@ -167,10 +167,10 @@ public class BookRepositoryTest {
 
     @Test
     void testFindAnyByAllContractDateFrom() {
-        Book book =
-            bookRepository.findAnyByAllContractDateFrom(LocalDate.MIN, LocalDate.now()).get();
+        List<Book> book =
+            bookRepository.findByAllContractDateFrom(LocalDate.MIN, LocalDate.now());
 
-        assertNotNull(book);
+        assertNotNull(book.get(0));
     }
 
     @Test

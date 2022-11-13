@@ -1,14 +1,13 @@
 package hust.kien.project.dao.bookdao;
 
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 import hust.kien.project.dao.LibraryDao;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.model.book.BookInfo;
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 public interface BookLibraryDao extends LibraryDao<Book, Long> {
     //-------------------------
@@ -17,43 +16,34 @@ public interface BookLibraryDao extends LibraryDao<Book, Long> {
 
     //------- Book Name -------
     public List<Book> findByBookName(String name);
-    public Optional<Book> findAnyByBookName(String name);
 
     //---- Released Year ------
     public List<Book> findByReleasedYear(int year);
-    public Optional<Book> findAnyByReleasedYear(int year);
 
     public List<Book> findByReleasedYearBetween(int from, int to);
-    public Optional<Book> findAnyByReleasedYearBetween(int from, int to);
 
     //------- Author(s) --------
     public List<Book> findByAuthor(Author author);
-    public Optional<Book> findAnyByAuthor(Author author);
     /**
      * Find books which are written by at least one of {@code authors}
      *
      * @see #findWrittenByAll(Collection)
      */
     public List<Book> findWrittenByAtLeastOne(Collection<Author> authors);
-    public Optional<Book> findAnyWrittenByAtLeastOne(Collection<Author> authors);
 
     /**
      * Find books which are written by one of {@code authors}
      *
-     * @see #findAnyWrittenByAtLeastOne(Collection)
+
      */
     public List<Book> findWrittenByAll(Collection<Author> authors);
-    public Optional<Book> findAnyWrittenByAll(Collection<Author> authors);
 
     //------ Genre(s) --------
     public List<Book> findFromGenre(BookGenre genre);
-    public Optional<Book> findAnyFromGenre(BookGenre genre);
 
     public List<Book> findMatchAtLeastOneGenre(Collection<BookGenre> genres);
-    public Optional<Book> findAnyMatchAtLeastOneGenre(Collection<BookGenre> genres);
 
     public List<Book> findMatchAllGenres(Collection<BookGenre> genres);
-    public Optional<Book> findAnyMatchAllGenres(Collection<BookGenre> genres);
 
     //--- Composite criteria ---
     /**
@@ -72,11 +62,9 @@ public interface BookLibraryDao extends LibraryDao<Book, Long> {
     
     //- Current library stock -
     public List<Book> findByStockBetween(int from, int to);
-    public Optional<Book> findAnyByStockBetween(int from, int to);
 
     //---- Reimburse Cost -----
     public List<Book> findByReimburseCostBetween(double from, double to);
-    public Optional<Book> findAnyByReimburseCostBetween(double from, double to);
 
     //----- Contract date -----
     /**
@@ -87,7 +75,6 @@ public interface BookLibraryDao extends LibraryDao<Book, Long> {
      * @see #findByAllContractDateFrom(LocalDate, LocalDate)
      */
     public List<Book> findByAtLeastOneContractDateFrom(LocalDate from, LocalDate to);
-    public Optional<Book> findAnyByAtLeastOneContractDateFrom(LocalDate from, LocalDate to);
 
     /**
      * Find all Book where all contracts satisfy date requirements <p>
@@ -97,7 +84,6 @@ public interface BookLibraryDao extends LibraryDao<Book, Long> {
      * @see #findByAtLeastOneContractDateFrom(LocalDate, LocalDate)
      */
     public List<Book> findByAllContractDateFrom(LocalDate from, LocalDate to);
-    public Optional<Book> findAnyByAllContractDateFrom(LocalDate from, LocalDate to);
 
 
 }

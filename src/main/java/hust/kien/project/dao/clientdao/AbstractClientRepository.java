@@ -1,7 +1,6 @@
 package hust.kien.project.dao.clientdao;
 
 import java.util.List;
-import java.util.Optional;
 import org.hibernate.SessionFactory;
 import hust.kien.project.dao.AbstractGeneralRepository;
 import hust.kien.project.model.client.Client;
@@ -55,11 +54,6 @@ public class AbstractClientRepository extends AbstractGeneralRepository
     }
 
     @Override
-    public Optional<Client> findAnyByName(String name) {
-        return findByName(name).stream().findAny();
-    }
-
-    @Override
     public List<Client> findByAddress(String address) {
         return getCurrentSession()
             .createQuery("from Client c where c.address like :address", Client.class)
@@ -67,20 +61,10 @@ public class AbstractClientRepository extends AbstractGeneralRepository
     }
 
     @Override
-    public Optional<Client> findAnyByAddress(String address) {
-        return findByAddress(address).stream().findAny();
-    }
-
-    @Override
     public List<Client> findByTier(ClientTier tier) {
         return getCurrentSession()
             .createQuery("from Client c where c.clientTier = :tier", Client.class)
             .setParameter("tier", tier).getResultList();
-    }
-
-    @Override
-    public Optional<Client> findAnyByTier(ClientTier tier) {
-        return findByTier(tier).stream().findAny();
     }
 
 }

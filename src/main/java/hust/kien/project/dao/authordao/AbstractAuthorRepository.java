@@ -2,7 +2,6 @@ package hust.kien.project.dao.authordao;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import org.hibernate.SessionFactory;
 import hust.kien.project.dao.AbstractGeneralRepository;
 import hust.kien.project.model.author.Author;
@@ -18,33 +17,6 @@ public abstract class AbstractAuthorRepository extends AbstractGeneralRepository
     protected AbstractAuthorRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
-
-    @Override
-    public Optional<Author> findAnyByAgeBetween(int from, int to) {
-        return findByAgeBetween(from, to).stream().findAny();
-    }
-
-    @Override
-    public Optional<Author> findAnyByAgeExact(int age) {
-        return findByAgeExact(age).stream().findAny();
-    }
-
-    @Override
-    public Optional<Author> findAnyByAuthorName(String name) {
-        return findByAuthorName(name).stream().findAny();
-    }
-
-    @Override
-    public Optional<Author> findAnyWroteAllOfBooks(Collection<Book> books) {
-        return findWroteAllOfBooks(books).stream().findAny();
-    }
-
-
-    @Override
-    public Optional<Author> findAnyWroteAtLeastOneOfBook(Collection<Book> books) {
-        return findWroteAtLeastOneOfBook(books).stream().findAny();
-    }
-
 
     @Override
     public List<Author> findByAgeBetween(int from, int to) {
