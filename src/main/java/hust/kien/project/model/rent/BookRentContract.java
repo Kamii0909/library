@@ -26,11 +26,9 @@ public class BookRentContract {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "book_id", foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT))
     private Book book;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "client_id", foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT))
     private Client client;
 
     @Formula("endDate > date('now', 'localtime')")

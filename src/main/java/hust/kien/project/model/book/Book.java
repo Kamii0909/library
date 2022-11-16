@@ -39,18 +39,18 @@ public class Book {
         this.id = id;
     }
 
-    
+
     public BookInfo getBookInfo() {
         return bookInfo;
     }
 
-    
+
     public void setBookInfo(BookInfo bookInfo) {
         this.bookInfo = bookInfo;
     }
-    
 
-    
+
+
     public BookStock getBookStock() {
         return bookStock;
     }
@@ -58,5 +58,5 @@ public class Book {
     public void setBookStock(BookStock bookStock) {
         this.bookStock = bookStock;
     }
-    
+
 }

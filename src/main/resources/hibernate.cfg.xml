@@ -51,7 +51,7 @@
     <!-- Create schema generation file 
     <property name="javax.persistence.schema-generation.scripts.action">create</property>
     <property name="javax.persistence.schema-generation.scripts.create-target">data.sql</property>
-    <property name="javax.persistence.schema-generation.scripts.create-source">metadata</property>   
+    <property name="javax.persistence.schema-generation.scripts.create-source">metadata</property>
 -->
 
   </session-factory>
