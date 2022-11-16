@@ -1,16 +1,18 @@
 package hust.kien.project.model.author;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.ManyToMany;
-
 import java.util.HashSet;
 import java.util.Set;
 import hust.kien.project.model.book.Book;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.ManyToMany;
 
 @Embeddable
 public class AuthorInfo {
+    
     private String name;
+
     private int age;
+
     @ManyToMany(mappedBy = "bookInfo.authors")
     private Set<Book> books = new HashSet<>();
 

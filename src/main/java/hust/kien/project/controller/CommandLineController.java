@@ -13,14 +13,14 @@ import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.model.book.BookInfo;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.rent.BookRentContract;
-import hust.kien.project.service.BookService;
+import hust.kien.project.service.BookServiceImpl;
 
 public class CommandLineController {
 
     public static void main(String[] args) {
-        BookService bookService;
+        BookServiceImpl bookService;
         SessionFactory sessionFactory = getSessionFactory();
-        bookService = new BookService(sessionFactory);
+        bookService = new BookServiceImpl(sessionFactory);
 
         System.out.println("Library application");
 
@@ -47,7 +47,7 @@ public class CommandLineController {
         scanner.close();
     }
 
-    private static void saveBook(Scanner scanner, BookService bookService) {
+    private static void saveBook(Scanner scanner, BookServiceImpl bookService) {
         BookInfo bookInfo = new BookInfo();
 
                 System.out.println("The name of the book: ");

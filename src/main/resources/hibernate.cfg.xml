@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE hibernate-configuration SYSTEM
-  "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
     <!-- Use HikariCP -->
@@ -29,9 +28,9 @@
     <!--    Auto commit -->
     <property name="hikari.autoCommit">false</property>
 
-    <!-- Show SQL 
+    <!-- Show SQL -->
     <property name="show_sql">true</property>
--->
+
 
     <!-- Drop schema, create new-->
     <property name="hbm2ddl.auto">update</property>
@@ -41,8 +40,13 @@
       org.hibernate.context.internal.ThreadLocalSessionContext
     </property>
 
-    <!-- Disable second level cache -->
+    <!-- Disable L2 caching -->
     <property name="cache.use_second_level_cache">false</property>
+
+
+    <!-- Readable cache format 
+    <property name="hibernate.cache.use_structured_entries">true</property>
+-->
 
     <!-- Create schema generation file 
     <property name="javax.persistence.schema-generation.scripts.action">create</property>

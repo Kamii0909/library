@@ -1,10 +1,15 @@
 package hust.kien.project.model.client;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
+@Cacheable
+@Cache(region = "book", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Client {
     @Id
     @GeneratedValue

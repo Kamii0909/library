@@ -2,24 +2,31 @@ package hust.kien.project.model.book;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
 import hust.kien.project.model.rent.BookRentContract;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 
 @Embeddable
 public class BookStock {
+
     private int stock;
+
     private double reimburseCost;
 
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     @Where(clause = "endDate <= date('now', 'localtime')")
+    @Fetch(FetchMode.JOIN)
     private Set<BookRentContract> completedContracts = new HashSet<>();
 
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     @Where(clause = "endDate > date('now', 'localtime')")
+    @Fetch(FetchMode.JOIN)
     private Set<BookRentContract> ongoingContracts = new HashSet<>();
 
 

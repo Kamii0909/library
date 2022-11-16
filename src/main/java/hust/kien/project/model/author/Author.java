@@ -1,10 +1,15 @@
 package hust.kien.project.model.author;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
+@Cacheable
+@Cache(region = "author", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Author {
     @Id
     @GeneratedValue

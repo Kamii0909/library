@@ -1,11 +1,14 @@
 package hust.kien.project.model.client;
 
 import java.util.Set;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
 import hust.kien.project.model.rent.BookRentContract;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 
 @Embeddable
@@ -15,16 +18,17 @@ public class ClientRentInfo {
     private ClientTier clientTier;
     
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     @Where(clause = "endDate <= date('now', 'localtime')")
+    @Fetch(FetchMode.JOIN)
     private Set<BookRentContract> completedContracts;
     
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     @Where(clause = "endDate > date('now', 'localtime')")
+    @Fetch(FetchMode.JOIN)
     private Set<BookRentContract> ongoingContracts;
     
 
-    
     public ClientRentInfo(ClientTier clientTier) {
         this.clientTier = clientTier;
     }
