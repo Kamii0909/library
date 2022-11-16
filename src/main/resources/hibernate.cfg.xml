@@ -40,18 +40,22 @@
       org.hibernate.context.internal.ThreadLocalSessionContext
     </property>
 
-    <!-- Disable L2 caching -->
-    <property name="cache.use_second_level_cache">false</property>
+    <!-- Enable second level cache -->
+    <property name="cache.use_second_level_cache">true</property>
+    <property name="hibernate.cache.region.factory_class">jcache</property>
+    <property name="hibernate.javax.cache.provider">
+      org.ehcache.jsr107.EhcacheCachingProvider
+    </property>
+    <property name="hibernate.javax.cache.uri">
+      ehcache.xml
+    </property>
 
+    <property name="cache.use_structured_entries">true</property>
 
-    <!-- Readable cache format 
-    <property name="hibernate.cache.use_structured_entries">true</property>
--->
-
-    <!-- Create schema generation file 
+    <!-- Create schema generation file
     <property name="javax.persistence.schema-generation.scripts.action">create</property>
     <property name="javax.persistence.schema-generation.scripts.create-target">data.sql</property>
-    <property name="javax.persistence.schema-generation.scripts.create-source">metadata</property>   
+    <property name="javax.persistence.schema-generation.scripts.create-source">metadata</property>
 -->
 
   </session-factory>

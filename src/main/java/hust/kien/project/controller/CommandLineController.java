@@ -1,12 +1,5 @@
 package hust.kien.project.controller;
 
-import java.util.Scanner;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.service.ServiceRegistry;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
@@ -14,6 +7,14 @@ import hust.kien.project.model.book.BookInfo;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.rent.BookRentContract;
 import hust.kien.project.service.BookServiceImpl;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.service.ServiceRegistry;
+
+import java.util.Scanner;
 
 public class CommandLineController {
 
@@ -35,11 +36,14 @@ public class CommandLineController {
                 break;
             }
 
-            if (i == 1) {
+            else if (i == 1) {
                 saveBook(scanner, bookService);
+            }
 
+            else if(i == 2) {
                 for (Book b : bookService.fetch(10)) {
                     System.out.println(b.getBookInfo().getBookName());
+                    System.out.println(b.getBookInfo().getAuthors());
                 }
             }
         }

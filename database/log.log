@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 02:02:10.959 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.1.5.Final
 02:02:11.404 [main] INFO  org.hibernate.engine.jdbc.connections.internal.ConnectionProviderInitiator - HHH000130: Instantiating explicit connection provider: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
 02:02:11.437 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
@@ -7,3 +8,40 @@
 02:02:12.356 [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@77524ca7] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
 02:02:18.319 [main] INFO  hust.kien.project.dao.AbstractGeneralRepository - Transaction commited
 02:02:18.597 [main] INFO  hust.kien.project.dao.AbstractGeneralRepository - Transaction commited
+=======
+12:06:18.098 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.1.5.Final
+12:06:18.641 [main] INFO  org.hibernate.engine.jdbc.connections.internal.ConnectionProviderInitiator - HHH000130: Instantiating explicit connection provider: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+12:06:18.670 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+12:06:18.799 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@2bac9ba
+12:06:18.800 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+12:06:18.824 [main] INFO  SQL dialect - HHH000400: Using dialect: org.hibernate.community.dialect.SQLiteDialect
+12:06:19.543 [main] INFO  org.ehcache.core.EhcacheManager - Cache 'hust.kien.project.model.book.Book' created in EhcacheManager.
+12:06:19.545 [main] INFO  org.ehcache.core.EhcacheManager - Cache 'hust.kien.project.model.author.Author' created in EhcacheManager.
+12:06:19.565 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheConfiguration,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=hust.kien.project.model.book.Book
+12:06:19.566 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=hust.kien.project.model.book.Book
+12:06:19.567 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheConfiguration,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=hust.kien.project.model.author.Author
+12:06:19.567 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=hust.kien.project.model.author.Author
+12:06:19.578 [main] WARN  org.hibernate.orm.cache - HHH90001006: Missing cache[Book Rent Contract] was created on-the-fly. The created cache will use a provider-specific default configuration: make sure you defined one. You can disable this warning by setting 'hibernate.javax.cache.missing_cache_strategy' to 'create'.
+12:06:19.583 [main] INFO  org.ehcache.core.EhcacheManager - Cache 'Book Rent Contract' created in EhcacheManager.
+12:06:19.584 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheConfiguration,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=Book Rent Contract
+12:06:19.584 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=Book Rent Contract
+12:06:19.586 [main] WARN  org.hibernate.orm.cache - HHH90001006: Missing cache[Author] was created on-the-fly. The created cache will use a provider-specific default configuration: make sure you defined one. You can disable this warning by setting 'hibernate.javax.cache.missing_cache_strategy' to 'create'.
+12:06:19.588 [main] INFO  org.ehcache.core.EhcacheManager - Cache 'Author' created in EhcacheManager.
+12:06:19.589 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheConfiguration,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=Author
+12:06:19.589 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=Author
+12:06:19.589 [main] WARN  org.hibernate.orm.cache - HHH90001006: Missing cache[Client] was created on-the-fly. The created cache will use a provider-specific default configuration: make sure you defined one. You can disable this warning by setting 'hibernate.javax.cache.missing_cache_strategy' to 'create'.
+12:06:19.591 [main] INFO  org.ehcache.core.EhcacheManager - Cache 'Client' created in EhcacheManager.
+12:06:19.592 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheConfiguration,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=Client
+12:06:19.592 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=Client
+12:06:19.592 [main] WARN  org.hibernate.orm.cache - HHH90001006: Missing cache[Book Genre] was created on-the-fly. The created cache will use a provider-specific default configuration: make sure you defined one. You can disable this warning by setting 'hibernate.javax.cache.missing_cache_strategy' to 'create'.
+12:06:19.594 [main] INFO  org.ehcache.core.EhcacheManager - Cache 'Book Genre' created in EhcacheManager.
+12:06:19.595 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheConfiguration,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=Book Genre
+12:06:19.595 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=Book Genre
+12:06:19.595 [main] WARN  org.hibernate.orm.cache - HHH90001006: Missing cache[Book] was created on-the-fly. The created cache will use a provider-specific default configuration: make sure you defined one. You can disable this warning by setting 'hibernate.javax.cache.missing_cache_strategy' to 'create'.
+12:06:19.597 [main] INFO  org.ehcache.core.EhcacheManager - Cache 'Book' created in EhcacheManager.
+12:06:19.597 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheConfiguration,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=Book
+12:06:19.597 [main] INFO  org.ehcache.jsr107.Eh107CacheManager - Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./D./Work/Project/library/target/classes/ehcache.xml,Cache=Book
+12:06:20.093 [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@7f2c995b] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+12:06:21.221 [main] INFO  hust.kien.project.dao.AbstractGeneralRepository - Transaction commited
+12:06:21.981 [main] INFO  hust.kien.project.dao.AbstractGeneralRepository - Transaction commited
+>>>>>>> dad1a9ebf07bac1e9e895b835ea461b7a8f08393
