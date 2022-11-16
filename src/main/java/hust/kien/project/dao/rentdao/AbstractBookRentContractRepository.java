@@ -15,50 +15,57 @@ public abstract class AbstractBookRentContractRepository extends AbstractGeneral
 
     @Override
     public List<BookRentContract> findByDate(LocalDate from, LocalDate to) {
-        // TODO Auto-generated method stub
-        return null;
+        return getCurrentSession().createQuery(
+            "from BookRentContract brc"
+                + " where brc.startDate >= :from and brc.endDate <= :to and :now >= brc.endDate",
+            BookRentContract.class)
+            .setParameter("from", from)
+            .setParameter("to", to)
+            .setParameter("now", LocalDate.now())
+            .getResultList();
     }
 
     @Override
     public List<BookRentContract> findByStatus(boolean isActive) {
-        // TODO Auto-generated method stub
-        return null;
+        return getCurrentSession().createQuery(
+            "from BookRentContract brc"
+                + " where :now >= brc.endDate",
+            BookRentContract.class)
+            .setParameter("now", LocalDate.now())
+            .getResultList();
     }
 
     @Override
     public void delete(BookRentContract entity) {
-        // TODO Auto-generated method stub
-        
+        getCurrentSession().remove(entity);
     }
 
     @Override
     public void deleteAll() {
-        // TODO Auto-generated method stub
-        
+        throw new UnsupportedOperationException("Can't delete all");
     }
 
     @Override
     public List<BookRentContract> fetch(int amount) {
-        // TODO Auto-generated method stub
-        return null;
+        return getCurrentSession().createQuery(
+            "from BookRentContract brc", BookRentContract.class)
+            .setMaxResults(amount)
+            .getResultList();
     }
 
     @Override
     public BookRentContract findById(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        return getCurrentSession().find(BookRentContract.class, id);
     }
 
     @Override
     public void save(BookRentContract entity) {
-        // TODO Auto-generated method stub
-        
+        getCurrentSession().persist(entity);
     }
 
     @Override
     public void update(BookRentContract entity) {
-        // TODO Auto-generated method stub
-        
+        getCurrentSession().merge(entity);
     }
 
 }

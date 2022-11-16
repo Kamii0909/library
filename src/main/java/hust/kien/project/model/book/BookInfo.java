@@ -2,11 +2,14 @@ package hust.kien.project.model.book;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import hust.kien.project.model.author.Author;
 
 @Embeddable
@@ -14,12 +17,12 @@ public class BookInfo {
     private String bookName;
     private int releasedYear;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "Book_BookGenre")
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
     private Set<BookGenre> bookGenres = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "Book_Author")
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
     private Set<Author> authors = new HashSet<>();
 
 

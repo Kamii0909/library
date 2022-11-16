@@ -1,9 +1,12 @@
 package hust.kien.project.model.rent;
 
 import java.time.LocalDate;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Formula;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.client.Client;
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Convert;
@@ -15,6 +18,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+@Cacheable
+@Cache(region = "contract", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BookRentContract {
     @Id
     @GeneratedValue

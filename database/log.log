@@ -1,0 +1,9 @@
+02:02:10.959 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.1.5.Final
+02:02:11.404 [main] INFO  org.hibernate.engine.jdbc.connections.internal.ConnectionProviderInitiator - HHH000130: Instantiating explicit connection provider: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+02:02:11.437 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+02:02:11.570 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@6e1f8469
+02:02:11.571 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+02:02:11.587 [main] INFO  SQL dialect - HHH000400: Using dialect: org.hibernate.community.dialect.SQLiteDialect
+02:02:12.356 [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@77524ca7] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+02:02:18.319 [main] INFO  hust.kien.project.dao.AbstractGeneralRepository - Transaction commited
+02:02:18.597 [main] INFO  hust.kien.project.dao.AbstractGeneralRepository - Transaction commited

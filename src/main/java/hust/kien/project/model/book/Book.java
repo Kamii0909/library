@@ -1,11 +1,16 @@
 package hust.kien.project.model.book;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
+@Cacheable
+@Cache(region = "book", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Book {
     @Id
     @GeneratedValue
@@ -19,6 +24,11 @@ public class Book {
     public Book(BookInfo bookInfo) {
         this.bookInfo = bookInfo;
         this.bookStock = new BookStock();
+    }
+
+    public Book(BookInfo bookInfo, BookStock bookStock) {
+        this.bookInfo = bookInfo;
+        this.bookStock = bookStock;
     }
 
     public int getid() {

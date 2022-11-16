@@ -40,5 +40,7 @@ public abstract class AbstractGeneralRepository {
     public Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
+
+    
     
 }

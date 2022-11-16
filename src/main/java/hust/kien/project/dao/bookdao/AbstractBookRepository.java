@@ -1,6 +1,7 @@
 package hust.kien.project.dao.bookdao;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.hibernate.SessionFactory;
@@ -20,7 +21,7 @@ import jakarta.persistence.criteria.Subquery;
 
 public abstract class AbstractBookRepository extends AbstractGeneralRepository
     implements BookLibraryDao {
-
+        
     /**
      * Should be a singleton
      */

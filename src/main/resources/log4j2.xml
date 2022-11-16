@@ -13,11 +13,11 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="test" level="warn">
+        <Logger name="test" level="info">
             <AppenderRef ref="stdout" />
         </Logger>
 
-        <Root level="warn">
+        <Root level="info">
             <AppenderRef ref="fout" />
         </Root>
     </Loggers>

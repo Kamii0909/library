@@ -8,6 +8,7 @@ import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.model.book.BookInfo;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 public interface BookLibraryDao extends LibraryDao<Book, Long> {
     //-------------------------
@@ -84,6 +85,4 @@ public interface BookLibraryDao extends LibraryDao<Book, Long> {
      * @see #findByAtLeastOneContractDateFrom(LocalDate, LocalDate)
      */
     public List<Book> findByAllContractDateFrom(LocalDate from, LocalDate to);
-
-
 }
