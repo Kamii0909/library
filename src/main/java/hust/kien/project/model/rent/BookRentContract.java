@@ -1,31 +1,25 @@
 package hust.kien.project.model.rent;
 
 import java.time.LocalDate;
+
+import jakarta.persistence.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Formula;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.client.Client;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.ConstraintMode;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(region = "Book Rent Contract", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class BookRentContract {
     @Id
     @GeneratedValue
     private Long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "book_id", foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT))
     private Book book;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "client_id", foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT))
     private Client client;
 
     @Formula("endDate > date('now', 'localtime')")

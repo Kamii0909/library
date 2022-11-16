@@ -1,5 +1,8 @@
 package hust.kien.project.service;
 
-public class GeneralLibraryService {
-    
+import org.hibernate.Transaction;
+
+public abstract class GeneralLibraryService {
+    protected abstract Transaction beginTransaction();
+    protected abstract void commitTransaction();
 }
