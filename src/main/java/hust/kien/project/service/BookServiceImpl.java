@@ -32,6 +32,14 @@ public class BookServiceImpl {
         return books;
     }
 
+    public Book findById(Long id){
+        bookRepository.beginTransaction();
+        Book book = bookRepository.findById(id);
+        bookRepository.commitTransaction();
+
+        return book;
+    }
+
     public List<Book> fetch(int amount) {
         return listTransactionWrapper(() ->  bookRepository.fetch(amount));
     }

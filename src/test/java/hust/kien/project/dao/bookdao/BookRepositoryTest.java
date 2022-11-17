@@ -19,12 +19,22 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import hust.kien.project.dao.BookQueryBuilder;
 import hust.kien.project.dao.authordao.AuthorRepository;
 import hust.kien.project.model.author.Author;
+import hust.kien.project.model.author.Author_;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
+import hust.kien.project.model.book.BookInfo;
+import hust.kien.project.model.book.BookInfo_;
+import hust.kien.project.model.book.Book_;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.rent.BookRentContract;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.SetJoin;
 
 public class BookRepositoryTest {
     static SessionFactory sessionFactory;
@@ -121,7 +131,25 @@ public class BookRepositoryTest {
 
     @Test
     void testFindFromBookInfo() {
-        //TODO
+
+        BookQueryBuilder bqb = new BookQueryBuilder(sessionFactory.getCriteriaBuilder());
+
+        List<Author> authors = AuthorRepository.getInstance(sessionFactory).findByAgeBetween(22, 23);
+
+        assertEquals(2, authors.size());
+
+
+        bqb.byAtLeastOneAuthor(authors);
+        bqb.initializeCollections();
+
+        List<Book> books = session.createQuery(bqb.build()).getResultList();
+
+        assertEquals(3, books.size());
+
+        for(Book book: books) {
+            System.out.println(book.getBookInfo().getBookName());
+            System.out.println(book.getBookInfo().getAuthors());
+        }
     }
 
     @Test

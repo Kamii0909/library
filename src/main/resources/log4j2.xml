@@ -17,7 +17,7 @@
             <AppenderRef ref="stdout" />
         </Logger>
 
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="fout" />
         </Root>
     </Loggers>
