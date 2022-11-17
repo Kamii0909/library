@@ -1,5 +1,6 @@
 package hust.kien.project.controller;
 
+import hust.kien.project.dao.BookQueryBuilder;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
@@ -13,7 +14,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
-
+import java.util.List;
 import java.util.Scanner;
 
 public class CommandLineController {
@@ -43,8 +44,29 @@ public class CommandLineController {
             else if(i == 2) {
                 for (Book b : bookService.fetch(10)) {
                     System.out.println(b.getBookInfo().getBookName());
+                }
+            }
+            
+            else if(i == 3) {
+                BookQueryBuilder bqb = new BookQueryBuilder(sessionFactory.getCriteriaBuilder());
+                bqb.initializeCollections();
+                sessionFactory.getCurrentSession().beginTransaction();
+                List<Book> books = sessionFactory.getCurrentSession().createQuery(bqb.build()).getResultList();
+                sessionFactory.getCurrentSession().getTransaction().commit();
+                sessionFactory.getCurrentSession().close();
+
+                for(Book b: books) {
                     System.out.println(b.getBookInfo().getAuthors());
                 }
+            }
+
+            else if(i == 4) {
+                System.out.println("Id of Book to find: ");
+                
+                Book book = bookService.findById(Long.parseLong(scanner.nextLine()));
+
+                System.out.println(book.getBookInfo().getBookName());
+                System.out.println(book.getBookInfo().getAuthors());
             }
         }
 

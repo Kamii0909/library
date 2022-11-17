@@ -2,6 +2,8 @@ package hust.kien.project.model.author;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import hust.kien.project.model.book.Book;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.ManyToMany;
@@ -14,6 +16,7 @@ public class AuthorInfo {
     private int age;
 
     @ManyToMany(mappedBy = "bookInfo.authors")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Book> books = new HashSet<>();
 
     public AuthorInfo() {

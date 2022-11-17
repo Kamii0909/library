@@ -13,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class Author {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private AuthorInfo authorInfo;
 
     public Author() {
@@ -31,11 +31,11 @@ public class Author {
         this.authorInfo = authorInfo;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int authorId) {
+    public void setId(Long authorId) {
         this.id = authorId;
     }
 }

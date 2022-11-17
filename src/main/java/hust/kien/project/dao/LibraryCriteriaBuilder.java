@@ -18,12 +18,12 @@ public abstract class LibraryCriteriaBuilder<T> {
         root = cq.from(clazz);
     }
 
-    public LibraryCriteriaBuilder<T> where(Predicate[] predicates) {
+    protected LibraryCriteriaBuilder<T> where(Predicate[] predicates) {
         cq.where(predicates);
         return this;
     }
 
-    public CriteriaQuery<T> getQuery() {
+    protected CriteriaQuery<T> getQuery() {
         return cq;
     }
 

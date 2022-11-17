@@ -2,12 +2,13 @@ package hust.kien.project.model.book;
 
 import java.util.HashSet;
 import java.util.Set;
-import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+// import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
 import hust.kien.project.model.rent.BookRentContract;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 
 @Embeddable
@@ -18,15 +19,15 @@ public class BookStock {
     private double reimburseCost;
 
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "book")
     @Where(clause = "endDate <= date('now', 'localtime')")
-    @Fetch(FetchMode.JOIN)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<BookRentContract> completedContracts = new HashSet<>();
 
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "book")
     @Where(clause = "endDate > date('now', 'localtime')")
-    @Fetch(FetchMode.JOIN)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<BookRentContract> ongoingContracts = new HashSet<>();
 
 
