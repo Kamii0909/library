@@ -1,12 +1,10 @@
 package hust.kien.project.model.client;
 
-import java.util.Set;
+import java.util.List;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-// import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
-import hust.kien.project.model.rent.BookRentContract;
+import hust.kien.project.model.rent.BorrowTicket;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -22,14 +20,12 @@ public class ClientRentInfo {
     @OneToMany(mappedBy = "client")
     @Where(clause = "endDate <= date('now', 'localtime')")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    // @Fetch(FetchMode.JOIN)
-    private Set<BookRentContract> completedContracts;
+    private List<BorrowTicket> completedContracts;
     
     @OneToMany(mappedBy = "client")
     @Where(clause = "endDate > date('now', 'localtime')")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    // @Fetch(FetchMode.JOIN)
-    private Set<BookRentContract> ongoingContracts;
+    private List<BorrowTicket> ongoingContracts;
     
 
     public ClientRentInfo(ClientTier clientTier) {
@@ -42,24 +38,24 @@ public class ClientRentInfo {
         return clientTier;
     }
 
-    public void setClientTier(ClientTier clientTier) {
+    public void ListClientTier(ClientTier clientTier) {
         this.clientTier = clientTier;
     }
     
 
-    public Set<BookRentContract> getCompletedContracts() {
+    public List<BorrowTicket> getCompletedContracts() {
         return completedContracts;
     }
 
-    public void setCompletedContracts(Set<BookRentContract> completedContracts) {
+    public void ListCompletedContracts(List<BorrowTicket> completedContracts) {
         this.completedContracts = completedContracts;
     }
 
-    public Set<BookRentContract> getOngoingContracts() {
+    public List<BorrowTicket> getOngoingContracts() {
         return ongoingContracts;
     }
 
-    public void setOngoingContracts(Set<BookRentContract> ongoingContracts) {
+    public void ListOngoingContracts(List<BorrowTicket> ongoingContracts) {
         this.ongoingContracts = ongoingContracts;
     }
 }

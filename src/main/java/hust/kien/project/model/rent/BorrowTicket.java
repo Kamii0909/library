@@ -8,19 +8,16 @@ import hust.kien.project.model.book.Book;
 import hust.kien.project.model.client.Client;
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 @Cacheable
-@Cache(region = "contract", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class BookRentContract {
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class BorrowTicket {
     @Id
     @GeneratedValue
     private Long id;
@@ -40,9 +37,9 @@ public class BookRentContract {
     @Convert(converter = LocalDateConverter.class)
     private LocalDate endDate;
 
-    public BookRentContract() {}
+    public BorrowTicket() {}
 
-    public BookRentContract(Book book, Client client, LocalDate startDate) {
+    public BorrowTicket(Book book, Client client, LocalDate startDate) {
         this.book = book;
         this.client = client;
         this.isActive = true;
@@ -50,7 +47,7 @@ public class BookRentContract {
         this.endDate = LocalDate.of(2999, 12, 31);
     }
 
-    public BookRentContract(Book book, Client client, LocalDate startDate, LocalDate endDate) {
+    public BorrowTicket(Book book, Client client, LocalDate startDate, LocalDate endDate) {
         this.book = book;
         this.client = client;
         this.isActive = false;

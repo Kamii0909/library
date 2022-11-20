@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 
 @Entity
 @Cacheable
-@Cache(region = "book", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Book {
     @Id
     @GeneratedValue

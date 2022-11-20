@@ -2,31 +2,17 @@ package hust.kien.project.model.book;
 
 import java.util.HashSet;
 import java.util.Set;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import hust.kien.project.model.author.Author;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-
-import java.util.HashSet;
-import java.util.Set;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import hust.kien.project.model.author.Author;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.ManyToMany;
 
 @Embeddable
 public class BookInfo {
-    private String bookName;
+    private String name;
     private int releasedYear;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -41,7 +27,7 @@ public class BookInfo {
     public BookInfo() {}
 
     public BookInfo(String bookName, int releasedYear) {
-        this.bookName = bookName;
+        this.name = bookName;
         this.releasedYear = releasedYear;
     }
 
@@ -53,12 +39,12 @@ public class BookInfo {
         this.bookGenres = bookGenres;
     }
 
-    public String getBookName() {
-        return bookName;
+    public String getName() {
+        return name;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Author> getAuthors() {

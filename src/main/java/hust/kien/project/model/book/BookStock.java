@@ -4,10 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-// import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
-import hust.kien.project.model.rent.BookRentContract;
+import hust.kien.project.model.rent.BorrowTicket;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
 
@@ -22,13 +20,13 @@ public class BookStock {
     @OneToMany(mappedBy = "book")
     @Where(clause = "endDate <= date('now', 'localtime')")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<BookRentContract> completedContracts = new HashSet<>();
+    private Set<BorrowTicket> completedContracts = new HashSet<>();
 
 
     @OneToMany(mappedBy = "book")
     @Where(clause = "endDate > date('now', 'localtime')")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<BookRentContract> ongoingContracts = new HashSet<>();
+    private Set<BorrowTicket> ongoingContracts = new HashSet<>();
 
 
     public BookStock(int stock, double reimburseCost) {
@@ -56,20 +54,20 @@ public class BookStock {
     }
 
 
-    public Set<BookRentContract> getCompletedContracts() {
+    public Set<BorrowTicket> getCompletedContracts() {
         return completedContracts;
     }
 
-    public void setCompletedContracts(Set<BookRentContract> completedContracts) {
+    public void setCompletedContracts(Set<BorrowTicket> completedContracts) {
         this.completedContracts = completedContracts;
     }
 
 
-    public Set<BookRentContract> getOngoingContracts() {
+    public Set<BorrowTicket> getOngoingContracts() {
         return ongoingContracts;
     }
 
-    public void setOngoingContracts(Set<BookRentContract> ongoingContracts) {
+    public void setOngoingContracts(Set<BorrowTicket> ongoingContracts) {
         this.ongoingContracts = ongoingContracts;
     }
 
