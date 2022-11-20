@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 02:02:10.959 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.1.5.Final
 02:02:11.404 [main] INFO  org.hibernate.engine.jdbc.connections.internal.ConnectionProviderInitiator - HHH000130: Instantiating explicit connection provider: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
 02:02:11.437 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
@@ -9,6 +10,8 @@
 02:02:18.319 [main] INFO  hust.kien.project.dao.AbstractGeneralRepository - Transaction commited
 02:02:18.597 [main] INFO  hust.kien.project.dao.AbstractGeneralRepository - Transaction commited
 =======
+=======
+>>>>>>> 61f4ef0d9308fe856f38d77acc7857530824a918
 19:25:47.337 [main] DEBUG org.jboss.logging - Logging Provider: org.jboss.logging.Log4j2LoggerProvider
 19:25:47.357 [main] DEBUG org.hibernate.integrator.internal.IntegratorServiceImpl - Adding Integrator [org.hibernate.cfg.beanvalidation.BeanValidationIntegrator].
 19:25:47.359 [main] DEBUG org.hibernate.integrator.internal.IntegratorServiceImpl - Adding Integrator [org.hibernate.cache.internal.CollectionCacheInvalidator].
@@ -3154,4 +3157,7 @@
 19:25:59.926 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
 19:25:59.926 [main] INFO  hust.kien.project.dao.AbstractGeneralRepository - Transaction commited
 19:25:59.926 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+<<<<<<< HEAD
 >>>>>>> 61f4ef0 (update service)
+=======
+>>>>>>> 61f4ef0d9308fe856f38d77acc7857530824a918
