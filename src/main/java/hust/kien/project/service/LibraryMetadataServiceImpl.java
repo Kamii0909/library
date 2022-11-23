@@ -3,15 +3,19 @@ package hust.kien.project.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import hust.kien.project.dao.AuthorRepository;
 import hust.kien.project.dao.BookRepository;
 import hust.kien.project.dao.ClientRepository;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.client.Client;
+import hust.kien.project.service.dynamic.BookSpecificationBuilder;
 
+@Service
+@Transactional
 public class LibraryMetadataServiceImpl implements LibraryMetadataService {
-
 
     @Autowired
     private BookRepository bookRepository;
@@ -63,8 +67,21 @@ public class LibraryMetadataServiceImpl implements LibraryMetadataService {
     }
 
     @Override
+    public List<Author> findAuthorByNameContains(String name) {
+        return authorRepository.findByAuthorInfo_NameIgnoreCaseLike("%" + name + "%");
+    }
+
+    @Override
     public List<Book> dynamicFindBook(BookSpecificationBuilder specs) {
-        return bookRepository.findAll(specs.build());
+        List<Book> books = bookRepository.findAll(specs.build());
+
+        if(specs.isCollectionInit()){
+            for (Book book : books) {
+                book.getBookInfo().getAuthors().size();
+            }
+        }
+
+        return books;
     }
     
 }

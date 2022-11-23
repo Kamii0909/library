@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.client.Client;
+import hust.kien.project.service.dynamic.BookSpecificationBuilder;
 
 public interface LibraryMetadataService {
 
@@ -23,6 +24,8 @@ public interface LibraryMetadataService {
     public <T> List<T> dynamicFind(Specification<T> spec);
 
     public List<Book> findBookByExactName(String name);
+
+    public List<Author> findAuthorByNameContains(String name);
 
     public List<Book> dynamicFindBook(BookSpecificationBuilder specs);
 

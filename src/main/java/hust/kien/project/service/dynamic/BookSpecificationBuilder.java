@@ -1,21 +1,14 @@
-package hust.kien.project.service;
+package hust.kien.project.service.dynamic;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.data.jpa.domain.Specification;
+import java.util.Collection;
+import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookInfo_;
 import hust.kien.project.model.book.BookStock_;
 import hust.kien.project.model.book.Book_;
 
 
-public class BookSpecificationBuilder {
-
-    private List<Specification<Book>> specList;
-
-    public BookSpecificationBuilder() {
-        specList = new ArrayList<>();
-    }
+public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder<Book> {
 
     public BookSpecificationBuilder nameContains(String name) {
         specList.add((root, cq, cb) -> cb.like(root.get(Book_.bookInfo).get(BookInfo_.name),
@@ -41,8 +34,29 @@ public class BookSpecificationBuilder {
         return this;
     }
 
-    public Specification<Book> build() {
-        return Specification.allOf(specList);
+    public BookSpecificationBuilder fromAuthor(Author author) {
+        specList.add(
+            (root, cq, cb) -> cb.isMember(author, root.get(Book_.bookInfo).get(BookInfo_.authors)));
+        return this;
+    }
+
+    public BookSpecificationBuilder fromAllAuthors(Collection<Author> authors) {
+        for (Author author : authors) {
+            fromAuthor(author);
+        }
+        return this;
+    }
+
+    public BookSpecificationBuilder fromAtLeastOneAuthor(Collection<Author> authors) {
+        specList
+            .add((root, cq, cb) -> root.join(Book_.bookInfo).join(BookInfo_.authors).in(authors));
+        return this;
+    }
+
+    @Override
+    public BookSpecificationBuilder setInitCollections(boolean initCollections) {
+        doSetInitCollections(initCollections);
+        return this;
     }
 
 }

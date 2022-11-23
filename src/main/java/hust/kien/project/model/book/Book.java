@@ -15,11 +15,12 @@ public class Book {
     @Id
     @GeneratedValue
     private int id;
-    @Embedded private BookInfo bookInfo;
-    @Embedded private BookStock bookStock;
+    @Embedded
+    private BookInfo bookInfo;
+    @Embedded
+    private BookStock bookStock;
 
-    public Book() {
-    }
+    public Book() {}
 
     public Book(BookInfo bookInfo) {
         this.bookInfo = bookInfo;
@@ -48,8 +49,6 @@ public class Book {
     public void setBookInfo(BookInfo bookInfo) {
         this.bookInfo = bookInfo;
     }
-
-
 
     public BookStock getBookStock() {
         return bookStock;
