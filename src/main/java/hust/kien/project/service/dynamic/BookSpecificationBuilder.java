@@ -3,6 +3,7 @@ package hust.kien.project.service.dynamic;
 import java.util.Collection;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
+import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.model.book.BookInfo_;
 import hust.kien.project.model.book.BookStock_;
 import hust.kien.project.model.book.Book_;
@@ -28,7 +29,7 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
         return this;
     }
 
-    public BookSpecificationBuilder reimburseCoseBetween(int from, int to) {
+    public BookSpecificationBuilder reimburseCostBetween(int from, int to) {
         specList.add((root, cq, cb) -> cb.between(root.get(Book_.bookStock).get(BookStock_.stock),
             from, to));
         return this;
@@ -40,7 +41,7 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
         return this;
     }
 
-    public BookSpecificationBuilder fromAllAuthors(Collection<Author> authors) {
+    public BookSpecificationBuilder fromAllAuthors(Iterable<Author> authors) {
         for (Author author : authors) {
             fromAuthor(author);
         }
@@ -50,6 +51,25 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
     public BookSpecificationBuilder fromAtLeastOneAuthor(Collection<Author> authors) {
         specList
             .add((root, cq, cb) -> root.join(Book_.bookInfo).join(BookInfo_.authors).in(authors));
+        return this;
+    }
+
+    public BookSpecificationBuilder withGenre(BookGenre genre) {
+        specList.add((root, cq, cb) -> cb.isMember(genre,
+            root.get(Book_.bookInfo).get(BookInfo_.bookGenres)));
+        return this;
+    }
+
+    public BookSpecificationBuilder withAllGenres(Iterable<BookGenre> genre) {
+        for (BookGenre bookGenre : genre) {
+            withGenre(bookGenre);
+        }
+        return this;
+    }
+
+    public BookSpecificationBuilder withAtLeastOneOfGenre(Collection<BookGenre> genres) {
+        specList
+            .add((root, cq, cb) -> root.join(Book_.bookInfo).join(BookInfo_.authors).in(genres));
         return this;
     }
 

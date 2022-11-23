@@ -14,6 +14,7 @@ public class BookInfo {
     private int releasedYear;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
+    @BatchSize(size = 5)
     private Set<BookGenre> bookGenres = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.PERSIST)
