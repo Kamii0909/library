@@ -1,14 +1,13 @@
 package hust.kien.project.dao;
 
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientTier;
 
 @Repository
 public interface ClientRepository
-    extends LibraryRepository<Client, Long>, JpaSpecificationExecutor<Client> {
+    extends LibraryRepository<Client, Long> {
 
     public List<Client> findByContactInfo_Name(String name);
 

@@ -42,8 +42,11 @@ public class AuthorSpecificationBuilder extends GeneralLibrarySpecificationBuild
 
 
     @Override
-    public AuthorSpecificationBuilder setInitCollections(boolean initCollections) {
-        doSetInitCollections(initCollections);
+    public AuthorSpecificationBuilder initCollection() {
+        specList.add((root, cq, cb) -> {
+            root.fetch(Author_.authorInfo).fetch(AuthorInfo_.books);
+            return null;
+        });
         return this;
     }
 

@@ -2,10 +2,12 @@ package hust.kien.project.controller;
 
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import hust.kien.project.model.author.Author;
+import hust.kien.project.model.author.AuthorInfo;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookInfo;
 import hust.kien.project.model.book.BookStock;
@@ -13,7 +15,7 @@ import hust.kien.project.service.LibraryMetadataService;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
 
 @Component
-public class CliController {
+public class CliController implements CommandLineRunner {
 
     @Autowired
     private LibraryMetadataService metadataService;
@@ -59,7 +61,7 @@ public class CliController {
                             System.out.println("Reimburse cost:");
                             bookStock.setReimburseCost(Double.parseDouble(scanner.nextLine()));
 
-                            metadataService.saveOrUpdateBook(new Book(bookInfo, bookStock));
+                            metadataService.saveOrUpdate(new Book(bookInfo, bookStock));
 
                             break;
                         default:
@@ -84,7 +86,7 @@ public class CliController {
                             System.out.println("To:");
                             builder.releasedBetween(from, Integer.parseInt(scanner.nextLine()));
 
-                            System.out.println(metadataService.dynamicFindBook(builder));
+                            System.out.println(metadataService.dynamicFind(builder.build()));
 
                             break;
 
@@ -97,15 +99,14 @@ public class CliController {
 
                 case 3:
                     Book book = metadataService
-                        .dynamicFindBook(new BookSpecificationBuilder()
-                            .nameContains("Boo").setInitCollections(true))
+                        .dynamicFind(new BookSpecificationBuilder().nameContains("Boo").initCollection().build())
                         .get(0);
 
-                    Author author = metadataService.findAuthorByNameContains("1").get(0);
+                    Author author = metadataService.findAuthorByNameContains("Au").get(0);
 
                     book.getBookInfo().getAuthors().add(author);
 
-                    metadataService.saveOrUpdateBook(book);
+                    metadataService.saveOrUpdate(book);
 
                     break;
 
@@ -114,5 +115,19 @@ public class CliController {
 
         scanner.close();
 
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        Book book = new Book();
+        book.setBookInfo(
+            new BookInfo("Book " + (int) (Math.random() * 20), 1980 + (int) (Math.random() * 40)));
+        book.setBookStock(new BookStock(3, 30));
+        metadataService.saveOrUpdate(book);
+
+        Author author = new Author();
+        author.setAuthorInfo(
+            new AuthorInfo("Author " + (int) (Math.random() * 20), (int) (Math.random() * 40)));
+        metadataService.saveOrUpdate(author);
     }
 }
