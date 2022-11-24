@@ -2,7 +2,9 @@ package hust.kien.project.model.book;
 
 import java.util.HashSet;
 import java.util.Set;
-import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+// import org.hibernate.annotations.BatchSize;
 import hust.kien.project.model.author.Author;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
@@ -14,11 +16,13 @@ public class BookInfo {
     private int releasedYear;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @BatchSize(size = 5)
+    // @BatchSize(size = 5)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<BookGenre> bookGenres = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @BatchSize(size = 5)
+    // @BatchSize(size = 5)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<Author> authors = new HashSet<>();
 
 

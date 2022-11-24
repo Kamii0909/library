@@ -7,6 +7,7 @@ import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.model.book.BookInfo_;
 import hust.kien.project.model.book.BookStock_;
 import hust.kien.project.model.book.Book_;
+import jakarta.persistence.criteria.JoinType;
 
 
 public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder<Book> {
@@ -74,8 +75,12 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
     }
 
     @Override
-    public BookSpecificationBuilder setInitCollections(boolean initCollections) {
-        doSetInitCollections(initCollections);
+    public BookSpecificationBuilder initCollection() {
+        specList.add((root, cq, cb) -> {
+            root.fetch(Book_.bookInfo).fetch(BookInfo_.authors, JoinType.LEFT);
+            root.fetch(Book_.bookInfo).fetch(BookInfo_.bookGenres, JoinType.LEFT);
+            return null;
+        });
         return this;
     }
 

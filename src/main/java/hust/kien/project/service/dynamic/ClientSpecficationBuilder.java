@@ -5,8 +5,11 @@ import hust.kien.project.model.client.Client;
 public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilder<Client> {
 
     @Override
-    public GeneralLibrarySpecificationBuilder<Client> setInitCollections(boolean initCollections) {
-        doSetInitCollections(initCollections);
+    public GeneralLibrarySpecificationBuilder<Client> initCollection() {
+        specList.add((root, cq, cb) -> {
+
+            return null;
+        });
         return this;
     }
 

@@ -1,12 +1,11 @@
 package hust.kien.project.dao;
 
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import hust.kien.project.model.book.Book;
 
 @Repository
-public interface BookRepository extends LibraryRepository<Book, Long>, JpaSpecificationExecutor<Book>{
+public interface BookRepository extends LibraryRepository<Book, Long>{
 
     public List<Book> findByBookInfo_Name(String name);
 
