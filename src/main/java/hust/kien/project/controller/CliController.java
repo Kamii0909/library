@@ -4,6 +4,7 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import hust.kien.project.model.author.Author;
@@ -15,10 +16,12 @@ import hust.kien.project.service.LibraryMetadataService;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
 
 @Component
+@Profile("dev")
 public class CliController implements CommandLineRunner {
 
     @Autowired
     private LibraryMetadataService metadataService;
+
 
     @EventListener(classes = ApplicationReadyEvent.class)
     public void run() {
@@ -86,7 +89,7 @@ public class CliController implements CommandLineRunner {
                             System.out.println("To:");
                             builder.releasedBetween(from, Integer.parseInt(scanner.nextLine()));
 
-                            System.out.println(metadataService.dynamicFind(builder.build()));
+                            System.out.println(metadataService.dynamicFind(builder));
 
                             break;
 
@@ -99,8 +102,8 @@ public class CliController implements CommandLineRunner {
 
                 case 3:
                     Book book = metadataService
-                        .dynamicFind(new BookSpecificationBuilder().nameContains("Boo").initCollection().build())
-                        .get(0);
+                        .dynamicFind(new BookSpecificationBuilder().nameContains("Boo").initCollection())
+                        .get(3);
 
                     Author author = metadataService.findAuthorByNameContains("Au").get(0);
 
@@ -117,21 +120,20 @@ public class CliController implements CommandLineRunner {
 
     }
 
-
     /**
      * Preload data
      */
     @Override
     public void run(String... args) throws Exception {
-        Book book = new Book();
-        book.setBookInfo(
-            new BookInfo("Book " + (int) (Math.random() * 20), 1980 + (int) (Math.random() * 40)));
-        book.setBookStock(new BookStock(3, 30));
-        metadataService.saveOrUpdate(book);
+        // Book book = new Book();
+        // book.setBookInfo(
+        //     new BookInfo("Book " + (int) (Math.random() * 20), 1980 + (int) (Math.random() * 40)));
+        // book.setBookStock(new BookStock(3, 30));
+        // metadataService.saveOrUpdate(book);
 
-        Author author = new Author();
-        author.setAuthorInfo(
-            new AuthorInfo("Author " + (int) (Math.random() * 20), (int) (Math.random() * 40)));
-        metadataService.saveOrUpdate(author);
+        // Author author = new Author();
+        // author.setAuthorInfo(
+        //     new AuthorInfo("Author " + (int) (Math.random() * 20), (int) (Math.random() * 40)));
+        // metadataService.saveOrUpdate(author);
     }
 }

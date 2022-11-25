@@ -84,4 +84,9 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
         return this;
     }
 
+    @Override
+    public Class<Book> libraryType() {
+        return Book.class;
+    }
+
 }

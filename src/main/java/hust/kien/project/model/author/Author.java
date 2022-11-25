@@ -10,14 +10,13 @@ import jakarta.persistence.Id;
 @Entity
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Author {
+public class Author{
     @Id
     @GeneratedValue
     private Long id;
     private AuthorInfo authorInfo;
 
-    public Author() {
-    }
+    public Author() {}
 
     public Author(AuthorInfo authorInfo) {
         this.authorInfo = authorInfo;

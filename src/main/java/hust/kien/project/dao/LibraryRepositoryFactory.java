@@ -11,10 +11,7 @@ import org.springframework.stereotype.Component;
 
 @NoRepositoryBean
 @Component
-@SuppressWarnings({
-        "unchecked",
-        "null"
-})
+@SuppressWarnings({"unchecked", "null",})
 public class LibraryRepositoryFactory {
 
     private Map<Class<?>, LibraryRepository<?, ?>> repositories;
@@ -24,12 +21,11 @@ public class LibraryRepositoryFactory {
         this.repositories =
             repositories
                 .stream()
-                .collect(Collectors.toMap(
-                    repo -> GenericTypeResolver
-                        .resolveTypeArguments(
-                            repo.getClass(),
+                .collect(
+                    Collectors.toMap(
+                        repo -> GenericTypeResolver.resolveTypeArguments(repo.getClass(),
                             LibraryRepository.class)[0],
-                    Function.identity()));
+                        Function.identity()));
     }
 
     public <T> LibraryRepository<T, ?> getRepository(Class<T> clazz) {

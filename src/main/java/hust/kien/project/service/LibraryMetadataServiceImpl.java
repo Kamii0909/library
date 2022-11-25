@@ -2,8 +2,6 @@ package hust.kien.project.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.GenericTypeResolver;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import hust.kien.project.dao.AuthorRepository;
@@ -11,6 +9,7 @@ import hust.kien.project.dao.BookRepository;
 import hust.kien.project.dao.LibraryRepositoryFactory;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
+import hust.kien.project.service.dynamic.GeneralLibrarySpecificationBuilder;
 
 @Service
 @Transactional
@@ -31,10 +30,8 @@ public class LibraryMetadataServiceImpl implements LibraryMetadataService {
     }
 
     @Override
-    public <T> List<T> dynamicFind(Specification<T> spec) {
-        Class<T> clazz = (Class<T>) GenericTypeResolver.resolveTypeArgument(spec.getClass(),
-            Specification.class);
-        return repositoryFactory.getRepository(clazz).findAll(spec);
+    public <T> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> spec) {
+        return repositoryFactory.getRepository(spec.libraryType()).findAll(spec.build());
     }
 
     @Override

@@ -50,4 +50,9 @@ public class AuthorSpecificationBuilder extends GeneralLibrarySpecificationBuild
         return this;
     }
 
+    @Override
+    public Class<Author> libraryType() {
+        return Author.class;
+    }
+
 }

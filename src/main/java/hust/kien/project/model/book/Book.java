@@ -14,7 +14,7 @@ import jakarta.persistence.Id;
 public class Book {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     @Embedded
     private BookInfo bookInfo;
     @Embedded
@@ -32,11 +32,11 @@ public class Book {
         this.bookStock = bookStock;
     }
 
-    public int getid() {
+    public Long getId() {
         return id;
     }
 
-    public void setid(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

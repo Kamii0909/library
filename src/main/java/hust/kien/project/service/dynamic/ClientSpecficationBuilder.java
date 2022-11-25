@@ -13,4 +13,9 @@ public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilde
         return this;
     }
 
+    @Override
+    public Class<Client> libraryType() {
+        return Client.class;
+    }
+
 }
