@@ -44,7 +44,7 @@ public class BorrowTicket {
         this.client = client;
         this.isActive = true;
         this.startDate = startDate;
-        this.endDate = LocalDate.of(2999, 12, 31);
+        this.endDate = LocalDateConverter.MAX;
     }
 
     public BorrowTicket(Book book, Client client, LocalDate startDate, LocalDate endDate) {

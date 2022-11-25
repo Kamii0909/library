@@ -7,11 +7,12 @@ import hust.kien.project.model.book.BookInfo;
 import hust.kien.project.model.book.BookStock;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientContactInfo;
+import hust.kien.project.model.client.ClientRentInfo;
+import hust.kien.project.model.client.ClientTier;
 import hust.kien.project.model.rent.BorrowTicket;
 import hust.kien.project.service.LibraryBorrowService;
 import hust.kien.project.service.LibraryMetadataService;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
-import hust.kien.project.service.dynamic.BorrowTicketSpecificationBuilder;
 import hust.kien.project.service.dynamic.ClientSpecficationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -102,9 +103,8 @@ public class CliController implements CommandLineRunner {
                     Book book = metadataService.findBookByNameContains("Book").get(0);
                     Client client = metadataService.dynamicFind(new ClientSpecficationBuilder()).get(0);
 
-                    borrowService.createTicket(book, client);
+                    BorrowTicket ticket = borrowService.createTicket(book, client);
 
-                    BorrowTicket ticket = metadataService.dynamicFind(new BorrowTicketSpecificationBuilder()).get(0);
                     System.out.println(ticket.isActive());
 
                     break;
@@ -133,6 +133,7 @@ public class CliController implements CommandLineRunner {
         Client client = new Client();
         client.setContactInfo(
             new ClientContactInfo("Client " + (int) (Math.random() * 20), "Address " + (int) (Math.random() * 20)));
+        client.setRentInfo(new ClientRentInfo(ClientTier.NORMAL));
         metadataService.saveOrUpdate(client);
     }
 }

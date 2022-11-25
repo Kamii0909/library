@@ -169,3 +169,39 @@ java.lang.NullPointerException: Cannot invoke "hust.kien.project.model.rent.Borr
 2022-11-25T14:16:55.848+07:00  INFO 7108 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-11-25T14:16:55.852+07:00  INFO 7108 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-11-25T14:16:55.854+07:00  INFO 7108 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-11-25T14:49:02.686+07:00  INFO 4140 --- [main] hust.kien.project.LibraryApplication     : Starting LibraryApplication using Java 18.0.2.1 with PID 4140 (D:\Work\Project\HUST\target\classes started by RB070 in D:\Work\Project\HUST)
+2022-11-25T14:49:02.688+07:00  INFO 4140 --- [main] hust.kien.project.LibraryApplication     : The following 1 profile is active: "dev"
+2022-11-25T14:49:03.105+07:00  INFO 4140 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-25T14:49:03.150+07:00  INFO 4140 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 36 ms. Found 4 JPA repository interfaces.
+2022-11-25T14:49:03.529+07:00  WARN 4140 --- [main] com.zaxxer.hikari.HikariConfig           : HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-11-25T14:49:03.530+07:00  INFO 4140 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-11-25T14:49:03.773+07:00  INFO 4140 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@337bbfdf
+2022-11-25T14:49:03.777+07:00  INFO 4140 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-11-25T14:49:03.832+07:00  INFO 4140 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-25T14:49:03.873+07:00  INFO 4140 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.5.Final
+2022-11-25T14:49:04.004+07:00  WARN 4140 --- [main] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2022-11-25T14:49:04.118+07:00  INFO 4140 --- [main] SQL dialect                              : HHH000400: Using dialect: org.hibernate.community.dialect.SQLiteDialect
+2022-11-25T14:49:04.821+07:00  INFO 4140 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-25T14:49:04.829+07:00  INFO 4140 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25T14:49:05.347+07:00  INFO 4140 --- [main] hust.kien.project.LibraryApplication     : Started LibraryApplication in 3.274 seconds (process running for 3.759)
+2022-11-25T14:49:27.770+07:00  INFO 4140 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25T14:49:27.774+07:00  INFO 4140 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-11-25T14:49:27.775+07:00  INFO 4140 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-11-25T14:49:35.561+07:00  INFO 3596 --- [main] hust.kien.project.LibraryApplication     : Starting LibraryApplication using Java 18.0.2.1 with PID 3596 (D:\Work\Project\HUST\target\classes started by RB070 in D:\Work\Project\HUST)
+2022-11-25T14:49:35.563+07:00  INFO 3596 --- [main] hust.kien.project.LibraryApplication     : The following 1 profile is active: "dev"
+2022-11-25T14:49:35.988+07:00  INFO 3596 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-25T14:49:36.033+07:00  INFO 3596 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 36 ms. Found 4 JPA repository interfaces.
+2022-11-25T14:49:36.410+07:00  WARN 3596 --- [main] com.zaxxer.hikari.HikariConfig           : HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-11-25T14:49:36.411+07:00  INFO 3596 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-11-25T14:49:36.515+07:00  INFO 3596 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@337bbfdf
+2022-11-25T14:49:36.517+07:00  INFO 3596 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-11-25T14:49:36.559+07:00  INFO 3596 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-25T14:49:36.601+07:00  INFO 3596 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.5.Final
+2022-11-25T14:49:36.732+07:00  WARN 3596 --- [main] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2022-11-25T14:49:36.843+07:00  INFO 3596 --- [main] SQL dialect                              : HHH000400: Using dialect: org.hibernate.community.dialect.SQLiteDialect
+2022-11-25T14:49:37.540+07:00  INFO 3596 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-25T14:49:37.547+07:00  INFO 3596 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25T14:49:38.065+07:00  INFO 3596 --- [main] hust.kien.project.LibraryApplication     : Started LibraryApplication in 2.892 seconds (process running for 3.516)
+2022-11-25T14:50:16.382+07:00  INFO 3596 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25T14:50:16.386+07:00  INFO 3596 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-11-25T14:50:16.393+07:00  INFO 3596 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
