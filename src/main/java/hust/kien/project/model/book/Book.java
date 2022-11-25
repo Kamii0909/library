@@ -1,12 +1,8 @@
 package hust.kien.project.model.book;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import jakarta.persistence.Cacheable;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 
 @Entity
 @Cacheable
@@ -58,4 +54,7 @@ public class Book {
         this.bookStock = bookStock;
     }
 
+    /**
+     * Helper method
+     */
 }

@@ -35,9 +35,9 @@ public class LibraryMetadataServiceImpl implements LibraryMetadataService {
     }
 
     @Override
-    public List<Book> findBookByExactName(String name) {
+    public List<Book> findBookByNameContains(String name) {
         return ((BookRepository) repositoryFactory.getRepository(Book.class))
-            .findByBookInfo_Name(name);
+            .findByBookInfo_NameIgnoreCaseLike("%" + name + "%");
     }
 
     @Override

@@ -13,14 +13,13 @@ public abstract class GeneralLibrarySpecificationBuilder<T> {
     }
 
     public Specification<T> build() {
-        Specification<T> specification = Specification.allOf(specList);
-        return specification;
+        return Specification.allOf(specList);
     }
 
     /**
      * Fuck you type erasure
      */
     public abstract Class<T> libraryType();
-    
-    public abstract GeneralLibrarySpecificationBuilder<T> initCollection();
+
+    public abstract LibraryCollectionInitBuilder<T> initCollection();
 }
