@@ -63,4 +63,10 @@ public class AuthorSpecificationBuilder extends GeneralLibrarySpecificationBuild
         }
     }
 
+    @Override
+    public AuthorSpecificationBuilder withId(Object id) {
+        specList.add((root, cq, cb) -> cb.equal(root.get(Author_.id), id));
+        return this;
+    }
+
 }

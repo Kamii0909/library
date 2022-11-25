@@ -205,3 +205,43 @@ java.lang.NullPointerException: Cannot invoke "hust.kien.project.model.rent.Borr
 2022-11-25T14:50:16.382+07:00  INFO 3596 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-11-25T14:50:16.386+07:00  INFO 3596 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-11-25T14:50:16.393+07:00  INFO 3596 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-11-25T18:47:15.756+07:00  INFO 16248 --- [main] hust.kien.project.LibraryApplication     : Starting LibraryApplication using Java 18 with PID 16248 (D:\Studying\Code\Java\Project\Library\library\target\classes started by admin in D:\Studying\Code\Java\Project\Library\library)
+2022-11-25T18:47:15.760+07:00  INFO 16248 --- [main] hust.kien.project.LibraryApplication     : The following 1 profile is active: "dev"
+2022-11-25T18:47:16.261+07:00  INFO 16248 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-25T18:47:16.320+07:00  INFO 16248 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 4 JPA repository interfaces.
+2022-11-25T18:47:16.853+07:00  INFO 16248 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-25T18:47:16.903+07:00  INFO 16248 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.5.Final
+2022-11-25T18:47:17.056+07:00  WARN 16248 --- [main] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2022-11-25T18:47:17.186+07:00  WARN 16248 --- [main] com.zaxxer.hikari.HikariConfig           : HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-11-25T18:47:17.187+07:00  INFO 16248 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-11-25T18:47:17.358+07:00  INFO 16248 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@32456db0
+2022-11-25T18:47:17.361+07:00  INFO 16248 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-11-25T18:47:17.385+07:00  INFO 16248 --- [main] SQL dialect                              : HHH000400: Using dialect: org.hibernate.community.dialect.SQLiteDialect
+2022-11-25T18:47:18.166+07:00  INFO 16248 --- [main] org.hibernate.orm.connections.access     : HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@1aaf46e6] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2022-11-25T18:47:18.501+07:00  INFO 16248 --- [main] org.hibernate.orm.connections.access     : HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@6697f3d] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2022-11-25T18:47:19.071+07:00  INFO 16248 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-25T18:47:19.079+07:00  INFO 16248 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25T18:47:19.671+07:00  INFO 16248 --- [main] hust.kien.project.LibraryApplication     : Started LibraryApplication in 4.341 seconds (process running for 4.632)
+2022-11-25T18:47:25.697+07:00  INFO 16248 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25T18:47:25.708+07:00  INFO 16248 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-11-25T18:47:25.711+07:00  INFO 16248 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-11-25T18:47:36.972+07:00  INFO 1744 --- [main] hust.kien.project.LibraryApplication     : Starting LibraryApplication using Java 18 with PID 1744 (D:\Studying\Code\Java\Project\Library\library\target\classes started by admin in D:\Studying\Code\Java\Project\Library\library)
+2022-11-25T18:47:36.975+07:00  INFO 1744 --- [main] hust.kien.project.LibraryApplication     : The following 1 profile is active: "dev"
+2022-11-25T18:47:37.326+07:00  INFO 1744 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-25T18:47:37.380+07:00  INFO 1744 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 41 ms. Found 4 JPA repository interfaces.
+2022-11-25T18:47:37.859+07:00  INFO 1744 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-25T18:47:37.903+07:00  INFO 1744 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.5.Final
+2022-11-25T18:47:38.047+07:00  WARN 1744 --- [main] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2022-11-25T18:47:38.173+07:00  WARN 1744 --- [main] com.zaxxer.hikari.HikariConfig           : HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-11-25T18:47:38.174+07:00  INFO 1744 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-11-25T18:47:38.277+07:00  INFO 1744 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@32456db0
+2022-11-25T18:47:38.280+07:00  INFO 1744 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-11-25T18:47:38.303+07:00  INFO 1744 --- [main] SQL dialect                              : HHH000400: Using dialect: org.hibernate.community.dialect.SQLiteDialect
+2022-11-25T18:47:39.217+07:00  INFO 1744 --- [main] org.hibernate.orm.connections.access     : HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@1b444b5] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2022-11-25T18:47:39.228+07:00  INFO 1744 --- [main] org.hibernate.orm.connections.access     : HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@e0847a9] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2022-11-25T18:47:39.782+07:00  INFO 1744 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-25T18:47:39.789+07:00  INFO 1744 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25T18:47:40.379+07:00  INFO 1744 --- [main] hust.kien.project.LibraryApplication     : Started LibraryApplication in 3.843 seconds (process running for 4.198)
+2022-11-25T18:47:44.560+07:00  INFO 1744 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25T18:47:44.567+07:00  INFO 1744 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-11-25T18:47:44.569+07:00  INFO 1744 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

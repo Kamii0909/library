@@ -112,4 +112,10 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
         }
     }
 
+    @Override
+    public BookSpecificationBuilder withId(Object id) {
+        specList.add((root, cq, cb) -> cb.equal(root.get(Book_.id), id));
+        return this;
+    }
+
 }

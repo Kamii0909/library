@@ -1,8 +1,16 @@
 package hust.kien.project.service.dynamic;
 
 import hust.kien.project.model.client.Client;
+import hust.kien.project.model.client.ClientRentInfo_;
+import hust.kien.project.model.client.Client_;
 
 public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilder<Client> {
+
+    @Override
+    public ClientSpecficationBuilder withId(Object id) {
+        specList.add((root, cq, cb) -> cb.equal(root.get(Client_.id), id));
+        return this;
+    }
 
     @Override
     public Class<Client> libraryType() {
@@ -16,10 +24,28 @@ public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilde
 
     public class ClientCollectionInitBuilder extends LibraryCollectionInitBuilder<Client> {
 
+        public ClientCollectionInitBuilder activeTickets() {
+            specList.add((root, cq, cb) -> {
+                root.fetch(Client_.rentInfo).fetch(ClientRentInfo_.activeTicket);
+                return null;
+            });
+            return this;
+        }
+
+        public ClientCollectionInitBuilder closedTickets() {
+            specList.add((root, cq, cb) -> {
+                root.fetch(Client_.rentInfo).fetch(ClientRentInfo_.closedTicket);
+                return null;
+            });
+            return this;
+        }
+
         @Override
         public ClientSpecficationBuilder back() {
             return ClientSpecficationBuilder.this;
         }
     }
+
+
 
 }

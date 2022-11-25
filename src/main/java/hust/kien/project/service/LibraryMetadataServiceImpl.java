@@ -3,6 +3,7 @@ package hust.kien.project.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import hust.kien.project.dao.AuthorRepository;
 import hust.kien.project.dao.BookRepository;
@@ -12,7 +13,7 @@ import hust.kien.project.model.book.Book;
 import hust.kien.project.service.dynamic.GeneralLibrarySpecificationBuilder;
 
 @Service
-@Transactional
+@Transactional(propagation = Propagation.NESTED)
 @SuppressWarnings("unchecked")
 public class LibraryMetadataServiceImpl implements LibraryMetadataService {
 

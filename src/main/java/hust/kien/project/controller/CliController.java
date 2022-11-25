@@ -1,5 +1,13 @@
 package hust.kien.project.controller;
 
+import java.util.List;
+import java.util.Scanner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.author.AuthorInfo;
 import hust.kien.project.model.book.Book;
@@ -9,19 +17,9 @@ import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientContactInfo;
 import hust.kien.project.model.client.ClientRentInfo;
 import hust.kien.project.model.client.ClientTier;
-import hust.kien.project.model.rent.BorrowTicket;
 import hust.kien.project.service.LibraryBorrowService;
 import hust.kien.project.service.LibraryMetadataService;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
-import hust.kien.project.service.dynamic.ClientSpecficationBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
-
-import java.util.Scanner;
 
 @Component
 @Profile("dev")
@@ -39,8 +37,7 @@ public class CliController implements CommandLineRunner {
 
         Scanner scanner = new Scanner(System.in);
 
-        loop:
-        while (true) {
+        loop: while (true) {
             System.out.println("0: stop");
             System.out.println("1: add");
             System.out.println("2: find");
@@ -100,12 +97,20 @@ public class CliController implements CommandLineRunner {
                     break;
 
                 case 3:
-                    Book book = metadataService.findBookByNameContains("Book").get(0);
-                    Client client = metadataService.dynamicFind(new ClientSpecficationBuilder()).get(0);
+                
+                    Author author = metadataService.findAuthorByNameContains("Aut").get(0);
 
-                    BorrowTicket ticket = borrowService.createTicket(book, client);
-
-                    System.out.println(ticket.isActive());
+                    // Find all books written by author, name contains '12', stock >=3
+                    // and initialize its author collection by join fetch
+                    BookSpecificationBuilder bq =
+                        new BookSpecificationBuilder()
+                            .nameContains("12")
+                            .stockBetween(3, Integer.MAX_VALUE)
+                            .fromAtLeastOneAuthor(List.of(author))
+                            .initCollection()
+                            .authors()
+                            .back();
+                    metadataService.dynamicFind(bq);
 
                     break;
 
@@ -122,17 +127,20 @@ public class CliController implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Book book = new Book();
-        book.setBookInfo(new BookInfo("Book " + (int) (Math.random() * 20), 1980 + (int) (Math.random() * 40)));
+        book.setBookInfo(
+            new BookInfo("Book " + (int) (Math.random() * 20), 1980 + (int) (Math.random() * 40)));
         book.setBookStock(new BookStock(3, 30));
         metadataService.saveOrUpdate(book);
 
         Author author = new Author();
-        author.setAuthorInfo(new AuthorInfo("Author " + (int) (Math.random() * 20), (int) (Math.random() * 40)));
+        author.setAuthorInfo(
+            new AuthorInfo("Author " + (int) (Math.random() * 20), (int) (Math.random() * 40)));
         metadataService.saveOrUpdate(author);
 
         Client client = new Client();
         client.setContactInfo(
-            new ClientContactInfo("Client " + (int) (Math.random() * 20), "Address " + (int) (Math.random() * 20)));
+            new ClientContactInfo("Client " + (int) (Math.random() * 20),
+                "Address " + (int) (Math.random() * 20)));
         client.setRentInfo(new ClientRentInfo(ClientTier.NORMAL));
         metadataService.saveOrUpdate(client);
     }

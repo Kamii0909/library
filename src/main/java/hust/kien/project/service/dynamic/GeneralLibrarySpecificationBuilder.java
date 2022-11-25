@@ -8,6 +8,8 @@ public abstract class GeneralLibrarySpecificationBuilder<T> {
 
     protected List<Specification<T>> specList;
 
+    public abstract GeneralLibrarySpecificationBuilder<T> withId(Object id);
+
     public GeneralLibrarySpecificationBuilder() {
         specList = new ArrayList<>();
     }

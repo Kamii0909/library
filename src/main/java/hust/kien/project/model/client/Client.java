@@ -2,16 +2,21 @@ package hust.kien.project.model.client;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.domain.Persistable;
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Client implements Persistable<Long> {
+@Getter
+@Setter
+@NoArgsConstructor
+public class Client {
     @Id
     @GeneratedValue
     private Long id;
@@ -24,38 +29,5 @@ public class Client implements Persistable<Long> {
         this.contactInfo = contactInfo;
         this.rentInfo = new ClientRentInfo(clientTier);
     }
-
-    public Client() {}
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ClientContactInfo getContactInfo() {
-        return contactInfo;
-    }
-
-    public void setContactInfo(ClientContactInfo contactInfo) {
-        this.contactInfo = contactInfo;
-    }
-
-    public ClientRentInfo getRentInfo() {
-        return rentInfo;
-    }
-
-    public void setRentInfo(ClientRentInfo rentInfo) {
-        this.rentInfo = rentInfo;
-    }
-
-    @Override
-    public boolean isNew() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
 
 }
