@@ -14,18 +14,30 @@ import hust.kien.project.service.dynamic.BookSpecificationBuilder;
 
 @Service
 @Transactional
-public class LibraryBorrowServiceImpl implements LibraryBorrowService {
+public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private LibraryMetadataService metadataService;
 
     @Override
-    public Ticket createActiveTicket(Book book, Client client) {
+    public ActiveTicket createActiveTicket(Book book, Client client) {
 
-        book.getBookStock().setStock(book.getBookStock().getStock() - 1);
+        if (!Hibernate.isInitialized(book)) {
+            book = metadataService
+                .dynamicFind(new BookSpecificationBuilder().withId(book.getId()))
+                .get(0);
+        }
+
+        int i = book.getBookStock().getStock();
+
+        if( i > 0) {
+            book.getBookStock().setStock( i - 1);
+        }
+        else throw new OutOfStockException("The book you are trying to borrow is out of stock");
+        
         metadataService.saveOrUpdate(book);
 
-        Ticket newTicket = ActiveTicket.builder()
+        ActiveTicket newTicket = ActiveTicket.builder()
             .book(book)
             .client(client)
             .startDate(LocalDate.now())
@@ -35,9 +47,9 @@ public class LibraryBorrowServiceImpl implements LibraryBorrowService {
     }
 
     @Override
-    public Ticket createClosedTicket(Book book, Client client, LocalDate startDate,
+    public ClosedTicket createClosedTicket(Book book, Client client, LocalDate startDate,
         LocalDate endDate) {
-        Ticket ticket = ClosedTicket.builder()
+        ClosedTicket ticket = ClosedTicket.builder()
             .book(book)
             .client(client)
             .startDate(startDate)
@@ -52,7 +64,7 @@ public class LibraryBorrowServiceImpl implements LibraryBorrowService {
     }
 
     @Override
-    public Ticket createActiveTicket(Book book, Client client, LocalDate startDate) {
+    public ActiveTicket createActiveTicket(Book book, Client client, LocalDate startDate) {
         if (!Hibernate.isInitialized(book)) {
             book = metadataService
                 .dynamicFind(new BookSpecificationBuilder().withId(book.getId()))
@@ -62,7 +74,7 @@ public class LibraryBorrowServiceImpl implements LibraryBorrowService {
         book.getBookStock().setStock(book.getBookStock().getStock() - 1);
         metadataService.saveOrUpdate(book);
 
-        Ticket newTicket = ActiveTicket.builder()
+        ActiveTicket newTicket = ActiveTicket.builder()
             .book(book)
             .client(client)
             .startDate(startDate)
@@ -92,7 +104,7 @@ public class LibraryBorrowServiceImpl implements LibraryBorrowService {
             .startDate(startDate)
             .endDate(LocalDate.now())
             .build();
-        
+
         deleteTicket(ticket);
         return metadataService.saveOrUpdate(closedTicket);
     }

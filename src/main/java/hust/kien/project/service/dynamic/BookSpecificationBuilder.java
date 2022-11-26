@@ -2,7 +2,7 @@ package hust.kien.project.service.dynamic;
 
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.*;
-
+import jakarta.persistence.criteria.JoinType;
 import java.util.Collection;
 
 
@@ -76,7 +76,7 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
 
         public BookCollectionInitBuilder authors() {
             specList.add((root, cq, cb) -> {
-                root.fetch(Book_.bookInfo).fetch(BookInfo_.authors);
+                root.fetch(Book_.bookInfo).fetch(BookInfo_.authors, JoinType.LEFT);
                 return null;
             });
             return this;
@@ -84,7 +84,7 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
 
         public BookCollectionInitBuilder genres() {
             specList.add((root, cq, cb) -> {
-                root.fetch(Book_.bookInfo).fetch(BookInfo_.bookGenres);
+                root.fetch(Book_.bookInfo).fetch(BookInfo_.bookGenres, JoinType.LEFT);
                 return null;
             });
             return this;
@@ -92,7 +92,7 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
 
         public BookCollectionInitBuilder ongoingContracts() {
             specList.add((root, cq, cb) -> {
-                root.fetch(Book_.bookStock).fetch(BookStock_.ongoingContracts);
+                root.fetch(Book_.bookStock).fetch(BookStock_.ongoingContracts, JoinType.LEFT);
                 return null;
             });
             return this;
@@ -100,7 +100,7 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
 
         public BookCollectionInitBuilder completedContracts() {
             specList.add((root, cq, cb) -> {
-                root.fetch(Book_.bookStock).fetch(BookStock_.completedContracts);
+                root.fetch(Book_.bookStock).fetch(BookStock_.completedContracts, JoinType.LEFT);
                 return null;
             });
             return this;

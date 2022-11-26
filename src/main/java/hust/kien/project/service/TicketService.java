@@ -7,14 +7,15 @@ import hust.kien.project.model.rent.ActiveTicket;
 import hust.kien.project.model.rent.ClosedTicket;
 import hust.kien.project.model.rent.Ticket;
 
-public interface LibraryBorrowService {
-    Ticket createActiveTicket(Book book, Client client);
+public interface TicketService {
+
+    ActiveTicket createActiveTicket(Book book, Client client);
 
     @Deprecated
-    Ticket createActiveTicket(Book book, Client client, LocalDate startDate);
+    ActiveTicket createActiveTicket(Book book, Client client, LocalDate startDate);
 
     @Deprecated
-    Ticket createClosedTicket(Book book, Client client, LocalDate startDate, LocalDate endDate);
+    ClosedTicket createClosedTicket(Book book, Client client, LocalDate startDate, LocalDate endDate);
 
     ClosedTicket closeActiveTicket(ActiveTicket ticket);
 

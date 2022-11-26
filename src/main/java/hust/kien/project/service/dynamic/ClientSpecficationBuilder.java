@@ -3,6 +3,7 @@ package hust.kien.project.service.dynamic;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientRentInfo_;
 import hust.kien.project.model.client.Client_;
+import jakarta.persistence.criteria.JoinType;
 
 public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilder<Client> {
 
@@ -26,7 +27,7 @@ public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilde
 
         public ClientCollectionInitBuilder activeTickets() {
             specList.add((root, cq, cb) -> {
-                root.fetch(Client_.rentInfo).fetch(ClientRentInfo_.activeTicket);
+                root.fetch(Client_.rentInfo).fetch(ClientRentInfo_.activeTicket, JoinType.LEFT);
                 return null;
             });
             return this;
@@ -34,7 +35,7 @@ public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilde
 
         public ClientCollectionInitBuilder closedTickets() {
             specList.add((root, cq, cb) -> {
-                root.fetch(Client_.rentInfo).fetch(ClientRentInfo_.closedTicket);
+                root.fetch(Client_.rentInfo).fetch(ClientRentInfo_.closedTicket, JoinType.LEFT);
                 return null;
             });
             return this;

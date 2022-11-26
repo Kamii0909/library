@@ -1,20 +1,18 @@
 package hust.kien.project.model.client;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import jakarta.persistence.Cacheable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Getter
 @Setter
+@ToString(includeFieldNames = false)
 @NoArgsConstructor
 public class Client {
     @Id
@@ -24,6 +22,17 @@ public class Client {
     private ClientContactInfo contactInfo;
 
     private ClientRentInfo rentInfo;
+
+    @Builder
+    public Client(String name, String address, ClientTier tier) {
+        this.contactInfo = ClientContactInfo.builder()
+            .name(name)
+            .address(address)
+            .build();
+        this.rentInfo = ClientRentInfo.builder()
+            .clientTier(tier)
+            .build();
+    }
 
     public Client(ClientContactInfo contactInfo, ClientTier clientTier) {
         this.contactInfo = contactInfo;

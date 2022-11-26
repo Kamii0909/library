@@ -1,57 +1,41 @@
 package hust.kien.project.model.book;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Getter
+@Setter
+@ToString(includeFieldNames = false)
+@NoArgsConstructor
 public class Book {
     @Id
     @GeneratedValue
     private Long id;
+
     @Embedded
     private BookInfo bookInfo;
+
     @Embedded
     private BookStock bookStock;
 
-    public Book() {}
-
-    public Book(BookInfo bookInfo) {
-        this.bookInfo = bookInfo;
-        this.bookStock = new BookStock();
-    }
-
-    public Book(BookInfo bookInfo, BookStock bookStock) {
-        this.bookInfo = bookInfo;
-        this.bookStock = bookStock;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    public BookInfo getBookInfo() {
-        return bookInfo;
-    }
-
-
-    public void setBookInfo(BookInfo bookInfo) {
-        this.bookInfo = bookInfo;
-    }
-
-    public BookStock getBookStock() {
-        return bookStock;
-    }
-
-    public void setBookStock(BookStock bookStock) {
-        this.bookStock = bookStock;
+    @Builder
+    public Book(String name, int releasedYear, int stock, double reimburseCost) {
+        this.bookInfo = BookInfo.builder()
+            .name(name)
+            .releasedYear(releasedYear)
+            .build();
+        this.bookStock = BookStock.builder()
+            .stock(stock)
+            .reimburseCost(reimburseCost)
+            .build();
     }
 
     /**

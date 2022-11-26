@@ -12,16 +12,21 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Embeddable
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString(onlyExplicitlyIncluded = true, includeFieldNames = false)
 @RequiredArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
 public class ClientRentInfo {
     
     @Enumerated(EnumType.STRING)
     @NonNull
+    @ToString.Include
     private ClientTier clientTier;
     
     @OneToMany(mappedBy = "client")

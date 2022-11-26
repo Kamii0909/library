@@ -5,18 +5,17 @@ spring:
         driver-class-name: org.sqlite.JDBC
         url: jdbc:sqlite:database/library.db
         hikari:
-            idle-timeout: 10000
             auto-commit: false
             minimum-idle: 1
             maximum-pool-size: 1
     jpa:
         # generate-ddl: true
         hibernate:
-            ddl-auto: create
+            # ddl-auto: create
             naming:
                 physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
                 implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
-        show-sql: true
+        # show-sql: true
 logging:
     level:
         org:

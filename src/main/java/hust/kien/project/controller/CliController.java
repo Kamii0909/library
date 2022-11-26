@@ -1,7 +1,6 @@
 package hust.kien.project.controller;
 
 import java.util.List;
-import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -9,116 +8,69 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import hust.kien.project.model.author.Author;
-import hust.kien.project.model.author.AuthorInfo;
 import hust.kien.project.model.book.Book;
-import hust.kien.project.model.book.BookInfo;
-import hust.kien.project.model.book.BookStock;
+import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.model.client.Client;
-import hust.kien.project.model.client.ClientContactInfo;
-import hust.kien.project.model.client.ClientRentInfo;
 import hust.kien.project.model.client.ClientTier;
-import hust.kien.project.service.LibraryBorrowService;
+import hust.kien.project.model.rent.ActiveTicket;
+import hust.kien.project.model.rent.ClosedTicket;
 import hust.kien.project.service.LibraryMetadataService;
+import hust.kien.project.service.TicketService;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
+import hust.kien.project.service.dynamic.ClientSpecficationBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Profile("dev")
+@Slf4j
 public class CliController implements CommandLineRunner {
 
     @Autowired
     private LibraryMetadataService metadataService;
 
     @Autowired
-    private LibraryBorrowService borrowService;
+    private TicketService ticketService;
 
 
     @EventListener(classes = ApplicationReadyEvent.class)
     public void run() {
 
-        Scanner scanner = new Scanner(System.in);
+        List<Author> authors = metadataService.findAuthorByNameContains("Aut");
 
-        loop: while (true) {
-            System.out.println("0: stop");
-            System.out.println("1: add");
-            System.out.println("2: find");
-            System.out.println("3: update");
+        List<BookGenre> genres = metadataService.findGenreByNameContains("Gen");
 
-            switch (Integer.parseInt(scanner.nextLine())) {
-                case 0:
-                    break loop;
+        BookGenre genre = genres.get(random(genres.size()));
+        Author author = authors.get(random(authors.size()));
 
-                case 1:
-                    System.out.println("Choose which one to add:");
-                    System.out.println("1: book");
-                    System.out.println("2: author");
-                    System.out.println("3: client");
+        List<Book> books = metadataService
+            .dynamicFind(new BookSpecificationBuilder()
+                .initCollection()
+                .authors()
+                .genres()
+                .back());
+        Book book = books.get((int) (Math.random() * books.size()));
 
-                    switch (Integer.parseInt(scanner.nextLine())) {
-                        case 1 -> {
-                            System.out.println("Adding book");
-                            BookInfo bookInfo = new BookInfo();
-                            System.out.println("Book name:");
-                            bookInfo.setName(scanner.nextLine());
-                            System.out.println("Released year:");
-                            bookInfo.setReleasedYear(Integer.parseInt(scanner.nextLine()));
-                            BookStock bookStock = new BookStock();
-                            System.out.println("Current stock:");
-                            bookStock.setStock(Integer.parseInt(scanner.nextLine()));
-                            System.out.println("Reimburse cost:");
-                            bookStock.setReimburseCost(Double.parseDouble(scanner.nextLine()));
-                            metadataService.saveOrUpdate(new Book(bookInfo, bookStock));
-                        }
-                        default -> {
-                        }
-                    }
+        book.getBookInfo().getAuthors().add(author);
+        book.getBookInfo().getBookGenres().add(genre);
 
-                    break;
-                case 2:
-                    System.out.println("Choose which one to find:");
-                    System.out.println("1: book");
-                    System.out.println("2: author");
-                    System.out.println("3: client");
-                    switch (Integer.parseInt(scanner.nextLine())) {
-                        case 1 -> {
-                            BookSpecificationBuilder builder = new BookSpecificationBuilder();
-                            System.out.println("Name:");
-                            builder.nameContains(scanner.nextLine());
-                            System.out.println("From:");
-                            int from = Integer.parseInt(scanner.nextLine());
-                            System.out.println("To:");
-                            builder.releasedBetween(from, Integer.parseInt(scanner.nextLine()));
-                            System.out.println(metadataService.dynamicFind(builder));
-                        }
-                        default -> {
-                        }
-                    }
-                    break;
-                default:
-                    break;
+        book = metadataService.saveOrUpdate(book);
 
-                case 3:
-                
-                    Author author = metadataService.findAuthorByNameContains("Aut").get(0);
+        Client client = metadataService
+            .dynamicFind(new ClientSpecficationBuilder())
+            .get(0);
 
-                    // Find all books written by author, name contains '12', stock >=3
-                    // and initialize its author collection by join fetch
-                    BookSpecificationBuilder bq =
-                        new BookSpecificationBuilder()
-                            .nameContains("12")
-                            .stockBetween(3, Integer.MAX_VALUE)
-                            .fromAtLeastOneAuthor(List.of(author))
-                            .initCollection()
-                            .authors()
-                            .back();
-                    metadataService.dynamicFind(bq);
+        ActiveTicket activeTicket = ticketService.createActiveTicket(book, client);
 
-                    break;
+        ActiveTicket activeTicket2 = ticketService.createActiveTicket(book, client);
 
-            }
-        }
+        log.info("Created active ticket");
 
-        scanner.close();
+        System.out.println(activeTicket);
+        System.out.println(activeTicket2);
 
+        ClosedTicket closedTicket = ticketService.closeActiveTicket(activeTicket);
+
+        System.out.println(closedTicket);
     }
 
     /**
@@ -126,22 +78,40 @@ public class CliController implements CommandLineRunner {
      */
     @Override
     public void run(String... args) throws Exception {
-        Book book = new Book();
-        book.setBookInfo(
-            new BookInfo("Book " + (int) (Math.random() * 20), 1980 + (int) (Math.random() * 40)));
-        book.setBookStock(new BookStock(3, 30));
-        metadataService.saveOrUpdate(book);
+        int seed = 20;
 
-        Author author = new Author();
-        author.setAuthorInfo(
-            new AuthorInfo("Author " + (int) (Math.random() * 20), (int) (Math.random() * 40)));
+        Book book = Book.builder()
+            .name("Book " + random(seed))
+            .releasedYear(1980 + random(40))
+            .stock(random(seed) + 3)
+            .reimburseCost(random(seed * 3))
+            .build();
+        book = metadataService.saveOrUpdate(book);
+
+        BookGenre bookGenre = new BookGenre("Genre " + random(seed));
+        metadataService.saveOrUpdate(bookGenre);
+
+        Author author = Author.builder()
+            .name("Author " + random(seed))
+            .age(20 + random(40))
+            .build();
         metadataService.saveOrUpdate(author);
 
-        Client client = new Client();
-        client.setContactInfo(
-            new ClientContactInfo("Client " + (int) (Math.random() * 20),
-                "Address " + (int) (Math.random() * 20)));
-        client.setRentInfo(new ClientRentInfo(ClientTier.NORMAL));
+        ClientTier[] tiers = ClientTier.values();
+
+        Client client = Client.builder()
+            .name("Client " + random(seed))
+            .address("Address " + random(seed))
+            .tier(tiers[random(tiers.length)]).build();
         metadataService.saveOrUpdate(client);
+
+        
+    }
+
+    /**
+     * Helper method
+     */
+    private int random(int max) {
+        return (int) (Math.random() * max);
     }
 }

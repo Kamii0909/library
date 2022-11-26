@@ -4,7 +4,7 @@ import hust.kien.project.model.author.Author;
 import hust.kien.project.model.author.AuthorInfo_;
 import hust.kien.project.model.author.Author_;
 import hust.kien.project.model.book.Book;
-
+import jakarta.persistence.criteria.JoinType;
 import java.util.Collection;
 
 public class AuthorSpecificationBuilder extends GeneralLibrarySpecificationBuilder<Author> {
@@ -51,7 +51,7 @@ public class AuthorSpecificationBuilder extends GeneralLibrarySpecificationBuild
 
         public AuthorCollectionInitBuilder books() {
             specList.add((root, cq, cb) -> {
-                root.fetch(Author_.authorInfo).fetch(AuthorInfo_.books);
+                root.fetch(Author_.authorInfo).fetch(AuthorInfo_.books, JoinType.LEFT);
                 return null;
             });
             return this;
