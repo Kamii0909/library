@@ -1,4 +1,4 @@
-package hust.kien.project.service;
+package hust.kien.project.service.internal;
 
 public class OutOfStockException extends RuntimeException {
 

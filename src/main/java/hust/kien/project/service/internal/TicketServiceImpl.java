@@ -1,4 +1,4 @@
-package hust.kien.project.service;
+package hust.kien.project.service.internal;
 
 import java.time.LocalDate;
 import org.hibernate.Hibernate;
@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.client.Client;
-import hust.kien.project.model.rent.ActiveTicket;
-import hust.kien.project.model.rent.ClosedTicket;
-import hust.kien.project.model.rent.Ticket;
+import hust.kien.project.model.ticket.ActiveTicket;
+import hust.kien.project.model.ticket.ClosedTicket;
+import hust.kien.project.model.ticket.Ticket;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
 
 @Service

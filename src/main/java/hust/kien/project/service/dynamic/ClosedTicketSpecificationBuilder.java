@@ -1,7 +1,7 @@
 package hust.kien.project.service.dynamic;
 
-import hust.kien.project.model.rent.ClosedTicket;
 import hust.kien.project.model.rent.Ticket_;
+import hust.kien.project.model.ticket.ClosedTicket;
 
 public class ClosedTicketSpecificationBuilder extends GeneralLibrarySpecificationBuilder<ClosedTicket> {
 

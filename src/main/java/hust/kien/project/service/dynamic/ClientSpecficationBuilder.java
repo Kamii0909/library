@@ -27,7 +27,7 @@ public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilde
 
         public ClientCollectionInitBuilder activeTickets() {
             specList.add((root, cq, cb) -> {
-                root.fetch(Client_.rentInfo).fetch(ClientRentInfo_.activeTicket, JoinType.LEFT);
+                root.fetch(Client_.rentInfo).fetch(ClientRentInfo_.activeTickets, JoinType.LEFT);
                 return null;
             });
             return this;
@@ -35,7 +35,7 @@ public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilde
 
         public ClientCollectionInitBuilder closedTickets() {
             specList.add((root, cq, cb) -> {
-                root.fetch(Client_.rentInfo).fetch(ClientRentInfo_.closedTicket, JoinType.LEFT);
+                root.fetch(Client_.rentInfo).fetch(ClientRentInfo_.closedTickets, JoinType.LEFT);
                 return null;
             });
             return this;

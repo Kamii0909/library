@@ -1,5 +1,6 @@
 package hust.kien.project.model.author;
 
+import hust.kien.project.model.LibraryPersistable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -14,7 +15,7 @@ import lombok.ToString;
 @Setter
 @ToString(includeFieldNames = false)
 @NoArgsConstructor
-public class Author {
+public class Author implements LibraryPersistable {
     @Id
     @GeneratedValue
     private Long id;

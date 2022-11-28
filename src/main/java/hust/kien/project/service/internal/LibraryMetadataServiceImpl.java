@@ -1,4 +1,4 @@
-package hust.kien.project.service;
+package hust.kien.project.service.internal;
 
 import java.io.Serializable;
 import java.util.List;

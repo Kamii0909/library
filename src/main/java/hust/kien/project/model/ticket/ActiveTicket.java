@@ -1,4 +1,4 @@
-package hust.kien.project.model.rent;
+package hust.kien.project.model.ticket;
 
 import java.time.LocalDate;
 import jakarta.persistence.Convert;

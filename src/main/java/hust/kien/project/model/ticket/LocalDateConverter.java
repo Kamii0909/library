@@ -1,4 +1,4 @@
-package hust.kien.project.model.rent;
+package hust.kien.project.model.ticket;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

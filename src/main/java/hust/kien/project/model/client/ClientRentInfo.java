@@ -1,8 +1,8 @@
 package hust.kien.project.model.client;
 
 import java.util.List;
-import hust.kien.project.model.rent.ActiveTicket;
-import hust.kien.project.model.rent.ClosedTicket;
+import hust.kien.project.model.ticket.ActiveTicket;
+import hust.kien.project.model.ticket.ClosedTicket;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,11 +28,13 @@ public class ClientRentInfo {
     @NonNull
     @ToString.Include
     private ClientTier clientTier;
+
+    private List<Integer> year;
     
     @OneToMany(mappedBy = "client")
-    private List<ActiveTicket> activeTicket;
+    private List<ActiveTicket> activeTickets;
     
     @OneToMany(mappedBy = "client")
-    private List<ClosedTicket> closedTicket;
+    private List<ClosedTicket> closedTickets;
 
 }

@@ -1,9 +1,9 @@
 package hust.kien.project.model.book;
 
 import java.util.List;
+import hust.kien.project.model.ticket.ActiveTicket;
+import hust.kien.project.model.ticket.ClosedTicket;
 import java.util.ArrayList;
-import hust.kien.project.model.rent.ActiveTicket;
-import hust.kien.project.model.rent.ClosedTicket;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
 import lombok.Builder;
@@ -27,11 +27,9 @@ public class BookStock {
     @ToString.Include
     private double reimburseCost;
 
-
     @OneToMany(mappedBy = "book")
     @Builder.Default
     private List<ClosedTicket> completedContracts = new ArrayList<>();
-
 
     @OneToMany(mappedBy = "book")
     @Builder.Default

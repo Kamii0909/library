@@ -12,12 +12,12 @@ import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientTier;
-import hust.kien.project.model.rent.ActiveTicket;
-import hust.kien.project.model.rent.ClosedTicket;
-import hust.kien.project.service.LibraryMetadataService;
-import hust.kien.project.service.TicketService;
+import hust.kien.project.model.ticket.ActiveTicket;
+import hust.kien.project.model.ticket.ClosedTicket;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
 import hust.kien.project.service.dynamic.ClientSpecficationBuilder;
+import hust.kien.project.service.internal.LibraryMetadataService;
+import hust.kien.project.service.internal.TicketService;
 import lombok.extern.slf4j.Slf4j;
 
 @Component

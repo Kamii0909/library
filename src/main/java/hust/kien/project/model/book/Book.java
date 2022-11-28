@@ -1,5 +1,6 @@
 package hust.kien.project.model.book;
 
+import hust.kien.project.model.LibraryPersistable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import lombok.ToString;
 @Setter
 @ToString(includeFieldNames = false)
 @NoArgsConstructor
-public class Book {
+public class Book implements LibraryPersistable {
     @Id
     @GeneratedValue
     private Long id;

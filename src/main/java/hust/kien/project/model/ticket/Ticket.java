@@ -1,6 +1,7 @@
-package hust.kien.project.model.rent;
+package hust.kien.project.model.ticket;
 
 import java.time.LocalDate;
+import hust.kien.project.model.LibraryPersistable;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.client.Client;
 import jakarta.persistence.Convert;
@@ -23,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString
-public abstract class Ticket {
+public abstract class Ticket implements LibraryPersistable {
     @Id
     @GeneratedValue
     private Long id;
