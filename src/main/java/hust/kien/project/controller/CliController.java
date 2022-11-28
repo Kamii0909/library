@@ -1,5 +1,6 @@
 package hust.kien.project.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,6 +15,7 @@ import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientTier;
 import hust.kien.project.model.ticket.ActiveTicket;
 import hust.kien.project.model.ticket.ClosedTicket;
+import hust.kien.project.model.ticket.LocalDateConverter;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
 import hust.kien.project.service.dynamic.ClientSpecficationBuilder;
 import hust.kien.project.service.internal.LibraryMetadataService;
@@ -102,7 +104,10 @@ public class CliController implements CommandLineRunner {
         Client client = Client.builder()
             .name("Client " + random(seed))
             .address("Address " + random(seed))
-            .tier(tiers[random(tiers.length)]).build();
+            .tier(tiers[random(tiers.length)])
+            .startDate(LocalDate.of(2022, 1 + random(seed/3), 1))
+            .endDate(LocalDateConverter.MAX)
+            .build();
         metadataService.saveOrUpdate(client);
 
         

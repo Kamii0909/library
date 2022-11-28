@@ -1,8 +1,8 @@
 package hust.kien.project.service;
 
-import hust.kien.project.model.auth.LibraryUser;
+import hust.kien.project.model.auth.LibraryEmployee;
 
 public interface AuthenticationService {
     
-    LibraryUser authenticate(String username, String password);
+    LibraryEmployee authenticate(String username, String password);
 }

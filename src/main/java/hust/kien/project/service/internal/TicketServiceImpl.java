@@ -10,6 +10,7 @@ import hust.kien.project.model.client.Client;
 import hust.kien.project.model.ticket.ActiveTicket;
 import hust.kien.project.model.ticket.ClosedTicket;
 import hust.kien.project.model.ticket.Ticket;
+import hust.kien.project.service.OutOfStockException;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
 
 @Service
@@ -33,7 +34,7 @@ public class TicketServiceImpl implements TicketService {
         if( i > 0) {
             book.getBookStock().setStock( i - 1);
         }
-        else throw new OutOfStockException("The book you are trying to borrow is out of stock");
+        else throw new OutOfStockException("Book " + book.getBookInfo().getName() + " with id " + book.getId());
         
         metadataService.saveOrUpdate(book);
 

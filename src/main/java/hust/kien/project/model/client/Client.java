@@ -1,5 +1,7 @@
 package hust.kien.project.model.client;
 
+import java.time.LocalDate;
+import hust.kien.project.model.LibraryLocatable;
 import hust.kien.project.model.LibraryPersistable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +17,7 @@ import lombok.ToString;
 @Setter
 @ToString(includeFieldNames = false)
 @NoArgsConstructor
-public class Client implements LibraryPersistable {
+public class Client implements LibraryLocatable, LibraryPersistable {
     @Id
     @GeneratedValue
     private Long id;
@@ -25,19 +27,16 @@ public class Client implements LibraryPersistable {
     private ClientRentInfo rentInfo;
 
     @Builder
-    public Client(String name, String address, ClientTier tier) {
+    public Client(String name, String address, ClientTier tier, LocalDate startDate, LocalDate endDate) {
         this.contactInfo = ClientContactInfo.builder()
             .name(name)
             .address(address)
             .build();
         this.rentInfo = ClientRentInfo.builder()
             .clientTier(tier)
+            .startDate(startDate)
+            .endDate(endDate)
             .build();
-    }
-
-    public Client(ClientContactInfo contactInfo, ClientTier clientTier) {
-        this.contactInfo = contactInfo;
-        this.rentInfo = new ClientRentInfo(clientTier);
     }
 
 }

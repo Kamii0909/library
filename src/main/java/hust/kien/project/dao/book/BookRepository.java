@@ -1,7 +1,8 @@
-package hust.kien.project.dao;
+package hust.kien.project.dao.book;
 
 import java.util.List;
 import org.springframework.stereotype.Repository;
+import hust.kien.project.dao.LibraryRepository;
 import hust.kien.project.model.book.Book;
 
 @Repository
