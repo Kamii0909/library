@@ -7,7 +7,7 @@ import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientTier;
 
 @Repository
-public interface ClientRepository extends LibraryRepository<Client, Long>, AccountingRepository {
+public interface ClientRepository extends LibraryRepository<Client, Long>{
 
     public List<Client> findByContactInfo_Name(String name);
 

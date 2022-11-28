@@ -1,16 +1,13 @@
 package hust.kien.project.service.auth;
 
 import java.time.LocalDate;
-import java.util.List;
 import hust.kien.project.model.auth.LibraryEmployee;
 
 public interface ManagerService extends AuthorizedService {
     
-    LibraryEmployee createUser(LibraryEmployee user);
+    void createUser(LibraryEmployee user, String password);
 
-    List<LibraryEmployee> findEmployeeFromName(String employeeName);
-
-    void deleteUser(LibraryEmployee employee);
+    void deleteUser(String username);
 
     long income(LocalDate from, LocalDate to);
 }

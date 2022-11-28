@@ -1,11 +1,13 @@
 package hust.kien.project.service.auth;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import hust.kien.project.model.auth.LibraryEmployee;
-import hust.kien.project.service.dynamic.LibraryUserSpecificationBuilder;
+import hust.kien.project.service.dynamic.LibraryEmployeeSpecificationBuilder;
 import hust.kien.project.service.internal.AccountingService;
 import hust.kien.project.service.internal.LibraryMetadataService;
 
@@ -18,6 +20,16 @@ public class ManagerServiceImpl implements ManagerService {
     @Autowired
     private AccountingService accountingService;
 
+    private MessageDigest encryptor;
+
+    public ManagerServiceImpl() {
+        try {
+            encryptor = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public Class<ManagerService> getRuntimeServiceClass() {
@@ -25,24 +37,36 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public LibraryEmployee createUser(LibraryEmployee employee) {
-        return metadataService.saveOrUpdate(employee);
-    }
+    public void createUser(LibraryEmployee employee, String password) {
 
-    @Override
-    public List<LibraryEmployee> findEmployeeFromName(String employeeName) {
-        return metadataService
-            .dynamicFind(new LibraryUserSpecificationBuilder().employeeNameContains(employeeName));
-    }
+        employee.setSalt(generateRandomSalt(2));
+        /** (int) (Math.random() * 10) */
 
-    @Override
-    public void deleteUser(LibraryEmployee employee) {
-        metadataService.delete(employee);
+        encryptor.update(password.getBytes());
+        encryptor.update(employee.getSalt());
+
+        employee.setEncryptedPassword(encryptor.digest());
+
+        metadataService.saveOrUpdate(employee);
     }
 
     @Override
     public long income(LocalDate from, LocalDate to) {
         return accountingService.income(from, to);
+    }
+
+    private byte[] generateRandomSalt(int size) {
+        byte[] bytes = new byte[size];
+        new Random().nextBytes(bytes);
+
+        return bytes;
+    }
+
+    @Override
+    public void deleteUser(String username) {
+        metadataService.delete(
+            metadataService.dynamicFind(
+                new LibraryEmployeeSpecificationBuilder().withUsername(username)));
     }
 
 }

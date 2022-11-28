@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientRentInfo;
 import hust.kien.project.model.client.ClientRentInfo_;
@@ -19,7 +20,7 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Root;
 
-
+@Component
 public class AccountingRepositoryImpl implements AccountingRepository {
 
     @Autowired
@@ -31,6 +32,7 @@ public class AccountingRepositoryImpl implements AccountingRepository {
 
         // boilerplate
         Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
 
         // String hql = """
         // select c.rentInfo.clientTier, count(c.id)
@@ -59,12 +61,12 @@ public class AccountingRepositoryImpl implements AccountingRepository {
 
         cq.multiselect(tier, count);
 
+        
         List<Tuple> list = session.createQuery(cq).getResultList();
 
         for (Tuple tuple : list) {
             result += tuple.get(tier).getMonthlyCost() * tuple.get(count);
         }
-
         return result;
     }
 

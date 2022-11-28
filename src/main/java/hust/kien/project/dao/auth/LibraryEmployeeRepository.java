@@ -5,6 +5,6 @@ import hust.kien.project.dao.LibraryRepository;
 import hust.kien.project.model.auth.LibraryEmployee;
 
 @Repository
-public interface LibraryUserRepository extends LibraryRepository<LibraryEmployee, Long> {
+public interface LibraryEmployeeRepository extends LibraryRepository<LibraryEmployee, Long> {
     
 }
