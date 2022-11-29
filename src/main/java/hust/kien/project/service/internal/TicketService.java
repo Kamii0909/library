@@ -11,10 +11,8 @@ public interface TicketService {
 
     ActiveTicket createActiveTicket(Book book, Client client);
 
-    @Deprecated
     ActiveTicket createActiveTicket(Book book, Client client, LocalDate startDate);
 
-    @Deprecated
     ClosedTicket createClosedTicket(Book book, Client client, LocalDate startDate, LocalDate endDate);
 
     ClosedTicket closeActiveTicket(ActiveTicket ticket);

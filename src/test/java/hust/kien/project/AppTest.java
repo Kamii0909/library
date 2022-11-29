@@ -1,16 +1,17 @@
 package hust.kien.project;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import java.time.LocalDate;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.orm.hibernate5.SpringSessionContext;
 import hust.kien.project.model.auth.LibraryEmployee;
 import hust.kien.project.model.auth.LibraryRole;
-import hust.kien.project.service.AuthenticationService;
-import hust.kien.project.service.auth.ManagerService;
+import hust.kien.project.service.auth.AuthenticationService;
+import hust.kien.project.service.auth.AuthorizationService;
+import hust.kien.project.service.auth.AuthorizedContextHolder;
+import hust.kien.project.service.authorized.ManagerService;
 
 @SpringBootTest
 public class AppTest {
@@ -20,6 +21,9 @@ public class AppTest {
 
     @Autowired
     AuthenticationService authenService;
+
+    @Autowired
+    AuthorizationService authorizationService;
 
     @Test
     void contextLoad() {
@@ -35,10 +39,10 @@ public class AppTest {
 
         assertNotNull(emp);
 
-        long i = managerService.income(LocalDate.ofYearDay(1900, 1), LocalDate.ofYearDay(2050, 1));
-        System.out.println(i);
+        AuthorizedContextHolder securityContext = authorizationService.authorize(emp);
 
-        long i2 = managerService.income(LocalDate.ofYearDay(1900, 1), LocalDate.ofYearDay(2050, 1));
-        System.out.println(i2);
+        assertNotNull(securityContext.getLibrarianService());
+
+        assertNull(securityContext.getAuditService());
     }
 }

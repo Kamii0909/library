@@ -1,4 +1,4 @@
-package hust.kien.project.service;
+package hust.kien.project.service.auth;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

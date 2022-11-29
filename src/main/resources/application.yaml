@@ -23,6 +23,6 @@ logging:
     level:
         org:
             springframework:
-                transaction: trace
+                # transaction: trace
     file:
         name: log/app.log

@@ -1,4 +1,4 @@
-package hust.kien.project.service;
+package hust.kien.project.service.auth;
 
 import hust.kien.project.model.auth.LibraryEmployee;
 

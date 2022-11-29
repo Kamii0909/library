@@ -1,4 +1,4 @@
-package hust.kien.project.service.auth;
+package hust.kien.project.service.authorized;
 
 import java.time.LocalDate;
 import hust.kien.project.model.book.Book;

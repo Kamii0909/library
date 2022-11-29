@@ -1,4 +1,4 @@
-package hust.kien.project.service.auth;
+package hust.kien.project.service.authorized;
 
 import java.util.List;
 import hust.kien.project.model.LibraryLocatable;

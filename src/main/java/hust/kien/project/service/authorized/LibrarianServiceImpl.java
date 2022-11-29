@@ -1,4 +1,4 @@
-package hust.kien.project.service.auth;
+package hust.kien.project.service.authorized;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

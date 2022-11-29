@@ -1,4 +1,4 @@
-package hust.kien.project.service.auth;
+package hust.kien.project.service.authorized;
 
 public interface AuthorizedService {
     <T extends AuthorizedService> Class<T> getRuntimeServiceClass();

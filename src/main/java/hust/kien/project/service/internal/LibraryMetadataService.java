@@ -17,10 +17,13 @@ public interface LibraryMetadataService {
 
     <T> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> spec);
 
+    @Deprecated
     List<Book> findBookByNameContains(String name);
 
+    @Deprecated
     List<Author> findAuthorByNameContains(String name);
 
+    @Deprecated
     List<BookGenre> findGenreByNameContains(String name);
 
 }

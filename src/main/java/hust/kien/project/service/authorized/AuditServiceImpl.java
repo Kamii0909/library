@@ -1,4 +1,4 @@
-package hust.kien.project.service.auth;
+package hust.kien.project.service.authorized;
 
 import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +28,12 @@ public class AuditServiceImpl implements AuditService {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public ActiveTicket createActiveTicketWithTimeSpecified(Book book, Client client,
         LocalDate startDate) {
         return ticketService.createActiveTicket(book, client, startDate);
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public ClosedTicket createClosedTicketWithTimeSpecified(Book book, Client client,
         LocalDate startDate, LocalDate endDate) {
         return ticketService.createClosedTicket(book, client, startDate, endDate);

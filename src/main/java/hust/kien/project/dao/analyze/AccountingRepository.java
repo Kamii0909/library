@@ -1,4 +1,4 @@
-package hust.kien.project.dao.client;
+package hust.kien.project.dao.analyze;
 
 import java.time.LocalDate;
 
