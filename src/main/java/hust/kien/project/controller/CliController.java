@@ -3,11 +3,10 @@ package hust.kien.project.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import hust.kien.project.model.auth.LibraryEmployee;
 import hust.kien.project.model.auth.LibraryRole;
@@ -37,11 +36,7 @@ public class CliController implements CommandLineRunner {
     @Autowired
     private ManagerService managerService;
 
-
-    @EventListener(classes = ApplicationReadyEvent.class)
-    public void run() {
-        
-    }
+    private Random r = new Random();
 
     /**
      * Preload data
@@ -57,7 +52,7 @@ public class CliController implements CommandLineRunner {
             .stock(random(seed) + 3)
             .reimburseCost(random(seed * 3))
             .build();
-        book = metadataService.saveOrUpdate(book);
+        metadataService.saveOrUpdate(book);
 
         // Add a book genre
         BookGenre genre = new BookGenre("Genre " + random(seed));
@@ -97,7 +92,7 @@ public class CliController implements CommandLineRunner {
                 .back());
 
         // Get a random book
-        book = books.get((int) (Math.random() * books.size()));
+        book = books.get(random(seed));
 
         // Associate it with an extra author and a genre
         book.getBookInfo().getAuthors().add(author);
@@ -145,6 +140,6 @@ public class CliController implements CommandLineRunner {
      * Helper method
      */
     private int random(int max) {
-        return (int) (Math.random() * max);
+        return r.nextInt(max);
     }
 }
