@@ -1,4 +1,4 @@
-package hust.kien.project.service.auth;
+package hust.kien.project.service.auth.internal;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import hust.kien.project.model.auth.LibraryEmployee;
 import hust.kien.project.model.auth.LibraryRole;
+import hust.kien.project.service.auth.AuthorizedContextHolder;
 import hust.kien.project.service.authorized.AuditService;
 import hust.kien.project.service.authorized.AuthorizedService;
 import hust.kien.project.service.authorized.LibrarianService;
@@ -27,6 +28,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public AuthorizedContextHolder authorize(LibraryEmployee employee) {
+        if (employee == null) {
+            return null;
+        }
+        
         currentlyLoggedInEmployee = employee;
 
         Map<LibraryRole, AuthorizedService> map = new HashMap<>();

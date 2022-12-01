@@ -18,6 +18,7 @@ import hust.kien.project.service.dynamic.GeneralLibrarySpecificationBuilder;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW)
+// @Transactional(propagation = Propagation.NESTED)
 @SuppressWarnings("unchecked")
 public class LibraryMetadataServiceImpl implements LibraryMetadataService {
 
@@ -41,26 +42,31 @@ public class LibraryMetadataServiceImpl implements LibraryMetadataService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+    // @Transactional(readOnly = true)
     public <T> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> spec) {
         return repositoryFactory.getRepository(spec.libraryType()).findAll(spec.build());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Book> findBookByNameContains(String name) {
         return ((BookRepository) repositoryFactory.getRepository(Book.class))
             .findByBookInfo_NameIgnoreCaseLike("%" + name + "%");
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Author> findAuthorByNameContains(String name) {
         return ((AuthorRepository) repositoryFactory.getRepository(Author.class))
             .findByAuthorInfo_NameIgnoreCaseLike("%" + name + "%");
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<BookGenre> findGenreByNameContains(String name) {
         return ((BookGenreRepository) repositoryFactory.getRepository(BookGenre.class))
-        .findByNameLikeIgnoreCase("%" + name + "%");
+            .findByNameLikeIgnoreCase("%" + name + "%");
     }
 
 }

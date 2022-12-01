@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 // import org.hibernate.annotations.BatchSize;
 import hust.kien.project.model.author.Author;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.ManyToMany;
 import lombok.Builder;
@@ -28,12 +27,12 @@ public class BookInfo {
     @ToString.Include
     private int releasedYear;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     // @BatchSize(size = 5)
     @Builder.Default
     private Set<BookGenre> bookGenres = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     // @BatchSize(size = 5)
     @Builder.Default
     private Set<Author> authors = new HashSet<>();

@@ -19,8 +19,8 @@
   <version>1</version>
 
   <properties>
-    <maven.compiler.source>18</maven.compiler.source>
-    <maven.compiler.target>18</maven.compiler.target>
+    <maven.compiler.source>19</maven.compiler.source>
+    <maven.compiler.target>19</maven.compiler.target>
     <sqlite.version>3.39.4.1</sqlite.version>
     <hibernate.version>6.1.5.Final</hibernate.version>
 

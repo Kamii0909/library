@@ -10,8 +10,10 @@ import hust.kien.project.model.client.Client;
 import hust.kien.project.model.ticket.ActiveTicket;
 import hust.kien.project.model.ticket.ClosedTicket;
 import hust.kien.project.model.ticket.Ticket;
+import hust.kien.project.service.ClientOverlimitException;
 import hust.kien.project.service.OutOfStockException;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
+import hust.kien.project.service.dynamic.ClientSpecficationBuilder;
 
 @Service
 @Transactional
@@ -29,13 +31,30 @@ public class TicketServiceImpl implements TicketService {
                 .get(0);
         }
 
+        // The number of book in stock
         int i = book.getBookStock().getStock();
 
-        if( i > 0) {
-            book.getBookStock().setStock( i - 1);
+        if (i > 0) {
+            book.getBookStock().setStock(i - 1);
+        } else
+            throw new OutOfStockException(book);
+
+        if (!Hibernate.isInitialized(client.getRentInfo().getActiveTickets())) {
+            client = metadataService
+                .dynamicFind(new ClientSpecficationBuilder()
+                    .withId(client.getId())
+                    .initCollection()
+                    .activeTickets().back())
+                .get(0);
         }
-        else throw new OutOfStockException("Book " + book.getBookInfo().getName() + " with id " + book.getId());
-        
+
+        // The number of books a client is holding
+        int j = client.getRentInfo().getActiveTickets().size();
+
+        if (j >= client.getRentInfo().getClientTier().getMaximumCanBorrow()) {
+            throw new ClientOverlimitException(client);
+        }
+
         metadataService.saveOrUpdate(book);
 
         ActiveTicket newTicket = ActiveTicket.builder()
