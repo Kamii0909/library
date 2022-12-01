@@ -1,58 +1,45 @@
 package hust.kien.project.model.client;
 
-import java.util.Set;
-import org.hibernate.annotations.Where;
-import hust.kien.project.model.rent.BookRentContract;
+import java.time.LocalDate;
+import java.util.List;
+import hust.kien.project.model.ticket.ActiveTicket;
+import hust.kien.project.model.ticket.ClosedTicket;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Embeddable
+@Getter
+@Setter
+@ToString(onlyExplicitlyIncluded = true, includeFieldNames = false)
+@NoArgsConstructor
 public class ClientRentInfo {
-    
+
     @Enumerated(EnumType.STRING)
+    @ToString.Include
     private ClientTier clientTier;
-    
+
+    private Subscription subscription;
 
     @OneToMany(mappedBy = "client")
-    @Where(clause = "strftime('%s', 'now') - endDate/1000 > 0")
-    private Set<BookRentContract> completedContracts;
-    
+    private List<ActiveTicket> activeTickets;
+
     @OneToMany(mappedBy = "client")
-    @Where(clause = "strftime('%s', 'now') - endDate/1000 <= 0")
-    private Set<BookRentContract> ongoingContracts;
-    
+    private List<ClosedTicket> closedTickets;
 
-    
-    public ClientRentInfo(ClientTier clientTier) {
+    @Builder
+    public ClientRentInfo(ClientTier clientTier, LocalDate startDate, LocalDate endDate) {
         this.clientTier = clientTier;
+        this.subscription = Subscription.builder()
+            .startDate(startDate)
+            .endDate(endDate)
+            .build();
     }
 
-    public ClientRentInfo() {}
-
-    public ClientTier getClientTier() {
-        return clientTier;
-    }
-
-    public void setClientTier(ClientTier clientTier) {
-        this.clientTier = clientTier;
-    }
-    
-
-    public Set<BookRentContract> getCompletedContracts() {
-        return completedContracts;
-    }
-
-    public void setCompletedContracts(Set<BookRentContract> completedContracts) {
-        this.completedContracts = completedContracts;
-    }
-
-    public Set<BookRentContract> getOngoingContracts() {
-        return ongoingContracts;
-    }
-
-    public void setOngoingContracts(Set<BookRentContract> ongoingContracts) {
-        this.ongoingContracts = ongoingContracts;
-    }
 }

@@ -1,48 +1,33 @@
 package hust.kien.project.model.author;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.ManyToMany;
-
 import java.util.HashSet;
 import java.util.Set;
 import hust.kien.project.model.book.Book;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.ManyToMany;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Embeddable
+@Getter
+@Setter
+@ToString(onlyExplicitlyIncluded = true, includeFieldNames = false)
+@NoArgsConstructor
+@SuperBuilder
 public class AuthorInfo {
+    
+    @ToString.Include
     private String name;
+
+    @ToString.Include
     private int age;
+
     @ManyToMany(mappedBy = "bookInfo.authors")
+    @Builder.Default
     private Set<Book> books = new HashSet<>();
 
-    public AuthorInfo() {
-    }
-
-    public AuthorInfo(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public Set<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(Set<Book> books) {
-        this.books = books;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 }

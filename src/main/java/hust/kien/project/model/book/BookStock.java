@@ -1,69 +1,43 @@
 package hust.kien.project.model.book;
 
-import java.util.HashSet;
-import java.util.Set;
-import org.hibernate.annotations.Where;
-import hust.kien.project.model.rent.BookRentContract;
+import java.util.List;
+import hust.kien.project.model.ticket.ActiveTicket;
+import hust.kien.project.model.ticket.ClosedTicket;
+import java.util.ArrayList;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Embeddable
+@Getter
+@Setter
+@ToString(onlyExplicitlyIncluded = true)
+@NoArgsConstructor
+@SuperBuilder
 public class BookStock {
+
+    @ToString.Include
     private int stock;
+
+    @ToString.Include
     private double reimburseCost;
 
+    @OneToMany(mappedBy = "book")
+    @Builder.Default
+    private List<ClosedTicket> completedContracts = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
-    @Where(clause = "strftime('%s', 'now') - endDate/1000 > 0")
-    private Set<BookRentContract> completedContracts = new HashSet<>();
-
-
-    @OneToMany(mappedBy = "book")
-    @Where(clause = "strftime('%s', 'now') - endDate/1000 <= 0")
-    private Set<BookRentContract> ongoingContracts = new HashSet<>();
+    @Builder.Default
+    private List<ActiveTicket> ongoingContracts = new ArrayList<>();
 
 
     public BookStock(int stock, double reimburseCost) {
         this.stock = stock;
         this.reimburseCost = reimburseCost;
     }
-
-    public BookStock() {}
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-
-    public double getReimburseCost() {
-        return reimburseCost;
-    }
-
-    public void setReimburseCost(double reimburseCost) {
-        this.reimburseCost = reimburseCost;
-    }
-
-
-    public Set<BookRentContract> getCompletedContracts() {
-        return completedContracts;
-    }
-
-    public void setCompletedContracts(Set<BookRentContract> completedContracts) {
-        this.completedContracts = completedContracts;
-    }
-
-
-    public Set<BookRentContract> getOngoingContracts() {
-        return ongoingContracts;
-    }
-
-    public void setOngoingContracts(Set<BookRentContract> ongoingContracts) {
-        this.ongoingContracts = ongoingContracts;
-    }
-
-
 }

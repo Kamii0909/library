@@ -1,32 +1,25 @@
 package hust.kien.project.model.client;
 
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Embeddable
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 public class ClientContactInfo {
+
     private String name;
+
     private String address;
 
-    public ClientContactInfo() {}
 
-    public ClientContactInfo(String name, String address) {
-        this.name = name;
-        this.address = address;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }

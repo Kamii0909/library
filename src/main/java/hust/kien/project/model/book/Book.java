@@ -1,51 +1,46 @@
 package hust.kien.project.model.book;
 
+import hust.kien.project.model.LibraryLocatable;
+import hust.kien.project.model.LibraryPersistable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-public class Book {
+@Getter
+@Setter
+@ToString(includeFieldNames = false)
+@NoArgsConstructor
+public class Book implements LibraryLocatable, LibraryPersistable {
     @Id
     @GeneratedValue
-    private int id;
-    @Embedded private BookInfo bookInfo;
-    @Embedded private BookStock bookStock;
+    private Long id;
 
-    public Book() {
+    @Embedded
+    private BookInfo bookInfo;
+
+    @Embedded
+    private BookStock bookStock;
+
+    @Builder
+    public Book(String name, int releasedYear, int stock, double reimburseCost) {
+        this.bookInfo = BookInfo.builder()
+            .name(name)
+            .releasedYear(releasedYear)
+            .build();
+        this.bookStock = BookStock.builder()
+            .stock(stock)
+            .reimburseCost(reimburseCost)
+            .build();
     }
 
-    public Book(BookInfo bookInfo) {
-        this.bookInfo = bookInfo;
-    }
-
-    public int getid() {
-        return id;
-    }
-
-    public void setid(int id) {
-        this.id = id;
-    }
-
-    
-    public BookInfo getBookInfo() {
-        return bookInfo;
-    }
-
-    
-    public void setBookInfo(BookInfo bookInfo) {
-        this.bookInfo = bookInfo;
-    }
-    
-
-    
-    public BookStock getBookStock() {
-        return bookStock;
-    }
-
-    public void setBookStock(BookStock bookStock) {
-        this.bookStock = bookStock;
-    }
-    
+    /**
+     * Helper method
+     */
 }

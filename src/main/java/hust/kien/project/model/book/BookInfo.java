@@ -1,66 +1,44 @@
 package hust.kien.project.model.book;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-
 import java.util.HashSet;
 import java.util.Set;
+// import org.hibernate.annotations.BatchSize;
 import hust.kien.project.model.author.Author;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.ManyToMany;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Embeddable
+@Getter
+@Setter
+@ToString(onlyExplicitlyIncluded = true)
+@NoArgsConstructor
+@SuperBuilder
 public class BookInfo {
-    private String bookName;
+
+    @ToString.Include
+    private String name;
+
+    @ToString.Include
     private int releasedYear;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "Book_BookGenre")
+    @ManyToMany
+    // @BatchSize(size = 5)
+    @Builder.Default
     private Set<BookGenre> bookGenres = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "Book_Author")
+    @ManyToMany
+    // @BatchSize(size = 5)
+    @Builder.Default
     private Set<Author> authors = new HashSet<>();
 
-
-    public BookInfo() {}
-
     public BookInfo(String bookName, int releasedYear) {
-        this.bookName = bookName;
+        this.name = bookName;
         this.releasedYear = releasedYear;
     }
-
-    public Set<BookGenre> getBookGenres() {
-        return bookGenres;
-    }
-
-    public void setBookGenres(Set<BookGenre> bookGenres) {
-        this.bookGenres = bookGenres;
-    }
-
-    public String getBookName() {
-        return bookName;
-    }
-
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
-
-    public Set<Author> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(Set<Author> authors) {
-        this.authors = authors;
-    }
-
-    public int getReleasedYear() {
-        return releasedYear;
-    }
-
-    public void setReleasedYear(int releasedYear) {
-        this.releasedYear = releasedYear;
-    }
-
-
 }
