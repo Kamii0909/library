@@ -3,6 +3,8 @@
 
 # IntelliJ IDEA #
 .idea/*
+*.iml
+
 
 # Compiled files #
 target/*

@@ -1,4 +1,4 @@
-package hust.kien.project.controller;
+package hust.kien.project.dao.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class CliController implements CommandLineRunner {
     @Autowired
     private ManagerService managerService;
 
-    private Random r = new Random();
+    private final Random r = new Random();
 
     /**
      * Preload data
@@ -133,7 +133,7 @@ public class CliController implements CommandLineRunner {
             .build();
 
         managerService.createUser(employee, employee.getUsername());
-        
+
     }
 
     /**
