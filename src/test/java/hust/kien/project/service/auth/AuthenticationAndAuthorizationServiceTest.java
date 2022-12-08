@@ -1,22 +1,20 @@
 package hust.kien.project.service.auth;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.service.authorized.LibrarianService;
 import hust.kien.project.service.dynamic.AuthorSpecificationBuilder;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 public class AuthenticationAndAuthorizationServiceTest {
@@ -28,8 +26,7 @@ public class AuthenticationAndAuthorizationServiceTest {
     @ValueSource(strings = {"kienht3", "kienht4", "kienht5"})
     void testAuth(String authenticationKey) {
 
-        AuthorizedContextHolder securityContext =
-            authService.auth(authenticationKey, authenticationKey);
+        AuthorizedContextHolder securityContext = authService.auth(authenticationKey, authenticationKey);
 
         assertNotNull(securityContext);
 
@@ -56,7 +53,8 @@ public class AuthenticationAndAuthorizationServiceTest {
             }
         }
 
-        Book book = Book.builder()
+        Book book = Book
+            .builder()
             .name("Book created from Service")
             .releasedYear(2022)
             .stock(7)
@@ -67,19 +65,24 @@ public class AuthenticationAndAuthorizationServiceTest {
 
         book = librarianService.saveOrUpdate(book);
 
-        book = librarianService.dynamicFind(
-            new BookSpecificationBuilder()
-                .withId(book.getId())
-                .initCollection()
-                .authors()
-                .back())
+        book = librarianService
+            .dynamicFind(new BookSpecificationBuilder().withId(book.getId()).initCollection().authors().back())
             .get(0);
 
-        System.out.println(authorSet.stream().map(a -> a.getId()).collect(Collectors.toList()));
+        System.out.println(authorSet.stream().map(Author::getId).collect(Collectors.toList()));
 
-        assertEquals(
-            authorSet.stream().map(a -> a.getId()).collect(Collectors.toCollection(TreeSet::new)),
-            book.getBookInfo().getAuthors().stream().map(a -> a.getId()).collect(Collectors.toCollection(TreeSet::new)));
+        assertEquals(authorSet
+                         .stream()
+                         .map(Author::getId)
+                         .collect(Collectors.toCollection(TreeSet::new))
+                         .hashCode(),
+                     book
+                         .getBookInfo()
+                         .getAuthors()
+                         .stream()
+                         .map(Author::getId)
+                         .collect(Collectors.toCollection(TreeSet::new))
+                         .hashCode());
     }
 
 }

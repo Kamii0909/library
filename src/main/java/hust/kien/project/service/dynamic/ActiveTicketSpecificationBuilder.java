@@ -3,7 +3,7 @@ package hust.kien.project.service.dynamic;
 import java.time.LocalDate;
 import ch.qos.logback.core.net.server.Client;
 import hust.kien.project.model.book.Book;
-import hust.kien.project.model.rent.Ticket_;
+import hust.kien.project.model.ticket.Ticket_;
 import hust.kien.project.model.ticket.ActiveTicket;
 
 public class ActiveTicketSpecificationBuilder extends GeneralLibrarySpecificationBuilder<ActiveTicket> {
@@ -28,6 +28,9 @@ public class ActiveTicketSpecificationBuilder extends GeneralLibrarySpecificatio
         return ActiveTicket.class;
     }
 
+    /**
+     * @deprecated 
+     */
     @Override
     @Deprecated
     public ActiveTicketCollectionInitBuilder initCollection() {

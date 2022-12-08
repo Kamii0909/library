@@ -3,6 +3,10 @@
 
 # IntelliJ IDEA #
 .idea/*
+*.iml
 
 # Compiled files #
 target/*
+
+# Log
+log/app.log
