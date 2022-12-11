@@ -125,13 +125,12 @@
               <artifactId>hibernate-jpamodelgen</artifactId>
               <version>${hibernate.version}</version>
             </annotationProcessorPath>
+            <annotationProcessorPath>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </annotationProcessorPath>
           </annotationProcessorPaths>
-
-          <annotationProcessors>
-            <annotationProcessor>
-              org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
-            </annotationProcessor>
-          </annotationProcessors>
         </configuration>
       </plugin>
       <plugin>

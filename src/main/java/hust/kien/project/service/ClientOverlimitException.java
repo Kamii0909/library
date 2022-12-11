@@ -4,7 +4,7 @@ import hust.kien.project.model.client.Client;
 
 public class ClientOverlimitException extends RuntimeException {
 
-    private Client client;
+    private final transient Client client;
 
     public ClientOverlimitException(Client client) {
         super("A client with " + client.getRentInfo().getClientTier()

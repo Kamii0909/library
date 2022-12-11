@@ -10,7 +10,6 @@ import hust.kien.project.service.auth.AuthorizedContextHolder;
 import hust.kien.project.service.authorized.LibrarianService;
 import hust.kien.project.service.authorized.ManagerService;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
-import hust.kien.project.service.dynamic.TicketSpecificationBuilder;
 
 @SpringBootTest
 public class AppTest {

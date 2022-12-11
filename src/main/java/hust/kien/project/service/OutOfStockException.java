@@ -4,7 +4,7 @@ import hust.kien.project.model.book.Book;
 
 public class OutOfStockException extends RuntimeException {
 
-    private Book book;
+    private final transient Book book;
 
     public OutOfStockException(Book book) {
         super("The book you attempted to borrow is currently out of stock\n" +
