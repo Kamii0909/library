@@ -9,27 +9,32 @@ import java.util.Collection;
 public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder<Book> {
 
     public BookSpecificationBuilder nameContains(String name) {
-        specList.add((root, cq, cb) -> cb.like(root.get(Book_.bookInfo).get(BookInfo_.name), "%" + name + "%"));
+        specList.add((root, cq, cb) -> cb.like(root.get(Book_.bookInfo).get(BookInfo_.name),
+            "%" + name + "%"));
         return this;
     }
 
     public BookSpecificationBuilder releasedBetween(int from, int to) {
-        specList.add((root, cq, cb) -> cb.between(root.get(Book_.bookInfo).get(BookInfo_.releasedYear), from, to));
+        specList.add((root, cq, cb) -> cb
+            .between(root.get(Book_.bookInfo).get(BookInfo_.releasedYear), from, to));
         return this;
     }
 
     public BookSpecificationBuilder stockBetween(int from, int to) {
-        specList.add((root, cq, cb) -> cb.between(root.get(Book_.bookStock).get(BookStock_.stock), from, to));
+        specList.add((root, cq, cb) -> cb.between(root.get(Book_.bookStock).get(BookStock_.stock),
+            from, to));
         return this;
     }
 
-    public BookSpecificationBuilder reimburseCostBetween(int from, int to) {
-        specList.add((root, cq, cb) -> cb.between(root.get(Book_.bookStock).get(BookStock_.stock), from, to));
+    public BookSpecificationBuilder reimburseCostBetween(double from, double to) {
+        specList.add((root, cq, cb) -> cb
+            .between(root.get(Book_.bookStock).get(BookStock_.reimburseCost), from, to));
         return this;
     }
 
     public BookSpecificationBuilder fromAuthor(Author author) {
-        specList.add((root, cq, cb) -> cb.isMember(author, root.get(Book_.bookInfo).get(BookInfo_.authors)));
+        specList.add(
+            (root, cq, cb) -> cb.isMember(author, root.get(Book_.bookInfo).get(BookInfo_.authors)));
         return this;
     }
 
@@ -41,12 +46,14 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
     }
 
     public BookSpecificationBuilder fromAtLeastOneAuthor(Collection<Author> authors) {
-        specList.add((root, cq, cb) -> root.join(Book_.bookInfo).join(BookInfo_.authors).in(authors));
+        specList
+            .add((root, cq, cb) -> root.join(Book_.bookInfo).join(BookInfo_.authors).in(authors));
         return this;
     }
 
     public BookSpecificationBuilder withGenre(BookGenre genre) {
-        specList.add((root, cq, cb) -> cb.isMember(genre, root.get(Book_.bookInfo).get(BookInfo_.bookGenres)));
+        specList.add((root, cq, cb) -> cb.isMember(genre,
+            root.get(Book_.bookInfo).get(BookInfo_.bookGenres)));
         return this;
     }
 
@@ -58,7 +65,8 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
     }
 
     public BookSpecificationBuilder withAtLeastOneOfGenre(Collection<BookGenre> genres) {
-        specList.add((root, cq, cb) -> root.join(Book_.bookInfo).join(BookInfo_.authors).in(genres));
+        specList
+            .add((root, cq, cb) -> root.join(Book_.bookInfo).join(BookInfo_.authors).in(genres));
         return this;
     }
 

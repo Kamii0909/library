@@ -12,4 +12,4 @@ target/*
 log/app.log
 
 # Github
-.github
+.github/*

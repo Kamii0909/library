@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ClientTier {
-    FIRST_CLASS(100, 20), NORMAL(30, 10);
+    FIRST_CLASS(10, 20), NORMAL(3, 10);
 
     private int maximumCanBorrow;
 
