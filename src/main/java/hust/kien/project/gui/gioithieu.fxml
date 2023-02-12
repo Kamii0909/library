@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hust.kien.project.controller.GioiThieuController">
+   <children>
+      <VBox fx:id="vBox_Content" alignment="TOP_CENTER" prefWidth="2000.0" style="-fx-background-color: #FFF;">
+         <children>
+            <Label text="GIỚI THIỆU VỀ PHẦN MỀM">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Separator prefHeight="17.0" prefWidth="600.0" />
+         </children>
+         <HBox.margin>
+            <Insets right="20.0" />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>

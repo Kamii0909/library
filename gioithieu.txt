@@ -1,0 +1,38 @@
+<h3>MỤC LỤC</h3>
+<br>
+<ul>
+	<li><a href="#">•**MỤC LỤC**</a></li>
+	<li><a href="#">•**GIỚI THIỆU**</a></li>
+	<li><a href="#">•**THÀNH VIÊN NHÓM**</a></li>
+	<li><a href="#">•**PROJECT I: QUẢN LÝ THƯ VIỆN**</a></li>
+	<li><a href="#">•**ĐỊNH HƯỚNG PHÁT TRIỂN**</a></li>
+	<li><a href="#">•**QUẢN LÝ**</a></li>
+	<li><a href="#">•**TRIỂN KHAI**</a></li>
+	<li><a href="#">•**GIAI ĐOẠN I**</a></li>
+	<li><a href="#">•**TIẾN ĐỘ**</a></li>
+</ul>
+<h3>GIỚI THIỆU</h3>
+<hr>
+<h3>THÀNH VIÊN NHÓM</h3>
+<hr>
+<ul>
+	<li><p style="font-weight: bold;">Trưởng nhóm</p>: Hà Trung Kiên - 20190078</li>
+	<li><p style="font-weight: bold;">Thành viên</p>: Nguyễn Huy Hoàng - 20183749</li>
+	<li><p style="font-weight: bold;">Thành viên</p>: Hà Trung Nam Hải - 20183913</li>
+</ul>
+<h3>PROJECT I: QUẢN LÝ THƯ VIỆN</h3>
+<hr>
+<p>Yêu cầu chung: Xây dựng hệ thống quản lý sách cho thư viện.</p>
+<p>Chức năng:  Kho metadata sách cho thư viện, đầy đủ các chức năng cho mượn, tính tiền, cùng một số chức năng quản lý.</p>
+<h3>ĐỊNH HƯỚNG PHÁT TRIỂN</h3>
+<hr>
+<p>Đối tượng sử dụng: Phần mềm dành cho thủ thư có thể kiểm kê, quản lý các đầu sách trong thư viện. </p>
+<p>Phần mềm được viết chủ yếu bằng Java.</p>
+<p>TODO: Phiên bản dành cho client - người tới mượn sách.</p>
+<h3>QUẢN LÝ</h3>
+<hr>
+<p>Với việc các yêu cầu tính năng liên tục được thay đổi, dự án sẽ được quản lý theo mô hình scrum, với khả năng thích nghi tốt hơn.</p>
+<p>Các phần của dự án sẽ được ưu tiên thực hiện với khả năng hoạt động động lập cao, còn gọi là modularity. Các mảnh nhỏ sẽ được thực hiện lần lượt hoặc đồng thời, sau đó được lắp ghép lại.</p>
+<h3>TRIỂN KHAI</h3>
+<hr>
+<p>Phù hợp nhất với yêu cầu sẽ là MVC truyền thống, cho phép tách các phần của dự án làm 3 yêu tố riêng biệt. </p>

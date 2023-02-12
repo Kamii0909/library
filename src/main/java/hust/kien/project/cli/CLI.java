@@ -1,4 +1,4 @@
-package hust.kien.project.controller;
+package hust.kien.project.cli;
 
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.service.authorized.LibrarianService;
 
-@Component
+// @Component
 @Profile("dev")
 public class CLI {
 
