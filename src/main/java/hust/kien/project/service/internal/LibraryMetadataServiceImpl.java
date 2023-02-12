@@ -8,11 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import hust.kien.project.dao.LibraryRepository;
 import hust.kien.project.dao.LibraryRepositoryFactory;
-import hust.kien.project.dao.author.AuthorRepository;
 import hust.kien.project.dao.book.BookGenreRepository;
-import hust.kien.project.dao.book.BookRepository;
-import hust.kien.project.model.author.Author;
-import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.service.dynamic.GeneralLibrarySpecificationBuilder;
 
@@ -46,20 +42,6 @@ public class LibraryMetadataServiceImpl implements LibraryMetadataService {
     // @Transactional(readOnly = true)
     public <T> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> spec) {
         return repositoryFactory.getRepository(spec.libraryType()).findAll(spec.build());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Book> findBookByNameContains(String name) {
-        return ((BookRepository) repositoryFactory.getRepository(Book.class))
-            .findByBookInfo_NameIgnoreCaseLike("%" + name + "%");
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Author> findAuthorByNameContains(String name) {
-        return ((AuthorRepository) repositoryFactory.getRepository(Author.class))
-            .findByAuthorInfo_NameIgnoreCaseLike("%" + name + "%");
     }
 
     @Override

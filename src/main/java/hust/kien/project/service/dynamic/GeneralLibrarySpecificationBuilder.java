@@ -10,7 +10,7 @@ public abstract class GeneralLibrarySpecificationBuilder<T> {
 
     public abstract GeneralLibrarySpecificationBuilder<T> withId(Object id);
 
-    public GeneralLibrarySpecificationBuilder() {
+    protected GeneralLibrarySpecificationBuilder() {
         specList = new ArrayList<>();
     }
 

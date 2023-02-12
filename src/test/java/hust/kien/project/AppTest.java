@@ -29,11 +29,20 @@ public class AppTest {
 
         LibrarianService librarianService = securityContext.getLibrarianService();
 
-        Book book = librarianService
-            .dynamicFind(new BookSpecificationBuilder().nameContains("test")).get(0);
+        Book book = librarianService.dynamicFind(
+            new BookSpecificationBuilder()
+                .nameContains("test")
+                .stockBetween(1, 1000)
+                .releasedBetween(2022, 2023)
+                .initCollection()
+                .authors()
+                .genres()
+                .back())
+            .get(0);
 
         book.getBookInfo().setName("123 changed");
 
         librarianService.saveOrUpdate(book);
     }
 }
+

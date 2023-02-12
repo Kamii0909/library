@@ -5,6 +5,7 @@ import java.util.List;
 import hust.kien.project.model.ticket.ActiveTicket;
 import hust.kien.project.model.ticket.ClosedTicket;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
@@ -25,6 +26,7 @@ public class ClientRentInfo {
     @ToString.Include
     private ClientTier clientTier;
 
+    @Embedded
     private Subscription subscription;
 
     @OneToMany(mappedBy = "client")

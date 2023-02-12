@@ -17,6 +17,7 @@ import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientTier;
 import hust.kien.project.model.ticket.ActiveTicket;
 import hust.kien.project.service.authorized.ManagerService;
+import hust.kien.project.service.dynamic.AuthorSpecificationBuilder;
 import hust.kien.project.service.dynamic.BookSpecificationBuilder;
 import hust.kien.project.service.dynamic.ClientSpecficationBuilder;
 import hust.kien.project.service.internal.LibraryMetadataService;
@@ -24,7 +25,6 @@ import hust.kien.project.service.internal.TicketService;
 
 @Component
 @Profile("dev")
-@SuppressWarnings("deprecation")
 public class CliController implements CommandLineRunner {
 
     @Autowired
@@ -77,7 +77,7 @@ public class CliController implements CommandLineRunner {
         metadataService.saveOrUpdate(client);
 
 
-        List<Author> authors = metadataService.findAuthorByNameContains("Aut");
+        List<Author> authors = metadataService.dynamicFind(new AuthorSpecificationBuilder().nameContains("Aut"));
 
         List<BookGenre> genres = metadataService.findGenreByNameContains("Gen");
 

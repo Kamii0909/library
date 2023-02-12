@@ -1,6 +1,6 @@
 package hust.kien.project.service.auth.internal;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import hust.kien.project.service.authorized.ManagerService;
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
 
-    private static LibraryEmployee currentlyLoggedInEmployee;
+    private LibraryEmployee currentlyLoggedInEmployee;
 
     @Autowired
     private AuditService auditService;
@@ -31,10 +31,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         if (employee == null) {
             return null;
         }
-        
-        currentlyLoggedInEmployee = employee;
+        synchronized (this) {
+            currentlyLoggedInEmployee = employee;
+        }
 
-        Map<LibraryRole, AuthorizedService> map = new HashMap<>();
+
+        Map<LibraryRole, AuthorizedService> map = new EnumMap<>(LibraryRole.class);
 
         for (LibraryRole role : employee.getRoles()) {
             map.put(role, getService(role));

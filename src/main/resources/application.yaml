@@ -8,6 +8,7 @@ spring:
       auto-commit: false
       minimum-idle: 1
       maximum-pool-size: 1
+      poolName: SQLite Pool - Main application
   jpa:
     # generate-ddl: true
     hibernate:
@@ -19,6 +20,14 @@ spring:
     properties:
       hibernate:
         "[current_session_context_class]": org.springframework.orm.hibernate5.SpringSessionContext
+        jpa:
+      # javax: 
+      #   persistence:
+      #     schema-generation:
+      #       create-source: metadata
+      #       scripts:
+      #         action: create
+      #         create-target: src/main/resources/ddl_jpa_creation.sql
 logging:
   level:
     org:
