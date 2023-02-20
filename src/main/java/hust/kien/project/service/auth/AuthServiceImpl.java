@@ -15,7 +15,7 @@ class AuthServiceImpl implements AuthService {
     private AuthorizationService authorizationService;
 
     @Override
-    public AuthorizedContextHolder auth(String username, String password) {
+    public AuthorizedContextHolder auth(String username, String password) throws NoUserFoundException, BadCredentialException{
         return authorizationService
             .authorize(authenticationService.authenticate(username, password));
     }

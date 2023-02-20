@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 @Converter(autoApply = true)
 public class LocalDateConverter implements AttributeConverter<LocalDate, String> {
 
-    public static LocalDate MAX = LocalDate.of(2099, 1, 1);
+    public static final LocalDate MAX = LocalDate.of(2099, 1, 1);
 
     @Override
     public String convertToDatabaseColumn(LocalDate attribute) {

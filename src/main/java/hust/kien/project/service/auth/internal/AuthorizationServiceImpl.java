@@ -28,14 +28,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public AuthorizedContextHolder authorize(LibraryEmployee employee) {
-        if (employee == null) {
-            return null;
-        }
+
         synchronized (this) {
             currentlyLoggedInEmployee = employee;
         }
-
-
+        
         Map<LibraryRole, AuthorizedService> map = new EnumMap<>(LibraryRole.class);
 
         for (LibraryRole role : employee.getRoles()) {

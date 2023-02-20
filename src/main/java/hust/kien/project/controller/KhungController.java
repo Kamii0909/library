@@ -1,57 +1,106 @@
 package hust.kien.project.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
+import hust.kien.project.service.auth.AuthorizedContextHolder;
+import hust.kien.project.view.WindowManager;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Window;
 
-public class KhungController implements Initializable {
+@Component
+@Lazy
+public class KhungController {
+
+	private final Resource avatarImageResource;
+	private final Resource logoImageResource;
+	private final ObjectProvider<Region> manageBookRegionProvider;
+	private final ObjectProvider<Region> manageClientRegionProvider;
+	private final ObjectProvider<Region> manageAuthorRegionProvider;
+	private final ObjectProvider<Region> manageGenreRegionProvider;
+	private final ObjectProvider<Region> manageTicketRegionProvider;
+	private final ObjectProvider<Region> userInformationRegionProvider;
+	private final ObjectProvider<Region> statisticRegionProvider;
+	private final ObjectProvider<Region> introductionPageRegionProvider;
+
+
+	public KhungController(@Qualifier("avatarImage") Resource avatarImage,
+		@Qualifier("logoImage") Resource logoImage,
+		@Qualifier("manageBookRegion") ObjectProvider<Region> manageBookRegionProvider,
+		@Qualifier("manageClientRegion") ObjectProvider<Region> manageClientRegionProvider,
+		@Qualifier("manageAuthorRegion") ObjectProvider<Region> manageAuthorRegionProvider,
+		@Qualifier("manageGenreRegion") ObjectProvider<Region> manageGenreRegionProvider,
+		@Qualifier("manageTicketRegion") ObjectProvider<Region> manageTicketRegionProvider,
+		@Qualifier("userInformationRegion") ObjectProvider<Region> userInformationRegionProvider,
+		@Qualifier("statisticRegion") ObjectProvider<Region> statisticRegionProvider,
+		@Qualifier("introductionPageRegion") ObjectProvider<Region> introductionPageRegionProvider) {
+		this.avatarImageResource = avatarImage;
+		this.logoImageResource = logoImage;
+		this.introductionPageRegionProvider = introductionPageRegionProvider;
+		this.manageBookRegionProvider = manageBookRegionProvider;
+		this.manageClientRegionProvider = manageClientRegionProvider;
+		this.manageAuthorRegionProvider = manageAuthorRegionProvider;
+		this.manageGenreRegionProvider = manageGenreRegionProvider;
+		this.userInformationRegionProvider = userInformationRegionProvider;
+		this.statisticRegionProvider = statisticRegionProvider;
+		this.manageTicketRegionProvider = manageTicketRegionProvider;
+	}
+
 
 	@FXML
-	private HBox hBoxContent;
+	private AnchorPane mainContent;
 
 	@FXML
-	private VBox sub_menu;
+	private VBox accountMenu;
 
 	@FXML
-	private Button btnQlSach;
+	private GridPane navBar;
 
 	@FXML
-	private Button btnQlTacGia;
+	private Button manageBookButton;
 
 	@FXML
-	private Button btnTheLoai;
+	private Button manageAuthorButton;
 
 	@FXML
-	private Button btnNguoiDung;
+	private Button manageGenreButton;
 
 	@FXML
-	private Button btnThongTinTk;
-	
-	@FXML
-    private Button btnKhuyenMai;
+	private Button manageClientButton;
 
 	@FXML
-	private Button btnGioiThieu;
-	
+	private Button userInformationButton;
+
 	@FXML
-    private Button btnThongKe;
+	private Button manageTicketButton;
+
+	@FXML
+	private Button introductionPageButton;
+
+	@FXML
+	private Button statisticButton;
 
 	@FXML
 	private ImageView avatar;
@@ -59,164 +108,105 @@ public class KhungController implements Initializable {
 	@FXML
 	private ImageView logo;
 
-	private List<Button> listButton = new ArrayList<Button>();
-	
-	private int checkSubMenu = 1;
+	private Map<Button, ObjectProvider<Region>> buttonRegionMap = new LinkedHashMap<>(8);
 
 	@FXML
-	void openSubMenu(MouseEvent event) {
-		if(checkSubMenu %2 != 0) {
-			open_Sub_Menu();
+	void toggleAccountMenu() {
+		if (accountMenu.isVisible()) {
+			accountMenu.setVisible(false);
+			accountMenu.setPrefWidth(0);
+			accountMenu.setMinWidth(0);
+		} else {
+			accountMenu.setMinWidth(200);
+			accountMenu.setPrefWidth(200);
+			accountMenu.setVisible(true);
 		}
-		else {
-			close_Sub_Menu();
-		}
-		++checkSubMenu;
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		close_Sub_Menu();
-		setAvatar();
-		setLogo();
-		setWidthColumn();
-		clickButtonMenu();
-		hBoxContent.getChildren().clear();
-		try {
-			Region n = (Region)FXMLLoader.load(getClass().getResource("../gui/sach.fxml"));
-			hBoxContent.getChildren().add(n);
-			n.prefWidthProperty().bind(hBoxContent.widthProperty());
-			n.prefHeightProperty().bind(hBoxContent.heightProperty());
-		} catch (IOException e) {e.printStackTrace();}
+	public void initialize() {
+		toggleAccountMenu();
+
+		setImage(avatar, avatarImageResource);
+		setImage(logo, logoImageResource);
+
+		changeRegionOnContentPane(introductionPageRegionProvider.getIfUnique());
 	}
 
-	public void clickButtonMenu() {
-		listButton.add(btnQlSach);
-		listButton.add(btnQlTacGia);
-		listButton.add(btnTheLoai);
-		listButton.add(btnNguoiDung);
-		listButton.add(btnThongTinTk);
-		listButton.add(btnKhuyenMai);
-		listButton.add(btnThongKe);
-		listButton.add(btnGioiThieu);
-		for (Button b : listButton) {
-			b.addEventHandler(MouseEvent.MOUSE_CLICKED, ev -> {
-				for(Button p : listButton) {
-					p.setStyle("-fx-background-color: #3f4a59");
-					p.setTextFill(Color.WHITE);
-				}
-				b.setStyle("-fx-background-color: #d3e3fd");
-				b.setTextFill(Color.BLACK);
+	public void initializeButtonEventListener(AuthorizedContextHolder authContext) {
+		hideAllButtons();
 
-				// set noi dung
-				hBoxContent.getChildren().clear();
-				if(b.equals(listButton.get(0))) {
-					try {
-						Region n = (Region)FXMLLoader.load(getClass().getResource("../gui/sach.fxml"));
-						hBoxContent.getChildren().add(n);
-						n.prefWidthProperty().bind(hBoxContent.widthProperty());
-						n.prefHeightProperty().bind(hBoxContent.heightProperty());
-					} catch (IOException e) {e.printStackTrace();}
-				}
-				else if(b.equals(listButton.get(1))) {
-					try {
-						Region n = (Region)FXMLLoader.load(getClass().getResource("../gui/qltacgia.fxml"));
-						hBoxContent.getChildren().add(n);
-						n.prefWidthProperty().bind(hBoxContent.widthProperty());
-						n.prefHeightProperty().bind(hBoxContent.heightProperty());
-					} catch (IOException e) {e.printStackTrace();}
-				}
-				else if(b.equals(listButton.get(2))) {
-					try {
-						Region n = (Region)FXMLLoader.load(getClass().getResource("../gui/theloai.fxml"));
-						hBoxContent.getChildren().add(n);
-						n.prefWidthProperty().bind(hBoxContent.widthProperty());
-						n.prefHeightProperty().bind(hBoxContent.heightProperty());
-					} catch (IOException e) {e.printStackTrace();}
-				}
-				else if(b.equals(listButton.get(3))) {
-					try {
-						Region n = (Region)FXMLLoader.load(getClass().getResource("../gui/qlnguoidung.fxml"));
-						hBoxContent.getChildren().add(n);
-						n.prefWidthProperty().bind(hBoxContent.widthProperty());
-						n.prefHeightProperty().bind(hBoxContent.heightProperty());
-					} catch (IOException e) {e.printStackTrace();}
-				}
-				else if(b.equals(listButton.get(4))) {
-					try {
-						Region n = (Region)FXMLLoader.load(getClass().getResource("../gui/thongtintk.fxml"));
-						hBoxContent.getChildren().add(n);
-						n.prefWidthProperty().bind(hBoxContent.widthProperty());
-						n.prefHeightProperty().bind(hBoxContent.heightProperty());
-					} catch (IOException e) {e.printStackTrace();}
-				}
-				else if(b.equals(listButton.get(5))) {
-					try {
-						Region n = (Region)FXMLLoader.load(getClass().getResource("../gui/phieumuon.fxml"));
-						hBoxContent.getChildren().add(n);
-						n.prefWidthProperty().bind(hBoxContent.widthProperty());
-						n.prefHeightProperty().bind(hBoxContent.heightProperty());
-					} catch (IOException e) {e.printStackTrace();}
-				}
-				else if(b.equals(listButton.get(6))) {
-					try {
-						Region n = (Region)FXMLLoader.load(getClass().getResource("../gui/thongke.fxml"));
-						hBoxContent.getChildren().add(n);
-						n.prefWidthProperty().bind(hBoxContent.widthProperty());
-						n.prefHeightProperty().bind(hBoxContent.heightProperty());
-					} catch (IOException e) {e.printStackTrace();}
-				}
-				else if(b.equals(listButton.get(7))) {
-					try {
-						Region n = (Region)FXMLLoader.load(getClass().getResource("../gui/gioithieu.fxml"));
-						hBoxContent.getChildren().add(n);
-						n.prefWidthProperty().bind(hBoxContent.widthProperty());
-						n.prefHeightProperty().bind(hBoxContent.heightProperty());
-					} catch (IOException e) {e.printStackTrace();}
-				}
+		buttonRegionMap.put(introductionPageButton, introductionPageRegionProvider);
+
+		if (authContext.getLibrarianService() != null) {
+			buttonRegionMap.putAll(Map.of(
+				manageBookButton, manageBookRegionProvider,
+				manageAuthorButton, manageAuthorRegionProvider,
+				manageGenreButton, manageGenreRegionProvider,
+				manageClientButton, manageClientRegionProvider,
+				manageTicketButton, manageTicketRegionProvider));
+		}
+		if (authContext.getManagerService() != null) {
+			buttonRegionMap.putAll(Map.of(
+				statisticButton, statisticRegionProvider,
+				userInformationButton, userInformationRegionProvider));
+		}
+		if (authContext.getAuditService() != null) {
+			// TODO
+		}
+
+		int i = 0;
+		for (Entry<Button, ObjectProvider<Region>> entry : buttonRegionMap.entrySet()) {
+
+			Button button = entry.getKey();
+			Region content = entry.getValue().getIfUnique();
+			
+			navBar.add(button, 0, i++);
+
+			RowConstraints rowConstraints = new RowConstraints();
+			rowConstraints.setPercentHeight(100);
+			navBar.getRowConstraints().add(rowConstraints);
+
+			button.setOnMouseClicked(ev -> {
+				clearAllButtonsStyle();
+
+				button.setStyle("-fx-background-color: #d3e3fd");
+				button.setTextFill(Color.BLACK);
+
+				changeRegionOnContentPane(content);
 			});
 		}
 	}
 
-	public void open_Sub_Menu() {
-		sub_menu.setVisible(true);
-		sub_menu.setPrefWidth(200);
-		sub_menu.setMinWidth(200);
-		sub_menu.setMaxWidth(200);
+	private void hideAllButtons() {
+		navBar.getRowConstraints().clear();
+		navBar.getChildren().clear();
 	}
 
-	public void close_Sub_Menu() {
-		sub_menu.setVisible(false);
-		sub_menu.setPrefWidth(0);
-		sub_menu.setMinWidth(0);
-		sub_menu.setMaxWidth(0);
-	}
-
-	public void setAvatar() {
-		File is = new File("image/avatar.jpg");
-		InputStream ip = null;
-		try {
-			ip = new FileInputStream(is);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+	private void clearAllButtonsStyle() {
+		for (Button button : buttonRegionMap.keySet()) {
+			button.setStyle("-fx-background-color: #3f4a59");
+			button.setTextFill(Color.WHITE);
 		}
-		Image image = new Image(ip);
-		avatar.setImage(image);
 	}
 
-	public void setLogo() {
-		File is = new File("image/LOGO1.png");
-		InputStream ip = null;
+	private void changeRegionOnContentPane(Region region) {
+		assert region != null;
+
+		mainContent.getChildren().clear();
+		mainContent.getChildren().add(region);
+
+		region.prefWidthProperty().bind(WindowManager.getStage().widthProperty().subtract(180));
+		region.prefHeightProperty().bind(WindowManager.getStage().heightProperty().subtract(100));
+
+		FxUtils.setAnchorPoint(0, 0, 0, 0, region);
+	}
+
+	private static void setImage(ImageView imageContainer, Resource image) {
 		try {
-			ip = new FileInputStream(is);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			imageContainer.setImage(new Image(image.getInputStream()));
+		} catch (IOException e) {
+			throw new IllegalStateException("Can't load image " + image.getFilename()
+				+ " on container " + imageContainer, e);
 		}
-		Image image = new Image(ip);
-		logo.setImage(image);
-	}
-
-	public void setWidthColumn() {
-
 	}
 }

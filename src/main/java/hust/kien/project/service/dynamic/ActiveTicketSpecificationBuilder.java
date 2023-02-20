@@ -6,13 +6,14 @@ import hust.kien.project.model.book.Book;
 import hust.kien.project.model.ticket.Ticket_;
 import hust.kien.project.model.ticket.ActiveTicket;
 
-public class ActiveTicketSpecificationBuilder extends GeneralLibrarySpecificationBuilder<ActiveTicket> {
+public class ActiveTicketSpecificationBuilder extends
+                                              GeneralLibrarySpecificationBuilder<ActiveTicket> {
 
     public ActiveTicketSpecificationBuilder startDateBetween(LocalDate from, LocalDate to) {
         specList.add((root, cq, cb) -> cb.between(root.get(Ticket_.startDate), from, to));
         return this;
     }
-    
+
     public ActiveTicketSpecificationBuilder book(Book book) {
         specList.add((root, cq, cb) -> cb.equal(root.get(Ticket_.book), book));
         return this;
@@ -29,7 +30,7 @@ public class ActiveTicketSpecificationBuilder extends GeneralLibrarySpecificatio
     }
 
     /**
-     * @deprecated 
+     * @deprecated
      */
     @Override
     @Deprecated
@@ -37,7 +38,8 @@ public class ActiveTicketSpecificationBuilder extends GeneralLibrarySpecificatio
         return new ActiveTicketCollectionInitBuilder();
     }
 
-    public class ActiveTicketCollectionInitBuilder extends LibraryCollectionInitBuilder<ActiveTicket> {
+    public class ActiveTicketCollectionInitBuilder extends
+                                                   LibraryCollectionInitBuilder<ActiveTicket> {
         @Override
         public ActiveTicketSpecificationBuilder back() {
             return ActiveTicketSpecificationBuilder.this;

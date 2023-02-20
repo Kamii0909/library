@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-
+import org.springframework.stereotype.Component;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.web.WebEngine;
@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
+@Component
 public class GioiThieuController implements Initializable {
 
 	@FXML

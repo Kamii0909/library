@@ -1,5 +1,6 @@
 package hust.kien.project.controller;
 
+import org.springframework.stereotype.Component;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
+@Component
 public class ThongTinTkController {
 
 	@FXML

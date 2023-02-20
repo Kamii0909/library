@@ -3,7 +3,8 @@ package hust.kien.project.service.dynamic;
 import hust.kien.project.model.auth.LibraryEmployee;
 import hust.kien.project.model.auth.LibraryEmployee_;
 
-public class LibraryEmployeeSpecificationBuilder extends GeneralLibrarySpecificationBuilder<LibraryEmployee> {
+public class LibraryEmployeeSpecificationBuilder extends
+                                                 GeneralLibrarySpecificationBuilder<LibraryEmployee> {
 
     public LibraryEmployeeSpecificationBuilder withUsername(String username) {
         specList.add((root, cq, cb) -> cb.equal(root.get(LibraryEmployee_.username), username));
@@ -35,5 +36,5 @@ public class LibraryEmployeeSpecificationBuilder extends GeneralLibrarySpecifica
         }
 
     }
-    
+
 }

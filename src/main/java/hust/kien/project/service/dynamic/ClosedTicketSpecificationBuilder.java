@@ -7,7 +7,8 @@ import hust.kien.project.model.ticket.Ticket_;
 import hust.kien.project.model.ticket.ClosedTicket;
 import hust.kien.project.model.ticket.ClosedTicket_;
 
-public class ClosedTicketSpecificationBuilder extends GeneralLibrarySpecificationBuilder<ClosedTicket> {
+public class ClosedTicketSpecificationBuilder extends
+                                              GeneralLibrarySpecificationBuilder<ClosedTicket> {
 
     public ClosedTicketSpecificationBuilder startDateBetween(LocalDate from, LocalDate to) {
         specList.add((root, cq, cb) -> cb.between(root.get(Ticket_.startDate), from, to));
@@ -43,7 +44,8 @@ public class ClosedTicketSpecificationBuilder extends GeneralLibrarySpecificatio
         return new ClosedTicketCollectionInitBuilder();
     }
 
-    public class ClosedTicketCollectionInitBuilder extends LibraryCollectionInitBuilder<ClosedTicket> {
+    public class ClosedTicketCollectionInitBuilder extends
+                                                   LibraryCollectionInitBuilder<ClosedTicket> {
         @Override
         public ClosedTicketSpecificationBuilder back() {
             return ClosedTicketSpecificationBuilder.this;

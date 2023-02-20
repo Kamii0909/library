@@ -4,5 +4,6 @@ public interface AuthService {
     /**
      * Authenticate and authorize
      */
-    AuthorizedContextHolder auth(String username, String password);
+    AuthorizedContextHolder auth(String username, String password)
+        throws NoUserFoundException, BadCredentialException;
 }

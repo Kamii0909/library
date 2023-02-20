@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
+// import org.springframework.stereotype.Component;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.service.authorized.LibrarianService;
 

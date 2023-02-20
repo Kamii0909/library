@@ -1,14 +1,12 @@
 package hust.kien.project;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
+import javafx.application.Application;
 
 @SpringBootApplication
 public class LibraryApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx = SpringApplication.run(LibraryApplication.class, args);
-        ctx.close();
+        Application.launch(JavaFxApplication.class, args);
     }
 }

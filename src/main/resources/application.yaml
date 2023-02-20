@@ -1,4 +1,6 @@
 spring:
+  main: 
+    web-application-type: none
   profiles:
     active: dev
   datasource:
@@ -28,6 +30,18 @@ spring:
       #       scripts:
       #         action: create
       #         create-target: src/main/resources/ddl_jpa_creation.sql
+  application:
+    ui:
+      login:
+        title: Log in 
+      mainFrame:
+        title: Book Renting Application
+        min:
+          height: 300
+          width: 400
+        pref:
+          height: 800
+          width: 800
 logging:
   level:
     org:

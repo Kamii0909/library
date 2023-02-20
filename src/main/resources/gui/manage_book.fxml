@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" styleClass="container" stylesheets="@../css/manage_book.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hust.kien.project.controller.ManageBookController">
+   <children>
+      <Label alignment="CENTER" layoutX="889.5999755859375" maxHeight="40.0" minHeight="40.0" minWidth="300.0" text="Cơ sở dữ liệu sách" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <FlowPane layoutX="30.0" layoutY="80.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0">
+         <children>
+            <GridPane alignment="CENTER" hgap="4.0" vgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                  <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextFlow textAlignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" text="Mã sách: ">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </TextFlow>
+                  <TextField alignment="CENTER" GridPane.columnIndex="1" />
+                  <TextFlow textAlignment="CENTER" GridPane.columnIndex="2">
+                     <children>
+                        <Label alignment="CENTER" text="Tên sách: ">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </TextFlow>
+                  <TextField alignment="CENTER" GridPane.columnIndex="3" />
+                  <TextField alignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <TextFlow textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="đến: " />
+                     </children>
+                  </TextFlow>
+                  <TextField alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextFlow textAlignment="CENTER" GridPane.rowIndex="1">
+                     <children>
+                        <Label alignment="CENTER" text="Từ năm: ">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </TextFlow>
+               </children>
+            </GridPane>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Thể loại:" />
+         </children>
+         <styleClass>
+            <String fx:value="filter" />
+            <String fx:value="alegreya-sans-light-italic" />
+         </styleClass>
+      </FlowPane>
+      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="220.0" layoutY="83.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="200.0">
+         <content>
+            <FlowPane fx:id="bookContainer" columnHalignment="CENTER" hgap="30.0" vgap="30.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
