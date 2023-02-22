@@ -13,6 +13,8 @@ public interface LibrarianService extends AuthorizedService {
 
     <T extends LibraryPersistable> T saveOrUpdate(T entity); 
 
+    <T extends LibraryPersistable> void delete(T entity); 
+
     <T extends LibraryLocatable> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> builder);
 
     ActiveTicket createActiveTicket(Book book, Client client);

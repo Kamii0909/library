@@ -34,6 +34,11 @@ public class LibrarianServiceImpl implements LibrarianService {
     }
 
     @Override
+    public <T extends LibraryPersistable> void delete(T entity) {
+        metadataService.delete(entity);
+    }
+
+    @Override
     public <T extends LibraryLocatable> List<T> dynamicFind(
         GeneralLibrarySpecificationBuilder<T> builder) {
         return metadataService.dynamicFind(builder);
