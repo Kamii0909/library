@@ -1,6 +1,7 @@
 package hust.kien.project.service.authorized;
 
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 import hust.kien.project.model.LibraryLocatable;
 import hust.kien.project.model.LibraryPersistable;
 import hust.kien.project.model.book.Book;
@@ -16,6 +17,8 @@ public interface LibrarianService extends AuthorizedService {
     <T extends LibraryPersistable> void delete(T entity); 
 
     <T extends LibraryLocatable> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> builder);
+
+    <T extends LibraryLocatable> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> builder, Pageable pageable);
 
     ActiveTicket createActiveTicket(Book book, Client client);
 

@@ -1,10 +1,13 @@
-package hust.kien.project.controller;
+package hust.kien.project.controller.utils;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
@@ -112,5 +115,28 @@ public class FxUtils {
 
 		region.setClip(outputClip);
 	}
+
+    public static Image renderImage(Image image, double scale) {
+    	double width = image.getWidth();
+    	double height = image.getHeight();
+    
+    	ImageView imageView = new ImageView();
+    	imageView.setPreserveRatio(true);
+    
+    	int newHeigth = (int) height;
+    	int newWidth = (int) width;
+    	int x = 0;
+    	int y = 0;
+    
+    	if (height / width > scale) {
+    		newHeigth = (int) (width * scale);
+    		y = (int) ((newHeigth - height) / 2);
+    	} else {
+    		newWidth = (int) (height / scale);
+    		x = (int) ((width - newWidth) / 2);
+    	}
+    
+    	return new WritableImage(image.getPixelReader(), x, y, newWidth, newHeigth);
+    }
 
 }

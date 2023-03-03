@@ -1,22 +1,3 @@
-@font-face {
-    src: url("../fonts/Alatsi-Regular.ttf");
-}
-
-@font-face {
-    src: url("../fonts/AlegreyaSans-LightItalic.ttf");
-}
-
-
-.alatsi {
-    -fx-font-family: Alatsi;
-    -fx-font-style: normal;
-}
-
-.alegreya-sans-light-italic {
-    -fx-font-family: Alegreya Sans;
-    -fx-font-style: italic;
-}
-
 .editable-text {
     -fx-background-color: transparent, transparent, transparent, transparent;
     -fx-padding: 0px;
@@ -80,27 +61,6 @@
 .book-name {
     -fx-font-size: 22;
     -fx-text-fill: black;
-}
-
-.text-area {
-    -fx-background-insets: 0;
-}
-
-.text-area .content {
-    -fx-background-color: transparent, white, transparent, transparent;
-}
-
-.text-area:focused .content {
-    -fx-background-color: transparent, white, transparent, transparent;
-}
-
-.text-area:focused {
-    -fx-highlight-fill: #7ecfff;
-}
-
-.text-area .content {
-    -fx-padding: 0px;
-    -fx-highlight-fill: #7ecfff;
 }
 
 .filter * {

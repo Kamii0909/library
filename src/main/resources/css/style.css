@@ -1,11 +1,70 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
-.text-area>.scroll-pane {
+/* FONTS */
+@font-face {
+    src: url('../fonts/Alatsi-Regular.ttf');
+}
 
+@font-face {
+    font-family: Alegreya Sans Light;
+    src: url("../fonts/AlegreyaSans-LightItalic.ttf");
+}
+
+@font-face {
+    font-family: RegularGoto;
+    src: url("../fonts/Gotu-Regular.ttf");
+}
+
+
+.alatsi {
+    -fx-font-family: Alatsi;
+    -fx-font-style: normal;
+}
+
+.alegreya-sans-light-italic {
+    -fx-font-family: Alegreya Sans Light;
+    -fx-font-style: italic;
+}
+
+.goto-regular {
+    -fx-font-family: RegularGoto;
+}
+
+.text-area>.scroll-pane {
     -fx-hbar-policy: never;
     -fx-vbar-policy: never;
-
 }
+
+.tab *.tab-label {
+    -fx-rotate: 90;
+}
+
+.tab {
+    -fx-padding: 10 10 10 10;
+}
+
+
+.text-area {
+    -fx-background-insets: 0;
+}
+
+.text-area .content {
+    -fx-background-color: transparent, white, transparent, transparent;
+}
+
+.text-area:focused .content {
+    -fx-background-color: transparent, white, transparent, transparent;
+}
+
+.text-area:focused {
+    -fx-highlight-fill: #7ecfff;
+}
+
+.text-area .content {
+    -fx-padding: 0px;
+    -fx-highlight-fill: #7ecfff;
+}
+
 
 #add_content {
     -fx-border-radius: 16.0px;
@@ -34,10 +93,6 @@
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-effect: dropshadow(three-pass-box, #9e9d9b, 1, 10, 2, 3);
-}
-
-#txt_search {
-    -fx-background-color: none;
 }
 
 #accountMenu {
@@ -128,6 +183,10 @@
     -fx-background-color: transparent;
 }
 
+.scroll-pane>.viewport {
+    -fx-background-color: transparent;
+}
+
 .scroll-bar:horizontal,
 .scroll-bar:vertical {
     -fx-background-color: transparent;
@@ -186,4 +245,90 @@
 
 #btn_login {
     -fx-background-radius: 10px;
+}
+
+.anchor-pane {
+    -fx-background-color: transparent;
+}
+
+/* Menu item */
+/* VARIABLE DEFINITIONS: Only these 4 variables have to be adjusted, the rest is copy-paste */
+* {
+    -fx-my-menu-color: #263238;
+    /* Change according to your needs */
+    -fx-my-menu-color-highlighted: #455a64;
+    /* Change according to your needs */
+    -fx-my-menu-font-color: #FFFFFF;
+    /* Change according to your needs */
+    -fx-my-menu-font-color-highlighted: #FFFFFF;
+    /* Change according to your needs */
+}
+
+/* MENU BAR + Top-level MENU BUTTONS */
+/*** The menu bar itself ***/
+.menu-bar {
+    -fx-background-color: -fx-my-menu-color;
+}
+
+/*** Top-level menu itself (not selected / hovered) ***/
+.menu-bar>.container>.menu-button {
+    -fx-background-color: -fx-my-menu-color;
+}
+
+/*** Top-level menu's label (not selected / hovered) ***/
+.menu-bar>.container>.menu-button>.label {
+    -fx-text-fill: -fx-my-menu-font-color;
+}
+
+/*** Top-level menu's label (disabled) ***/
+.menu-bar>.container>.menu-button>.label:disabled {
+    -fx-opacity: 1.0;
+}
+
+/*** Top-level menu itself (selected / hovered) ***/
+.menu-bar>.container>.menu-button:hover,
+.menu-bar>.container>.menu-button:focused,
+.menu-bar>.container>.menu-button:showing {
+    -fx-background-color: -fx-my-menu-color-highlighted;
+}
+
+/*** Top-level menu's label (selected / hovered) ***/
+.menu-bar>.container>.menu-button:hover>.label,
+.menu-bar>.container>.menu-button:focused>.label,
+.menu-bar>.container>.menu-button:showing>.label {
+    -fx-text-fill: -fx-my-menu-font-color-highlighted;
+}
+
+/* MENU ITEM (children of a MENU BUTTON) */
+/*** The item itself (not hovered / focused) ***/
+.menu-item {
+    -fx-background-color: -fx-my-menu-color;
+}
+
+/*** The item's label (not hovered / focused) ***/
+.menu-item .label {
+    -fx-text-fill: -fx-my-menu-font-color;
+}
+
+/*** The item's label (disabled) ***/
+.menu-item .label:disabled {
+    -fx-opacity: 1.0;
+}
+
+/*** The item itself (hovered / focused) ***/
+.menu-item:focused,
+.menu-item:hovered {
+    -fx-background-color: -fx-my-menu-color-highlighted;
+}
+
+/*** The item's label (hovered / focused) ***/
+.menu-item:focused .label,
+.menu-item:hovered .label {
+    -fx-text-fill: -fx-my-menu-font-color-highlighted;
+}
+
+/* CONTEXT MENU */
+/*** The context menu that contains a menu's menu items ***/
+.context-menu {
+    -fx-background-color: -fx-my-menu-color;
 }

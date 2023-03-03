@@ -1,0 +1,48 @@
+.text-input {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.button {
+    -fx-background-color: transparent;
+}
+
+.delete-button {
+    -fx-text-fill: rgb(35, 1, 1);
+}
+
+.delete-button:hover {
+    -fx-background-color: lightgrey;
+}
+
+.modify-button {
+    -fx-text-fill: green;
+    -fx-border-color: green;
+    -fx-border-radius: 4;
+    -fx-border-width: 1.4;
+}
+
+.modify-button:hover {
+    -fx-text-fill: white;
+    -fx-background-color: darkgreen;
+    -fx-border-color: none;
+}
+
+.button>.text {
+    -fx-font-size: 14;
+}
+
+.author-age {
+    -fx-text-fill: rgb(41, 41, 41);
+    -fx-font-size: 12;
+    -fx-fill: rgb(41, 41, 41);
+}
+
+.author {
+    -fx-background-color: white;
+    -fx-border-color: #e8e8e8;
+    -fx-border-radius: 0 20 0 20;
+    -fx-border-style: solid solid hidden hidden;
+    -fx-border-width: 1.5;
+
+}

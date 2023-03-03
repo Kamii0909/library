@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import hust.kien.project.controller.component.BookComponentController;
+import hust.kien.project.controller.component.NewBookController;
+import hust.kien.project.controller.component.SelectAuthorController;
+import hust.kien.project.controller.component.SelectClientController;
 import hust.kien.project.controller.component.SelectGenreController;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.service.authorized.LibrarianService;
@@ -20,7 +23,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-@SuppressWarnings("java:S3305")
 @Configuration
 public class BookComponentConfig {
 
@@ -38,6 +40,21 @@ public class BookComponentConfig {
     @Bean
     public Resource selectGenreFxml() {
         return new ClassPathResource("gui/component/book/select_genre.fxml");
+    }
+
+    @Bean
+    public Resource selectAuthorFxml() {
+        return new ClassPathResource("gui/component/book/select_author.fxml");
+    }
+
+    @Bean
+    public Resource selectClientFxml() {
+        return new ClassPathResource("gui/component/book/select_client.fxml");
+    }
+
+    @Bean
+    public Resource newBookFxml() {
+        return new ClassPathResource("gui/component/book/new_book.fxml");
     }
 
     @Bean("bookComponentRegion")
@@ -76,6 +93,70 @@ public class BookComponentConfig {
         stage.setScene(new Scene(fxmlLoader.load()));
 
         return stage;
+    }
 
+    @Bean
+    @Scope("prototype")
+    public SelectAuthorController selectAuthorController(Book book) {
+        return new SelectAuthorController(book, librarianService);
+    }
+
+    @Bean("selectAuthorStage")
+    @Scope("prototype")
+    public Stage selectAuthorStage(Book book) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(selectAuthorFxml().getURL());
+
+        fxmlLoader.setControllerFactory(clazz -> ctx.getBean(clazz, book));
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setAlwaysOnTop(true);
+        stage.initOwner(WindowManager.getStage());
+        stage.setScene(new Scene(fxmlLoader.load()));
+
+        return stage;
+    }
+
+    @Bean
+    @Scope("prototype")
+    public SelectClientController selectClientController(Book book, boolean isBorrow) {
+        return new SelectClientController(book, isBorrow);
+    }
+
+    @Bean("selectClientStage")
+    @Scope("prototype")
+    public Stage selectClientStage(Book book, boolean isBorrow) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(selectClientFxml().getURL());
+        fxmlLoader.setControllerFactory(clazz -> ctx.getBean(clazz, book, isBorrow));
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setAlwaysOnTop(true);
+        stage.initOwner(WindowManager.getStage());
+        stage.setScene(new Scene(fxmlLoader.load()));
+
+        return stage;
+    }
+
+
+    @Bean
+    @Scope("prototype")
+    public NewBookController newbBookController() {
+        return new NewBookController();
+    }
+
+    @Bean("newBookStage")
+    @Scope("prototype")
+    public Stage newBookStage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(newBookFxml().getURL());
+        fxmlLoader.setControllerFactory(clazz -> ctx.getBean(clazz));
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setAlwaysOnTop(true);
+        stage.initOwner(WindowManager.getStage());
+        stage.setScene(new Scene(fxmlLoader.load()));
+
+        return stage;
     }
 }

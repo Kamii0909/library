@@ -9,7 +9,7 @@
 target/*
 
 # Log
-log/app.log
+log/*.log
 
 # Github
 .github/*

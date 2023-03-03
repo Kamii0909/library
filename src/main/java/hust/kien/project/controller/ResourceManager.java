@@ -58,11 +58,6 @@ public class ResourceManager {
         return new ClassPathResource("gui/login.fxml");
     }
 
-    @Bean("mainFrameFxml")
-    Resource mainFrameFxml() {
-        return new ClassPathResource("gui/main_frame.fxml");
-    }
-
     @Bean("manageBookFxml")
     Resource manageBookFxml() {
         return new ClassPathResource("gui/manage_book.fxml");
@@ -75,12 +70,12 @@ public class ResourceManager {
 
     @Bean("manageAuthorFxml")
     Resource manageAuthorFxml() {
-        return new ClassPathResource("gui/manage_author.fxml");
+        return new ClassPathResource("gui/manage_author_new.fxml");
     }
 
     @Bean("manageGenreFxml")
     Resource manageGenreFxml() {
-        return new ClassPathResource("gui/manage_genre.fxml");
+        return new ClassPathResource("gui/manage_genre_new.fxml");
     }
 
     @Bean("manageTicketFxml")
@@ -109,11 +104,6 @@ public class ResourceManager {
         @Bean("loginRegion")
         Region loginRegion(@Qualifier("loginFxml") Resource resource) {
             return getRegion(resource, "login");
-        }
-
-        @Bean("mainFrameRegion")
-        Region mainFrameRegion(@Qualifier("mainFrameFxml") Resource resource) {
-            return getRegion(resource, "main frame");
         }
 
         @Bean("manageBookRegion")

@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutY="25.599998474121094" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
+      <children>
+            <AnchorPane fx:id="mainContent" layoutX="60.0" style="-fx-background-color: #f4f6f9;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <AnchorPane style="-fx-background-radius: 20 20 20 20; -fx-background-color: white;" stylesheets="@../../css/manage_book.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <GridPane alignment="CENTER" hgap="4.0" layoutX="30.0" layoutY="20.0" vgap="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="5.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="NEVER" minWidth="80.0" prefWidth="80.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="NEVER" minWidth="80.0" prefWidth="80.0" />
+                              <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                              <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <TextFlow textAlignment="CENTER">
+                                 <children>
+                                    <Label alignment="CENTER" text="Ton kho ≥">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </TextFlow>
+                              <TextField GridPane.columnIndex="1" />
+                              <TextFlow textAlignment="CENTER" GridPane.columnIndex="2">
+                                 <children>
+                                    <Label alignment="CENTER" text="Tên sách: ">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </TextFlow>
+                              <TextField GridPane.columnIndex="3" />
+                              <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <TextFlow textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="đến: " />
+                                 </children>
+                              </TextFlow>
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextFlow textAlignment="CENTER" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label alignment="CENTER" text="Từ năm: ">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </TextFlow>
+                           </children>
+                           <styleClass>
+                              <String fx:value="filter" />
+                              <String fx:value="alegreya-sans-light-italic" />
+                           </styleClass>
+                        </GridPane>
+                        <GridPane hgap="4.0" layoutX="129.0" layoutY="104.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="95.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="NEVER" minWidth="80.0" prefWidth="80.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <HBox alignment="TOP_CENTER">
+                                 <children>
+                                    <Label text="The loai:">
+                                       <HBox.margin>
+                                          <Insets top="3.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <ScrollPane prefWidth="800.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER" GridPane.columnIndex="2">
+                                 <content>
+                                    <HBox alignment="TOP_CENTER">
+                                       <children>
+                                          <Button mnemonicParsing="false" text="The loai 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="The loai 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="The loai 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="The loai 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="The loai 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="The loai 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="The loai 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </content>
+                                 <padding>
+                                    <Insets left="12.0" />
+                                 </padding>
+                              </ScrollPane>
+                              <HBox alignment="TOP_CENTER" spacing="8.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <TextField HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <Button mnemonicParsing="false" text="+">
+                                       <styleClass>
+                                          <String fx:value="alatsi" />
+                                          <String fx:value="borrow-book" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets top="1.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="TOP_CENTER" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label text="Tac gia: ">
+                                       <HBox.margin>
+                                          <Insets top="3.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="TOP_CENTER" spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <TextField HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <Button mnemonicParsing="false" text="+">
+                                       <styleClass>
+                                          <String fx:value="alatsi" />
+                                          <String fx:value="borrow-book" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets top="1.0" />
+                                 </padding>
+                              </HBox>
+                              <ScrollPane prefWidth="800.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <content>
+                                    <HBox alignment="TOP_CENTER">
+                                       <children>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" text="Tac gia 1">
+                                             <styleClass>
+                                                <String fx:value="borrow-book" />
+                                                <String fx:value="alatsi" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </content>
+                                 <padding>
+                                    <Insets left="12.0" />
+                                 </padding>
+                              </ScrollPane>
+                           </children>
+                           <styleClass>
+                              <String fx:value="alegreya-sans-light-italic" />
+                              <String fx:value="filter" />
+                           </styleClass>
+                        </GridPane>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="220.0" layoutY="83.0" style="-fx-background-color: #fafbfc; -fx-background-radius: 20 20 20 20;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="210.0">
+                           <content>
+                              <FlowPane fx:id="bookContainer" columnHalignment="CENTER" hgap="30.0" vgap="30.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </FlowPane>
+                           </content>
+                        </ScrollPane>
+                        <Button contentDisplay="RIGHT" layoutX="32.0" layoutY="188.0" mnemonicParsing="false" text="Them sach ⬈" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="190.0">
+                           <styleClass>
+                              <String fx:value="alatsi" />
+                              <String fx:value="borrow-book" />
+                           </styleClass>
+                        </Button>
+                        <Button layoutX="69.0" layoutY="371.0" mnemonicParsing="false" prefWidth="90.0" text="Trang truoc" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0">
+                           <styleClass>
+                              <String fx:value="borrow-book" />
+                              <String fx:value="alatsi" />
+                           </styleClass>
+                        </Button>
+                        <Button layoutX="182.0" layoutY="371.0" mnemonicParsing="false" prefWidth="90.0" text="Trang tiep" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="180.0">
+                           <styleClass>
+                              <String fx:value="borrow-book" />
+                              <String fx:value="alatsi" />
+                           </styleClass>
+                        </Button>
+                        <Text layoutX="558.0" layoutY="389.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alatsi" text="Trang: 1" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="50.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding></AnchorPane>
+            <Rectangle fx:id="navigator" arcHeight="5.0" arcWidth="5.0" fill="#22963d" height="40.0" layoutX="40.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="4.0" AnchorPane.leftAnchor="43.0" AnchorPane.topAnchor="110.0" />
+            <VBox fx:id="navBar" layoutY="100.0" maxHeight="300.0" prefWidth="40.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <StackPane minHeight="40.0" styleClass="navButton">
+                     <children>
+                        <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="BOOK" size="22" />
+                           </graphic>
+                           <tooltip>
+                              <Tooltip contentDisplay="CENTER" text="Text Tooltip" />
+                           </tooltip>
+                        </Button>
+                     </children>
+                  </StackPane>
+                  <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" styleClass="navButton" VBox.vgrow="NEVER">
+                     <children>
+                        <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Button">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="PENCIL" size="22" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </StackPane>
+                  <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" styleClass="navButton" VBox.vgrow="NEVER">
+                     <children>
+                        <FontAwesomeIconView glyphName="VCARD_ALT" size="22" />
+                     </children>
+                  </StackPane>
+                  <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" styleClass="navButton" VBox.vgrow="NEVER">
+                     <children>
+                        <FontAwesomeIconView glyphName="AREA_CHART" size="22" />
+                     </children>
+                  </StackPane>
+                  <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" VBox.vgrow="NEVER">
+                     <children>
+                        <FontAwesomeIconView glyphName="FILE_ARCHIVE_ALT" size="22" />
+                     </children>
+                  </StackPane>
+                  <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="EDIT" size="22" />
+                     </children>
+                  </StackPane>
+                  <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="CUBES" size="22" />
+                     </children>
+                  </StackPane>
+                  <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="FILE_ARCHIVE_ALT" size="22" />
+                     </children>
+                  </StackPane>
+                  <StackPane VBox.vgrow="SOMETIMES" />
+               </children>
+               <padding>
+                  <Insets bottom="30.0" top="10.0" />
+               </padding>
+            </VBox>
+      </children>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </AnchorPane>
+      <GridPane AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+            <ColumnConstraints maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+            <ColumnConstraints minWidth="10.0" percentWidth="60.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <HBox alignment="CENTER" spacing="5.0" styleClass="search-bar" GridPane.columnIndex="2">
+               <children>
+                  <FontAwesomeIconView glyphName="SEARCH" text="" />
+                  <TextField promptText="Search..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+               </children>
+               <padding>
+                  <Insets left="12.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <FontAwesomeIconView glyphName="HOME" size="22" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" spacing="20.0" GridPane.columnIndex="3">
+               <children>
+                  <MenuButton alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Tai khoan">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Dang xuat" />
+                      <MenuItem mnemonicParsing="false" text="Chinh sua" />
+                    </items>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="USER_CIRCLE" size="18" />
+                     </graphic>
+                  </MenuButton>
+               </children>
+               <padding>
+                  <Insets right="30.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </GridPane>
+   </children>
+   <stylesheets>
+      <URL value="@main_frame.css" />
+      <URL value="@../../css/style.css" />
+   </stylesheets>
+</AnchorPane>

@@ -3,12 +3,11 @@ package hust.kien.project.service.authorized;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import java.util.Random;
-
-import hust.kien.project.service.dynamic.LibraryEmployeeSpecificationBuilder;
+import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import hust.kien.project.model.auth.LibraryEmployee;
+import hust.kien.project.service.dynamic.LibraryEmployeeSpecificationBuilder;
 import hust.kien.project.service.internal.AccountingService;
 import hust.kien.project.service.internal.LibraryMetadataService;
 
@@ -39,7 +38,6 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public void createUser(LibraryEmployee employee, String password) {
-
         employee.setSalt(generateRandomSalt(2));
         /** (int) (Math.random() * 10) */
 
@@ -58,7 +56,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     private byte[] generateRandomSalt(int size) {
         byte[] bytes = new byte[size];
-        new Random().nextBytes(bytes);
+        ThreadLocalRandom.current().nextBytes(bytes);
 
         return bytes;
     }

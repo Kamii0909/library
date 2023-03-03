@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<VBox spacing="5.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane style="-fx-background-color: white; -fx-background-radius: 20;">
+         <children>
+            <ImageView fx:id="authorImage" fitHeight="60.0" fitWidth="60.0" layoutX="39.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <image>
+                  <Image url="@../../../../../../../../../../../../Linh%20tinh/Art/@soraneko_hino_01.jpg" />
+               </image>
+            </ImageView>
+            <TextField layoutX="82.0" layoutY="26.0" prefWidth="120.0" style="-fx-font-size: 18;" styleClass="alatsi" text="Ten tac gia" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="26.0" />
+            <TextArea layoutX="80.0" layoutY="26.0" maxHeight="40.0" prefHeight="40.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="20.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextArea>
+            <TextFlow layoutX="80.0" layoutY="4.0" textAlignment="CENTER" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="4.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tuổi : " textAlignment="CENTER">
+                     <styleClass>
+                        <String fx:value="goto-regular" />
+                        <String fx:value="author-age" />
+                     </styleClass>
+                  </Text>
+                  <TextField alignment="TOP_LEFT" prefHeight="20.0" text="26">
+                     <styleClass>
+                        <String fx:value="goto-regular" />
+                        <String fx:value="author-age" />
+                     </styleClass>
+                  </TextField>
+               </children>
+            </TextFlow>
+            <VBox layoutX="260.0" layoutY="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Xóa tác giả">
+                     <styleClass>
+                        <String fx:value="delete-button" />
+                        <String fx:value="alatsi" />
+                     </styleClass>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Sửa thông tin">
+                     <styleClass>
+                        <String fx:value="alatsi" />
+                        <String fx:value="modify-button" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </VBox>
+            <Circle fill="DODGERBLUE" layoutX="40.0" layoutY="36.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+         </children>
+         <stylesheets>
+            <URL value="@author.css" />
+            <URL value="@../../../css/style.css" />
+         </stylesheets>
+      </AnchorPane>
+      <AnchorPane style="-fx-background-color: white; -fx-background-radius: 20;">
+         <children>
+            <ImageView fx:id="authorImage1" fitHeight="60.0" fitWidth="60.0" layoutX="39.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <image>
+                  <Image url="@../../../../../../../../../../../../Linh%20tinh/Art/@soraneko_hino_01.jpg" />
+               </image>
+            </ImageView>
+            <TextField layoutX="82.0" layoutY="26.0" prefWidth="120.0" style="-fx-font-size: 18;" styleClass="alatsi" text="Ten tac gia" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="26.0" />
+            <TextArea maxHeight="40.0" prefHeight="40.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="20.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextArea>
+            <TextFlow layoutX="80.0" layoutY="4.0" textAlignment="CENTER" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="4.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tuổi : " textAlignment="CENTER">
+                     <styleClass>
+                        <String fx:value="goto-regular" />
+                        <String fx:value="author-age" />
+                     </styleClass>
+                  </Text>
+                  <TextField alignment="TOP_LEFT" prefHeight="20.0" text="26">
+                     <styleClass>
+                        <String fx:value="goto-regular" />
+                        <String fx:value="author-age" />
+                     </styleClass>
+                  </TextField>
+               </children>
+            </TextFlow>
+            <VBox layoutX="260.0" layoutY="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Xóa tác giả">
+                     <styleClass>
+                        <String fx:value="delete-button" />
+                        <String fx:value="alatsi" />
+                     </styleClass>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Sửa thông tin">
+                     <styleClass>
+                        <String fx:value="alatsi" />
+                        <String fx:value="modify-button" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+         <stylesheets>
+            <URL value="@author.css" />
+            <URL value="@../../../css/style.css" />
+         </stylesheets>
+      </AnchorPane>
+   </children>
+</VBox>

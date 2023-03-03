@@ -3,6 +3,7 @@ package hust.kien.project.service.internal;
 import java.io.Serializable;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +14,8 @@ import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.service.dynamic.GeneralLibrarySpecificationBuilder;
 
 @Service
-@Transactional(propagation = Propagation.REQUIRES_NEW)
-// @Transactional(propagation = Propagation.NESTED)
 @SuppressWarnings("unchecked")
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class LibraryMetadataServiceImpl implements LibraryMetadataService {
 
     @Autowired
@@ -34,12 +34,15 @@ public class LibraryMetadataServiceImpl implements LibraryMetadataService {
 
     @Override
     public <T> void delete(T entity) {
+        if (entity instanceof BookGenre) {
+            BookGenre bg = getReference(BookGenre.class, ((BookGenre) entity).getName());
+            bg.getBooksWithThisGenre().forEach(b -> b.getBookInfo().getBookGenres().remove(bg));
+        }
         repositoryFactory.getRepository((Class<T>) entity.getClass()).delete(entity);
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    // @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public <T> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> spec) {
         return repositoryFactory.getRepository(spec.libraryType()).findAll(spec.build());
     }
@@ -49,6 +52,12 @@ public class LibraryMetadataServiceImpl implements LibraryMetadataService {
     public List<BookGenre> findGenreByNameContains(String name) {
         return ((BookGenreRepository) repositoryFactory.getRepository(BookGenre.class))
             .findByNameLikeIgnoreCase("%" + name + "%");
+    }
+
+    @Override
+    public <T> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> spec, Pageable pageable) {
+        return repositoryFactory.getRepository(spec.libraryType()).findAll(spec.build(),
+            pageable.getOffset(), pageable.getPageSize(), pageable.getSort());
     }
 
 }

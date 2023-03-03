@@ -18,7 +18,7 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
-    # show-sql: true
+    show-sql: true
     properties:
       hibernate:
         "[current_session_context_class]": org.springframework.orm.hibernate5.SpringSessionContext
@@ -40,12 +40,12 @@ spring:
           height: 300
           width: 400
         pref:
-          height: 800
-          width: 800
+          height: 650
+          width: 1100
 logging:
   level:
     org:
       springframework:
-      # transaction: trace
+      transaction: trace
   file:
     name: log/app.log

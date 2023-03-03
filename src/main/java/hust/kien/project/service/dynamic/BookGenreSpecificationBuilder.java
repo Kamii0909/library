@@ -1,5 +1,6 @@
 package hust.kien.project.service.dynamic;
 
+import java.util.Collection;
 import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.model.book.BookGenre_;
 
@@ -7,7 +8,12 @@ public class BookGenreSpecificationBuilder extends GeneralLibrarySpecificationBu
 
 
     public BookGenreSpecificationBuilder nameLike(String name) {
-        specList.add((root, cq, cb) -> cb.like(root.get(BookGenre_.name), name));
+        specList.add((root, cq, cb) -> cb.like(root.get(BookGenre_.name), "%" + name + "%"));
+        return this;
+    }
+
+    public BookGenreSpecificationBuilder nameIn(Collection<String> names) {
+        specList.add((root, cq, cb) -> root.get(BookGenre_.name).in(names));
         return this;
     }
 

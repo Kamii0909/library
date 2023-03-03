@@ -8,10 +8,10 @@ import java.util.Scanner;
 import org.springframework.stereotype.Component;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 @Component
 public class GioiThieuController implements Initializable {
@@ -29,9 +29,6 @@ public class GioiThieuController implements Initializable {
 
 		webEngine.loadContent(readFile());
 
-		scrollPane.setPrefHeight(5000);
-		scrollPane.setPrefWidth(2000);
-		browser.setPrefWidth(2000);
 		vBox_Content.getChildren().add(scrollPane);
 	}
 

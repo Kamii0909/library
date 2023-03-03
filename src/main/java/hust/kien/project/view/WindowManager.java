@@ -56,6 +56,9 @@ public class WindowManager {
     }
 
     public static void setStage(Stage stage) {
+        if(mainStage != null) {
+            mainStage.close();
+        }
         mainStage = stage;
     }
 }

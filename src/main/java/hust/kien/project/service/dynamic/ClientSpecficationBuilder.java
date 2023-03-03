@@ -1,8 +1,10 @@
 package hust.kien.project.service.dynamic;
 
+import java.time.LocalDate;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.client.ClientRentInfo_;
 import hust.kien.project.model.client.Client_;
+import hust.kien.project.model.client.Subscription_;
 import jakarta.persistence.criteria.JoinType;
 
 public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilder<Client> {
@@ -16,6 +18,13 @@ public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilde
     @Override
     public Class<Client> libraryType() {
         return Client.class;
+    }
+
+    public ClientSpecficationBuilder isActive() {
+        specList.add((root, cq, cb) -> cb.greaterThanOrEqualTo(
+            root.get(Client_.rentInfo).get(ClientRentInfo_.subscription).get(Subscription_.endDate),
+            LocalDate.now()));
+        return this;
     }
 
     @Override

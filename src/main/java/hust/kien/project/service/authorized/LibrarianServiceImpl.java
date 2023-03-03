@@ -2,6 +2,7 @@ package hust.kien.project.service.authorized;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import hust.kien.project.model.LibraryLocatable;
 import hust.kien.project.model.LibraryPersistable;
@@ -52,6 +53,12 @@ public class LibrarianServiceImpl implements LibrarianService {
     @Override
     public ClosedTicket closeActiveTicket(ActiveTicket ticket) {
         return ticketService.closeActiveTicket(ticket);
+    }
+
+    @Override
+    public <T extends LibraryLocatable> List<T> dynamicFind(
+        GeneralLibrarySpecificationBuilder<T> builder, Pageable pageable) {
+        return metadataService.dynamicFind(builder, pageable);
     }
 
 }

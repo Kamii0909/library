@@ -1,6 +1,8 @@
 package hust.kien.project.service.dynamic;
 
 import hust.kien.project.model.author.Author;
+import hust.kien.project.model.author.AuthorInfo_;
+import hust.kien.project.model.author.Author_;
 import hust.kien.project.model.book.*;
 import jakarta.persistence.criteria.JoinType;
 import java.util.Collection;
@@ -51,6 +53,19 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
         return this;
     }
 
+    public BookSpecificationBuilder fromAllAuthorWithNameLike(String string) {
+        specList.add((root, cq, cb) -> cb.like(root.join(Book_.bookInfo).join(BookInfo_.authors)
+            .get(Author_.authorInfo).get(AuthorInfo_.name), "%" + string + "%"));
+        return this;
+    }
+
+    public BookSpecificationBuilder fromAllAuthorsWithNameLike(Collection<String> strings) {
+        for (String string : strings) {
+            fromAllAuthorWithNameLike(string);
+        }
+        return this;
+    }
+
     public BookSpecificationBuilder withGenre(BookGenre genre) {
         specList.add((root, cq, cb) -> cb.isMember(genre,
             root.get(Book_.bookInfo).get(BookInfo_.bookGenres)));
@@ -60,6 +75,20 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
     public BookSpecificationBuilder withAllGenres(Iterable<BookGenre> genre) {
         for (BookGenre bookGenre : genre) {
             withGenre(bookGenre);
+        }
+        return this;
+    }
+
+    public BookSpecificationBuilder withAtLeastOneGenreLike(String genre) {
+        specList.add((root, cq, cb) -> cb.like(
+            root.join(Book_.bookInfo).join(BookInfo_.bookGenres).get(BookGenre_.name),
+            "%" + genre + "%"));
+        return this;
+    }
+
+    public BookSpecificationBuilder withEachGenreLikeAtLeastOne(Iterable<String> genres) {
+        for (String string : genres) {
+            withAtLeastOneGenreLike(string);
         }
         return this;
     }

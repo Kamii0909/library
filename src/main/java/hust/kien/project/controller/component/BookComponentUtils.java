@@ -15,7 +15,7 @@ public class BookComponentUtils {
         }
     }
 
-    public static boolean isYearValid(String year) {
+    public static boolean isIntegerValid(String year) {
         try {
             Integer.parseInt(year);
             return true;
@@ -24,10 +24,10 @@ public class BookComponentUtils {
         }
     }
 
-    public static boolean isMoneyValid(String money) {
+    public static boolean isDoubleValid(String db) {
         try {
-            money = money.replaceAll("[,' ]", "");
-            Double.parseDouble(money);
+            db = db.replaceAll("[,' ]", "");
+            Double.parseDouble(db);
             return true;
         } catch (NumberFormatException e) {
             return false;

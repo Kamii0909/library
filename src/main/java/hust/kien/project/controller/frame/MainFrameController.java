@@ -1,0 +1,140 @@
+package hust.kien.project.controller.frame;
+
+import static de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.FILE_ARCHIVE_ALT;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import hust.kien.project.controller.utils.FxUtils;
+import hust.kien.project.service.auth.AuthorizedContextHolder;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+@Lazy
+public class MainFrameController {
+
+	private final ObjectProvider<Region> manageBookRegionProvider;
+	private final ObjectProvider<Region> manageClientRegionProvider;
+	private final ObjectProvider<Region> manageGenreAuthorRegionProvider;
+	private final ObjectProvider<Region> manageTicketRegionProvider;
+	private final ObjectProvider<Region> userInformationRegionProvider;
+	private final ObjectProvider<Region> statisticRegionProvider;
+	private final ObjectProvider<Region> introductionPageRegionProvider;
+
+
+	public MainFrameController(
+		@Qualifier("manageBookRegion") ObjectProvider<Region> manageBookRegionProvider,
+		@Qualifier("manageClientRegion") ObjectProvider<Region> manageClientRegionProvider,
+		@Qualifier("manageGenreAuthorRegion") ObjectProvider<Region> manageGenreAuthorRegionProvider,
+		@Qualifier("manageTicketRegion") ObjectProvider<Region> manageTicketRegionProvider,
+		@Qualifier("userInformationRegion") ObjectProvider<Region> userInformationRegionProvider,
+		@Qualifier("statisticRegion") ObjectProvider<Region> statisticRegionProvider,
+		@Qualifier("introductionPageRegion") ObjectProvider<Region> introductionPageRegionProvider) {
+		this.introductionPageRegionProvider = introductionPageRegionProvider;
+		this.manageBookRegionProvider = manageBookRegionProvider;
+		this.manageClientRegionProvider = manageClientRegionProvider;
+		this.manageGenreAuthorRegionProvider = manageGenreAuthorRegionProvider;
+		this.userInformationRegionProvider = userInformationRegionProvider;
+		this.statisticRegionProvider = statisticRegionProvider;
+		this.manageTicketRegionProvider = manageTicketRegionProvider;
+	}
+
+	@FXML
+	private AnchorPane mainContent;
+
+	@FXML
+	private Rectangle navigator;
+
+	@FXML
+	private VBox navBar;
+
+	private Map<StackPane, Region> navBarButtons = new LinkedHashMap<>();
+
+	public void initialize() {
+		Region introductionPageRegion = introductionPageRegionProvider.getObject();
+
+		initButtonAndAddToMap(FILE_ARCHIVE_ALT, "Gioi thieu", introductionPageRegion, 10);
+
+		changeMainContent(introductionPageRegion, 10);
+	}
+
+
+	public void initializeButtonEventListener(AuthorizedContextHolder authenticationPrincipal) {
+		int i = 1;
+		
+		if (authenticationPrincipal.getLibrarianService() != null) {
+			initButtonAndAddToMap(FontAwesomeIcon.BOOK, "Quan ly sach",
+				manageBookRegionProvider.getObject(), 10 + (i++) * 51);
+			initButtonAndAddToMap(FontAwesomeIcon.CUBES, "Quan ly the loai",
+				manageGenreAuthorRegionProvider.getObject(), 10 + (i++) * 51);
+			initButtonAndAddToMap(FontAwesomeIcon.VCARD_ALT, "Quan ly khach hang",
+				manageClientRegionProvider.getObject(), 10 + (i++) * 51);
+
+		}
+		if (authenticationPrincipal.getManagerService() != null) {
+			initButtonAndAddToMap(FontAwesomeIcon.AREA_CHART, "Thong ke",
+				statisticRegionProvider.getObject(), 10 + (i++) * 51);
+		}
+		if (authenticationPrincipal.getAuditService() != null) {
+			initButtonAndAddToMap(FontAwesomeIcon.EDIT, "Quan ly phieu muon",
+				manageTicketRegionProvider.getObject(), 10 + (i++) * 51);
+		}
+
+	}
+
+	private void initButtonAndAddToMap(FontAwesomeIcon icon, String tooltip, Region region,
+		int navPosition) {
+		StackPane stackPane = createStackPane(icon, tooltip, region, navPosition);
+		navPosition += 50;
+
+		navBar.getChildren().add(stackPane);
+		navBarButtons.put(stackPane, region);
+	}
+
+	private void changeMainContent(Region region, int top) {
+		mainContent.getChildren().setAll(region);
+		FxUtils.setAnchorPoint(top, null, null, null, navigator);
+		FxUtils.setAnchorPoint(0, 0, 0, 0, region);
+
+	}
+
+	private StackPane createStackPane(FontAwesomeIcon icon, String tooltip, Region region,
+		int navPosition) {
+
+		FontAwesomeIconView fontAwesomeIconView = new FontAwesomeIconView(icon);
+		fontAwesomeIconView.setSize("22");
+
+		Button button = new Button();
+		button.setGraphic(fontAwesomeIconView);
+		button.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+		button.setOnMouseClicked(ev -> changeMainContent(region, navPosition));
+
+
+		Tooltip buttonTooltip = new Tooltip(tooltip);
+		buttonTooltip.setShowDelay(Duration.millis(100));
+		Tooltip.install(button, buttonTooltip);
+
+
+		StackPane stackPane = new StackPane(button);
+		stackPane.getStyleClass().setAll("navButton");
+		FxUtils.setHeigth(40, 40, 40, stackPane);
+
+		return stackPane;
+	}
+
+}

@@ -1,31 +1,31 @@
 package hust.kien.project.controller.component;
 
-import static hust.kien.project.controller.component.BookComponentUtils.isMoneyValid;
-import static hust.kien.project.controller.component.BookComponentUtils.isYearValid;
+import static hust.kien.project.controller.component.BookComponentUtils.isDoubleValid;
+import static hust.kien.project.controller.component.BookComponentUtils.isIntegerValid;
 import static hust.kien.project.controller.component.BookComponentUtils.setElementBorderFromValidationResult;
 import static hust.kien.project.controller.component.BookComponentUtils.setTextElementWithMaxLength;
 import static hust.kien.project.controller.component.BookComponentUtils.toggleElementOpacity;
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import hust.kien.project.controller.AlertUtils;
+import hust.kien.project.controller.utils.AlertUtils;
 import hust.kien.project.controller.utils.LeftAnchorPaneProperty;
 import hust.kien.project.controller.utils.RightAnchorPaneProperty;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.model.author.AuthorInfo;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.book.BookGenre;
+import hust.kien.project.model.book.BookInfo;
+import hust.kien.project.model.book.BookStock;
 import hust.kien.project.service.authorized.LibrarianService;
+import hust.kien.project.view.event.BookDeletedEvent;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -45,7 +45,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -54,6 +53,10 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class BookComponentController {
+
+    private static final Duration fadeDuration = Duration.millis(600);
+
+    private static final Duration animationDuration = Duration.millis(400);
 
     @FXML
     private Text stock;
@@ -91,13 +94,17 @@ public class BookComponentController {
     @FXML
     private Button addGenreButton;
 
-    private final Book book;
+    @FXML
+    private Button borrowBookButton;
+
+    @FXML
+    private Button returnBookButton;
+
+    private Book book;
+
+    private Book defensiveCopy;
 
     private final Image image;
-
-    private static final Duration animationDuration = Duration.millis(400);
-
-    private static final Duration fadeDuration = Duration.millis(600);
 
     private ParallelTransition openTabAnimation;
 
@@ -105,13 +112,19 @@ public class BookComponentController {
 
     private boolean tabEverOpened = false;
 
-    private Map<ToggleButton, BookGenre> uiToModelMap;
-
-    private Set<BookGenre> oldBookGenres;
+    private Map<ToggleButton, BookGenre> genresOnUi;
 
     @Autowired
     @Qualifier("selectGenreStage")
     private ObjectProvider<Stage> selectGenreProvider;
+
+    @Autowired
+    @Qualifier("selectAuthorStage")
+    private ObjectProvider<Stage> selectAuthorProvider;
+
+    @Autowired
+    @Qualifier("selectClientStage")
+    private ObjectProvider<Stage> selectClientProvider;
 
     @Autowired
     private LibrarianService librarianService;
@@ -119,14 +132,14 @@ public class BookComponentController {
     @Autowired
     private NumberFormat formatter;
 
+    private static final String STOCK_STRING = "Ton kho: ";
+
     public BookComponentController(Book book, Image image) {
+        this.defensiveCopy = getDefensiveCopy(book.getBookInfo(), book.getBookStock());
         this.book = book;
         this.image = image;
-        this.oldBookGenres = book.getBookInfo()
-            .getBookGenres()
-            .stream()
-            .collect(Collectors.toSet());
     }
+
 
     public void initialize() {
         renderBasicInformation();
@@ -141,6 +154,8 @@ public class BookComponentController {
     private void renderBasicInformation() {
         String bookString = book.getBookInfo().getName();
 
+        book.getBookInfo().getAuthors();
+
         String authorString = book.getBookInfo()
             .getAuthors()
             .stream()
@@ -150,7 +165,7 @@ public class BookComponentController {
 
         renderBookAndAuthorNameWithMaxLength(bookString, authorString);
 
-        String stockString = "Ton kho: " + book.getBookStock().getStock();
+        String stockString = STOCK_STRING + book.getBookStock().getStock();
 
         String moneyString = formatter.format(book.getBookStock().getReimburseCost());
         stock.setText(stockString);
@@ -165,14 +180,13 @@ public class BookComponentController {
     private void renderExtraInformation() {
         String yearString = Integer.toString(book.getBookInfo().getReleasedYear());
 
-        uiToModelMap = new HashMap<>();
+        genresOnUi = new HashMap<>();
 
         releasedYear.setText(yearString);
-        genreContainer.getChildren().addAll(book.getBookInfo()
+        book.getBookInfo()
             .getBookGenres()
             .stream()
-            .map(this::createToggleButtonForEachGenreAndAddToMap)
-            .toList());
+            .forEach(this::createTBAndAddToUI);
     }
 
     @FXML
@@ -196,11 +210,8 @@ public class BookComponentController {
         if (response.isEmpty() || response.get() == ButtonType.CANCEL) {
             // Do nothing
         } else if (response.get() == ButtonType.OK) {
-            // Hacky stuff
-            ((Pane) extraContainer.getParent().getParent())
-                .getChildren()
-                .remove(extraContainer.getParent());
             librarianService.delete(book);
+            extraContainer.fireEvent(new BookDeletedEvent(book));
             log.info("Delete book request: {{}}", book);
         } else {
             throw new IllegalStateException("can't be here, should be only OK Cancel and Close");
@@ -211,7 +222,19 @@ public class BookComponentController {
     @FXML
     private void handleBorrowBook(MouseEvent event) {
         log.info("Borrow book request: {{}}", book);
+        Stage stage = selectClientProvider.getObject(book, true);
+        stage.show();
+        stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, ev -> stock.setText(STOCK_STRING +
+            (Integer.parseInt(stock.getText().substring(9)) - 1)));
+    }
 
+    @FXML
+    private void handleReturnBook() {
+        log.info("Return book request: {}", book);
+        Stage stage = selectClientProvider.getObject(book, false);
+        stage.show();
+        stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, ev -> stock.setText(STOCK_STRING +
+            (Integer.parseInt(stock.getText().substring(9)) + 1)));
     }
 
     @FXML
@@ -222,6 +245,7 @@ public class BookComponentController {
             modifyBookButton.setText("Sua sach");
             if (validateAndRevertFields()) {
                 commitBook();
+                renderBasicInformation();
             }
         }
         toggleEditable();
@@ -229,7 +253,11 @@ public class BookComponentController {
 
     @FXML
     private void handleModifyAuthor(MouseEvent event) {
-        log.info("Modify author requests: {{}}", book);
+        if (modifyBookButton.isSelected()) {
+            log.info("Modify author requests: {{}}", book);
+            Stage stage = selectAuthorProvider.getObject(book);
+            stage.show();
+        }
     }
 
 
@@ -245,22 +273,12 @@ public class BookComponentController {
     }
 
     private void renderNewBookGenres() {
+        Collection<BookGenre> currentlyRenderedBookGenres = genresOnUi.values();
 
-        Collection<BookGenre> bookGenresCurrentlyRendered = uiToModelMap.values();
-
-        genreContainer.getChildren().addAll(book.getBookInfo()
-            .getBookGenres()
-            .stream()
-            .filter(bg -> !bookGenresCurrentlyRendered.contains(bg))
-            .map(bg -> {
-                ToggleButton tb = createToggleButtonForEachGenreAndAddToMap(bg);
-                tb.setDisable(false);
-                return tb;
-            })
-            .toList());
+        book.getBookInfo().getBookGenres().stream()
+            .filter(bg -> !currentlyRenderedBookGenres.contains(bg))
+            .forEach(bg -> createTBAndAddToUI(bg).setDisable(false));
     }
-
-
 
     private void openTabFirstTimeInitialization() {
         getOpenTabAnimation();
@@ -268,12 +286,18 @@ public class BookComponentController {
         renderExtraInformation();
     }
 
-    private ToggleButton createToggleButtonForEachGenreAndAddToMap(BookGenre genre) {
+
+    /**
+     * Create Book Genre Toggle Button and add it to UI
+     */
+    private ToggleButton createTBAndAddToUI(BookGenre genre) {
         ToggleButton toggleButton = new ToggleButton(genre.getName());
         toggleButton.getStyleClass().addAll("alatsi", "borrow-book");
         toggleButton.setDisable(true);
 
-        uiToModelMap.put(toggleButton, genre);
+        genresOnUi.put(toggleButton, genre);
+
+        genreContainer.getChildren().add(toggleButton);
 
         return toggleButton;
     }
@@ -339,11 +363,15 @@ public class BookComponentController {
             setTextElementWithMaxLength(bookName, book.getBookInfo().getName(), 40);
         }
 
-        for (ToggleButton genreToggleButton : uiToModelMap.keySet()) {
+        for (ToggleButton genreToggleButton : genresOnUi.keySet()) {
             genreToggleButton.setDisable(!editable);
         }
-    }
 
+        borrowBookButton.setDisable(editable);
+        toggleElementOpacity(borrowBookButton, !editable ? 1.0 : 0.4);
+        returnBookButton.setDisable(editable);
+        toggleElementOpacity(returnBookButton, !editable ? 1.0 : 0.4);
+    }
 
     private void toggleTextFieldsEditable(boolean editable) {
         bookName.setEditable(editable);
@@ -355,7 +383,7 @@ public class BookComponentController {
     }
 
     private boolean validateAndRevertFields() {
-        if (!isYearValid(releasedYear.getText()) || !isMoneyValid(money.getText())) {
+        if (!isIntegerValid(releasedYear.getText()) || !isDoubleValid(money.getText())) {
             revertEveryThing();
             return false;
         }
@@ -365,55 +393,86 @@ public class BookComponentController {
         book.getBookStock()
             .setReimburseCost(Double.parseDouble(money.getText().replaceAll("[' ,]", "")));
 
+
+        genresOnUi.keySet().removeIf(ToggleButton::isSelected);
+
+        log.debug("Book genre set before deleting unselected genres: {{}}",
+            book.getBookInfo().getBookGenres());
+
+        // delete selected BookGenres
         book.getBookInfo()
             .getBookGenres()
-            .retainAll(uiToModelMap.entrySet()
-                .stream()
-                .filter(entry -> {
-                    boolean toBeRemoved = entry.getKey().isSelected();
-                    if (toBeRemoved) {
-                        genreContainer.getChildren().remove(entry.getKey());
-                    }
-                    return !toBeRemoved;
-                })
-                .map(Entry::getValue)
-                .toList());
+            .retainAll(genresOnUi.values());
+
+        rerenderBookGenres(book.getBookInfo().getBookGenres());
         return true;
     }
 
+    private void rerenderBookGenres(Iterable<BookGenre> genres) {
+        genresOnUi.clear();
+        genreContainer.getChildren().removeIf(ToggleButton.class::isInstance);
+        for (BookGenre bookGenre : genres) {
+            createTBAndAddToUI(bookGenre);
+        }
+    }
+
     private void revertEveryThing() {
-        bookName.setText(book.getBookInfo().getName());
-        releasedYear.setText(String.valueOf(book.getBookInfo().getReleasedYear()));
-        money.setText(String.valueOf(book.getBookStock().getReimburseCost()));
+        renderBookAndAuthorNameWithMaxLength(
+            defensiveCopy.getBookInfo().getName(),
+            defensiveCopy.getBookInfo().getAuthors()
+                .stream()
+                .map(a -> a.getAuthorInfo().getName())
+                .collect(Collectors.joining(", ")));
+        releasedYear.setText(String.valueOf(defensiveCopy.getBookInfo().getReleasedYear()));
+        money.setText(String.valueOf(defensiveCopy.getBookStock().getReimburseCost()));
 
-        book.getBookInfo().getBookGenres().retainAll(oldBookGenres);
+        Set<BookGenre> oldBookGenres = defensiveCopy.getBookInfo().getBookGenres();
 
-        log.info("Reverting: Old book genres {{}}", oldBookGenres);
-        uiToModelMap.values().retainAll(oldBookGenres);
-
-        genreContainer.getChildren()
-            .removeIf(tg -> !uiToModelMap.containsKey(tg) && tg instanceof ToggleButton);
-
-        uiToModelMap.keySet().forEach(tb -> tb.setSelected(false));
+        Set<BookGenre> bookGenres = book.getBookInfo().getBookGenres();
+        bookGenres.retainAll(oldBookGenres);
+        rerenderBookGenres(bookGenres);
 
         validateYearTextField(null);
         validateMoneyTextField(null);
     }
 
     private void commitBook() {
-        oldBookGenres = book.getBookInfo().getBookGenres().stream().collect(Collectors.toSet());
-        librarianService.saveOrUpdate(book);
+        log.debug("Book Genres set before commit: {{}}", book.getBookInfo().getBookGenres());
+        defensiveCopy = getDefensiveCopy(book.getBookInfo(), book.getBookStock());
+        book = librarianService.saveOrUpdate(book);
     }
 
     @FXML
     private void validateYearTextField(KeyEvent event) {
-        log.debug("Validating year: {} ", isYearValid(releasedYear.getText()));
-        setElementBorderFromValidationResult(releasedYear, isYearValid(releasedYear.getText()));
+        log.debug("Validating year: {} ", isIntegerValid(releasedYear.getText()));
+        setElementBorderFromValidationResult(releasedYear, isIntegerValid(releasedYear.getText()));
     }
 
     @FXML
     private void validateMoneyTextField(KeyEvent event) {
-        log.debug("Validating money: {}", isMoneyValid(money.getText()));
-        setElementBorderFromValidationResult(money, isMoneyValid(money.getText()));
+        log.debug("Validating money: {}", isDoubleValid(money.getText()));
+        setElementBorderFromValidationResult(money, isDoubleValid(money.getText()));
     }
+
+    private Book getDefensiveCopy(BookInfo bookInfo, BookStock bookStock) {
+        Book bookCopy = Book.builder()
+            .name(bookInfo.getName())
+            .releasedYear(bookInfo.getReleasedYear())
+            .reimburseCost(bookStock.getReimburseCost())
+            .stock(bookStock.getStock())
+            .build();
+
+        bookCopy.getBookInfo().setAuthors(bookInfo
+            .getAuthors()
+            .stream()
+            .collect(Collectors.toSet()));
+
+        bookCopy.getBookInfo().setBookGenres(bookInfo
+            .getBookGenres()
+            .stream()
+            .collect(Collectors.toSet()));
+
+        return bookCopy;
+    }
+
 }

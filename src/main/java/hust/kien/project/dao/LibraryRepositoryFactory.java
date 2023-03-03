@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @NoRepositoryBean
 @Component
-@SuppressWarnings({"unchecked", "null",})
+@SuppressWarnings({"unchecked", "null"})
 public class LibraryRepositoryFactory {
 
     private Map<Class<?>, LibraryRepository<?, ?>> repositories;

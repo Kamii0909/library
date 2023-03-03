@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane alignment="CENTER" hgap="20.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hust.kien.project.controller.ManageGenreController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: white; -fx-background-radius: 20 20 20 20;" stylesheets="@../css/manage_genre.css">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutY="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+               <content>
+                  <ListView fx:id="genreContainer">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </ListView>
+               </content>
+            </ScrollPane>
+            <HBox alignment="CENTER" layoutX="20.0" layoutY="9.199999809265137" style="-fx-font-size: 14;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alegreya-sans-light-italic" text="Ten the loai:  " />
+                  <TextField fx:id="genreFilter" onKeyTyped="#handleFilterGenre" HBox.hgrow="SOMETIMES" />
+               </children>
+            </HBox>
+            <Button layoutX="109.0" layoutY="64.0" mnemonicParsing="false" onMouseClicked="#handleAddGenre" styleClass="alatsi" text="Them the loai" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: white; -fx-background-radius: 20;" GridPane.columnIndex="1">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" layoutY="120.0" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+               <content>
+                  <VBox alignment="TOP_CENTER" spacing="5.0">
+                     <children>
+                        <AnchorPane minHeight="70.0" styleClass="author" stylesheets="@component/author/author.css">
+                           <children>
+                              <ImageView fx:id="imageView1" fitHeight="60.0" fitWidth="60.0" layoutX="39.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                              <TextArea fx:id="nameField1" maxHeight="50.0" prefHeight="50.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextArea>
+                              <HBox layoutX="80.0" layoutY="4.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tuổi : " textAlignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </Text>
+                                    <TextField fx:id="ageField1" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="104.0" text="26">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="260.0" layoutY="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleDeleteAuthor" prefHeight="30.0" prefWidth="120.0" text="Xóa tác giả">
+                                       <styleClass>
+                                          <String fx:value="delete-button" />
+                                          <String fx:value="alatsi" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleModifyAuthor" prefHeight="30.0" prefWidth="120.0" text="Sửa thông tin">
+                                       <styleClass>
+                                          <String fx:value="alatsi" />
+                                          <String fx:value="modify-button" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="70.0" styleClass="author" stylesheets="@component/author/author.css">
+                           <children>
+                              <ImageView fx:id="imageView11" fitHeight="60.0" fitWidth="60.0" layoutX="39.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                              <TextArea fx:id="nameField11" maxHeight="45.0" prefHeight="45.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextArea>
+                              <HBox layoutX="80.0" layoutY="4.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tuổi : " textAlignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </Text>
+                                    <TextField fx:id="ageField11" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="104.0" text="26">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="260.0" layoutY="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleDeleteAuthor" prefHeight="30.0" prefWidth="120.0" text="Xóa tác giả">
+                                       <styleClass>
+                                          <String fx:value="delete-button" />
+                                          <String fx:value="alatsi" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleModifyAuthor" prefHeight="30.0" prefWidth="120.0" text="Sửa thông tin">
+                                       <styleClass>
+                                          <String fx:value="alatsi" />
+                                          <String fx:value="modify-button" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="70.0" styleClass="author" stylesheets="@component/author/author.css">
+                           <children>
+                              <ImageView fx:id="imageView12" fitHeight="60.0" fitWidth="60.0" layoutX="39.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                              <TextArea fx:id="nameField12" maxHeight="45.0" prefHeight="45.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextArea>
+                              <HBox layoutX="80.0" layoutY="4.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tuổi : " textAlignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </Text>
+                                    <TextField fx:id="ageField12" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="104.0" text="26">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="260.0" layoutY="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleDeleteAuthor" prefHeight="30.0" prefWidth="120.0" text="Xóa tác giả">
+                                       <styleClass>
+                                          <String fx:value="delete-button" />
+                                          <String fx:value="alatsi" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleModifyAuthor" prefHeight="30.0" prefWidth="120.0" text="Sửa thông tin">
+                                       <styleClass>
+                                          <String fx:value="alatsi" />
+                                          <String fx:value="modify-button" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="70.0" styleClass="author" stylesheets="@component/author/author.css">
+                           <children>
+                              <ImageView fx:id="imageView13" fitHeight="60.0" fitWidth="60.0" layoutX="39.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                              <TextArea fx:id="nameField13" maxHeight="45.0" prefHeight="45.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextArea>
+                              <HBox layoutX="80.0" layoutY="4.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tuổi : " textAlignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </Text>
+                                    <TextField fx:id="ageField13" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="104.0" text="26">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="260.0" layoutY="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleDeleteAuthor" prefHeight="30.0" prefWidth="120.0" text="Xóa tác giả">
+                                       <styleClass>
+                                          <String fx:value="delete-button" />
+                                          <String fx:value="alatsi" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleModifyAuthor" prefHeight="30.0" prefWidth="120.0" text="Sửa thông tin">
+                                       <styleClass>
+                                          <String fx:value="alatsi" />
+                                          <String fx:value="modify-button" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="70.0" styleClass="author" stylesheets="@component/author/author.css">
+                           <children>
+                              <ImageView fx:id="imageView111" fitHeight="60.0" fitWidth="60.0" layoutX="39.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                              <TextArea fx:id="nameField111" maxHeight="45.0" prefHeight="45.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextArea>
+                              <HBox layoutX="80.0" layoutY="4.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tuổi : " textAlignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </Text>
+                                    <TextField fx:id="ageField111" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="104.0" text="26">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="260.0" layoutY="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleDeleteAuthor" prefHeight="30.0" prefWidth="120.0" text="Xóa tác giả">
+                                       <styleClass>
+                                          <String fx:value="delete-button" />
+                                          <String fx:value="alatsi" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleModifyAuthor" prefHeight="30.0" prefWidth="120.0" text="Sửa thông tin">
+                                       <styleClass>
+                                          <String fx:value="alatsi" />
+                                          <String fx:value="modify-button" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="70.0" styleClass="author" stylesheets="@component/author/author.css">
+                           <children>
+                              <ImageView fx:id="imageView112" fitHeight="60.0" fitWidth="60.0" layoutX="39.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                              <TextArea fx:id="nameField112" maxHeight="45.0" prefHeight="45.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextArea>
+                              <HBox layoutX="80.0" layoutY="4.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tuổi : " textAlignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </Text>
+                                    <TextField fx:id="ageField112" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="104.0" text="26">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="260.0" layoutY="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleDeleteAuthor" prefHeight="30.0" prefWidth="120.0" text="Xóa tác giả">
+                                       <styleClass>
+                                          <String fx:value="delete-button" />
+                                          <String fx:value="alatsi" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleModifyAuthor" prefHeight="30.0" prefWidth="120.0" text="Sửa thông tin">
+                                       <styleClass>
+                                          <String fx:value="alatsi" />
+                                          <String fx:value="modify-button" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="70.0" styleClass="author" stylesheets="@component/author/author.css">
+                           <children>
+                              <ImageView fx:id="imageView113" fitHeight="60.0" fitWidth="60.0" layoutX="39.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                              <TextArea fx:id="nameField113" maxHeight="45.0" prefHeight="45.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextArea>
+                              <HBox layoutX="80.0" layoutY="4.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tuổi : " textAlignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </Text>
+                                    <TextField fx:id="ageField113" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="104.0" text="26">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="260.0" layoutY="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleDeleteAuthor" prefHeight="30.0" prefWidth="120.0" text="Xóa tác giả">
+                                       <styleClass>
+                                          <String fx:value="delete-button" />
+                                          <String fx:value="alatsi" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleModifyAuthor" prefHeight="30.0" prefWidth="120.0" text="Sửa thông tin">
+                                       <styleClass>
+                                          <String fx:value="alatsi" />
+                                          <String fx:value="modify-button" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="70.0" styleClass="author" stylesheets="@component/author/author.css">
+                           <children>
+                              <ImageView fx:id="imageView114" fitHeight="60.0" fitWidth="60.0" layoutX="39.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                              <TextArea fx:id="nameField114" maxHeight="45.0" prefHeight="45.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextArea>
+                              <HBox layoutX="80.0" layoutY="4.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tuổi : " textAlignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </Text>
+                                    <TextField fx:id="ageField114" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="104.0" text="26">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="260.0" layoutY="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleDeleteAuthor" prefHeight="30.0" prefWidth="120.0" text="Xóa tác giả">
+                                       <styleClass>
+                                          <String fx:value="delete-button" />
+                                          <String fx:value="alatsi" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleModifyAuthor" prefHeight="30.0" prefWidth="120.0" text="Sửa thông tin">
+                                       <styleClass>
+                                          <String fx:value="alatsi" />
+                                          <String fx:value="modify-button" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="70.0" styleClass="author" stylesheets="@component/author/author.css">
+                           <children>
+                              <ImageView fx:id="imageView115" fitHeight="60.0" fitWidth="60.0" layoutX="39.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                              <TextArea fx:id="nameField115" maxHeight="45.0" prefHeight="45.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextArea>
+                              <HBox layoutX="80.0" layoutY="4.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tuổi : " textAlignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </Text>
+                                    <TextField fx:id="ageField115" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="104.0" text="26">
+                                       <styleClass>
+                                          <String fx:value="goto-regular" />
+                                          <String fx:value="author-age" />
+                                       </styleClass>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="260.0" layoutY="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleDeleteAuthor" prefHeight="30.0" prefWidth="120.0" text="Xóa tác giả">
+                                       <styleClass>
+                                          <String fx:value="delete-button" />
+                                          <String fx:value="alatsi" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMouseClicked="#handleModifyAuthor" prefHeight="30.0" prefWidth="120.0" text="Sửa thông tin">
+                                       <styleClass>
+                                          <String fx:value="alatsi" />
+                                          <String fx:value="modify-button" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            <AnchorPane layoutX="41.0" layoutY="-18.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <HBox layoutX="40.0" layoutY="10.0" spacing="10.0" style="-fx-font-size: 14;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alegreya-sans-light-italic" text="Ten tac gia: " />
+                     </children>
+                  </HBox>
+                  <TextField />
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alegreya-sans-light-italic" text="Tuoi: " />
+                     </children>
+                  </HBox>
+                  <TextField />
+               </children>
+            </HBox>
+            <Button layoutX="214.0" layoutY="56.0" mnemonicParsing="false" onMouseClicked="#handleAddGenre" styleClass="alatsi" text="Them tac gia " AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0" />
+         </children>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</GridPane>

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import hust.kien.project.model.book.Book;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.ticket.ActiveTicket;
@@ -16,7 +15,6 @@ import hust.kien.project.service.dynamic.BookSpecificationBuilder;
 import hust.kien.project.service.dynamic.ClientSpecficationBuilder;
 
 @Service
-@Transactional
 public class TicketServiceImpl implements TicketService {
 
     @Autowired
@@ -55,13 +53,15 @@ public class TicketServiceImpl implements TicketService {
             throw new ClientOverlimitException(client);
         }
 
-        metadataService.saveOrUpdate(book);
+
+        book = metadataService.saveOrUpdate(book);
 
         ActiveTicket newTicket = ActiveTicket.builder()
             .book(book)
             .client(client)
             .startDate(LocalDate.now())
             .build();
+
 
         return metadataService.saveOrUpdate(newTicket);
     }
