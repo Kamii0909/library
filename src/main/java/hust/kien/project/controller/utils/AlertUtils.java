@@ -15,6 +15,12 @@ public class AlertUtils {
 		alert.show();
 	}
 
+	public static Alert createAlert(String str, AlertType type) {
+		Alert alert = new Alert(type, str, ButtonType.OK);
+		alert.setHeaderText(null);
+		return alert;
+	}
+
 	public static Optional<ButtonType> showAndWaitOkCancelAlert(String str) {
 		Alert alert = new Alert(AlertType.CONFIRMATION, str, ButtonType.OK, ButtonType.CANCEL);
 

@@ -16,10 +16,18 @@
 }
 
 .modify-button {
+    -fx-background-color: white;
+    -fx-background-radius: 4;
     -fx-text-fill: green;
     -fx-border-color: green;
     -fx-border-radius: 4;
     -fx-border-width: 1.4;
+}
+
+.modify-button:selected {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-border-color: none;
 }
 
 .modify-button:hover {
@@ -29,6 +37,10 @@
 }
 
 .button>.text {
+    -fx-font-size: 14;
+}
+
+.toggle-button>.text {
     -fx-font-size: 14;
 }
 
@@ -45,4 +57,8 @@
     -fx-border-style: solid solid hidden hidden;
     -fx-border-width: 1.5;
 
+}
+
+.author-name {
+    -fx-font-size: 16;
 }

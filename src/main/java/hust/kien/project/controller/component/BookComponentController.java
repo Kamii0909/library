@@ -145,6 +145,7 @@ public class BookComponentController {
         renderBasicInformation();
 
         bookImage.setImage(image);
+        bookImage.setFitHeight(137);
 
         modifyAuthor.setVisible(false);
         extraContainer.setVisible(false);

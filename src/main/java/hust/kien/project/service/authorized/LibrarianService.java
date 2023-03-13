@@ -8,7 +8,7 @@ import hust.kien.project.model.book.Book;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.ticket.ActiveTicket;
 import hust.kien.project.model.ticket.ClosedTicket;
-import hust.kien.project.service.dynamic.GeneralLibrarySpecificationBuilder;
+import hust.kien.project.service.dynamic.GeneralSpecificationBuilder;
 
 public interface LibrarianService extends AuthorizedService {
 
@@ -16,9 +16,9 @@ public interface LibrarianService extends AuthorizedService {
 
     <T extends LibraryPersistable> void delete(T entity); 
 
-    <T extends LibraryLocatable> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> builder);
+    <T extends LibraryLocatable> List<T> dynamicFind(GeneralSpecificationBuilder<T> builder);
 
-    <T extends LibraryLocatable> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> builder, Pageable pageable);
+    <T extends LibraryLocatable> List<T> dynamicFind(GeneralSpecificationBuilder<T> builder, Pageable pageable);
 
     ActiveTicket createActiveTicket(Book book, Client client);
 

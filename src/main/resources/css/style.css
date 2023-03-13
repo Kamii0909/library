@@ -11,7 +11,7 @@
 }
 
 @font-face {
-    font-family: RegularGoto;
+    font-family: Gotu Regular;
     src: url("../fonts/Gotu-Regular.ttf");
 }
 
@@ -27,7 +27,7 @@
 }
 
 .goto-regular {
-    -fx-font-family: RegularGoto;
+    -fx-font-family: Gotu Regular;
 }
 
 .text-area>.scroll-pane {
@@ -120,7 +120,7 @@
 .table-view .column-header-background {
     -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
     -fx-background-radius: 7px 7px 0px 0px;
-    -fx-background-insets: 0 11px 0 0;
+    -fx-background-insets: 0 0 0 0;
     -fx-padding: 0 0 5px 0;
 }
 
@@ -130,7 +130,7 @@
 
 .table-row-cell :hover {
     -fx-background-color: #93f9b911;
-    -fx-text-background-color: red;
+    /* -fx-text-background-color: red; */
 }
 
 .table-row-cell :odd {

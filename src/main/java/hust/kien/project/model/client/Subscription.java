@@ -14,6 +14,10 @@ public class Subscription {
     @Convert(converter = LocalDateConverter.class)
     private LocalDate endDate;
 
+    public boolean isActive() {
+        return LocalDate.now().compareTo(startDate) >= 0 && LocalDate.now().compareTo(endDate) <= 0;
+    }
+
 
     public abstract static class SubscriptionBuilder<C extends Subscription, B extends SubscriptionBuilder<C, B>> {
         private LocalDate startDate;

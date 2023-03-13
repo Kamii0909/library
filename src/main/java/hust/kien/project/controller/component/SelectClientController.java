@@ -12,12 +12,13 @@ import hust.kien.project.model.ticket.ActiveTicket;
 import hust.kien.project.service.ClientOverlimitException;
 import hust.kien.project.service.OutOfStockException;
 import hust.kien.project.service.authorized.LibrarianService;
-import hust.kien.project.service.dynamic.ActiveTicketSpecificationBuilder;
 import hust.kien.project.service.dynamic.ClientSpecficationBuilder;
+import hust.kien.project.service.dynamic.ticket.ActiveTicketSpecificationBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -100,9 +101,10 @@ public class SelectClientController {
             window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
         } catch (OutOfStockException e) {
             AlertUtils.showAlert("Sach da het hang trong kho", AlertType.ERROR);
-            window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
+            ((Stage) window).close();
         } catch (ClientOverlimitException e) {
             AlertUtils.showAlert("Khach hang can tra sach truoc khi muon them", AlertType.ERROR);
+            ((Stage) window).close();
         }
     }
 
@@ -111,8 +113,10 @@ public class SelectClientController {
             (ActiveTicket) allObjectsMap.get(clientList.getSelectionModel().getSelectedItem());
         if (activeTicket != null) {
             librarianService.closeActiveTicket(activeTicket);
+            window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
+        } else {
+            ((Stage) window).close();
         }
-        window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     @FXML

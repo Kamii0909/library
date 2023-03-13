@@ -15,7 +15,7 @@ import hust.kien.project.service.authorized.ManagerService;
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
 
-    private LibraryEmployee currentlyLoggedInEmployee;
+    private static LibraryEmployee currentlyLoggedInEmployee;
 
     @Autowired
     private AuditService auditService;
@@ -32,7 +32,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         synchronized (this) {
             currentlyLoggedInEmployee = employee;
         }
-        
+
         Map<LibraryRole, AuthorizedService> map = new EnumMap<>(LibraryRole.class);
 
         for (LibraryRole role : employee.getRoles()) {
@@ -55,8 +55,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             "Authorization Service Exception: role not manager, audit or librarian");
     }
 
-    @Override
-    public LibraryEmployee getCurrentlyLoggedInEmployee() {
+    public static LibraryEmployee getCurrentlyLoggedInEmployee() {
         return currentlyLoggedInEmployee;
     }
 

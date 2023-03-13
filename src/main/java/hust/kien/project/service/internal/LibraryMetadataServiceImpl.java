@@ -11,7 +11,8 @@ import hust.kien.project.dao.LibraryRepository;
 import hust.kien.project.dao.LibraryRepositoryFactory;
 import hust.kien.project.dao.book.BookGenreRepository;
 import hust.kien.project.model.book.BookGenre;
-import hust.kien.project.service.dynamic.GeneralLibrarySpecificationBuilder;
+import hust.kien.project.model.client.Client;
+import hust.kien.project.service.dynamic.GeneralSpecificationBuilder;
 
 @Service
 @SuppressWarnings("unchecked")
@@ -36,14 +37,20 @@ public class LibraryMetadataServiceImpl implements LibraryMetadataService {
     public <T> void delete(T entity) {
         if (entity instanceof BookGenre) {
             BookGenre bg = getReference(BookGenre.class, ((BookGenre) entity).getName());
-            bg.getBooksWithThisGenre().forEach(b -> b.getBookInfo().getBookGenres().remove(bg));
+            bg.getBooksWithThisGenre()
+                .forEach(book -> book.getBookInfo().getBookGenres().remove(bg));
+        } else if (entity instanceof Client) {
+            Client client = getReference(Client.class, ((Client) entity).getId());
+            assert client.getRentInfo().getActiveTickets().isEmpty() : new IllegalStateException(
+                "Client ticket should all be closed here");
+            client.getRentInfo().getClosedTickets().forEach(this::delete);
         }
         repositoryFactory.getRepository((Class<T>) entity.getClass()).delete(entity);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public <T> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> spec) {
+    public <T> List<T> dynamicFind(GeneralSpecificationBuilder<T> spec) {
         return repositoryFactory.getRepository(spec.libraryType()).findAll(spec.build());
     }
 
@@ -55,7 +62,7 @@ public class LibraryMetadataServiceImpl implements LibraryMetadataService {
     }
 
     @Override
-    public <T> List<T> dynamicFind(GeneralLibrarySpecificationBuilder<T> spec, Pageable pageable) {
+    public <T> List<T> dynamicFind(GeneralSpecificationBuilder<T> spec, Pageable pageable) {
         return repositoryFactory.getRepository(spec.libraryType()).findAll(spec.build(),
             pageable.getOffset(), pageable.getPageSize(), pageable.getSort());
     }

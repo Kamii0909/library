@@ -7,12 +7,14 @@ public class BookComponentUtils {
 
     private BookComponentUtils() {}
 
-    public static void setElementBorderFromValidationResult(Node node, boolean isValid) {
+    public static boolean setElementBorderFromValidationResult(Node node, boolean isValid) {
         if (isValid) {
             node.setStyle("-fx-boder-color: none");
         } else {
             node.setStyle("-fx-border-color: red; -fx-border-radius: 6; -fx-border-width: 1.5");
         }
+
+        return isValid;
     }
 
     public static boolean isIntegerValid(String year) {

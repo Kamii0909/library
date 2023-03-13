@@ -1,4 +1,4 @@
-package hust.kien.project.controller;
+package hust.kien.project.config;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,10 +88,7 @@ public class ResourceManager {
         return new ClassPathResource("gui/user_information.fxml");
     }
 
-    @Bean("statisticFxml")
-    Resource statisticFxml() {
-        return new ClassPathResource("gui/statistic.fxml");
-    }
+
 
     @Bean("introductionPageFxml")
     Resource introductionPageFxml() {
@@ -137,10 +134,7 @@ public class ResourceManager {
             return getRegion(resource, "user information");
         }
 
-        @Bean("statisticRegion")
-        Region statisticRegion(@Qualifier("statisticFxml") Resource resource) {
-            return getRegion(resource, "statistic");
-        }
+
 
         @Bean("introductionPageRegion")
         Region introductionPageRegion(@Qualifier("introductionPageFxml") Resource resource) {

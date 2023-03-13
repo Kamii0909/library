@@ -2,12 +2,15 @@ package hust.kien.project.controller;
 
 import static hust.kien.project.controller.component.BookComponentUtils.setElementBorderFromValidationResult;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Component;
+import hust.kien.project.controller.utils.AlertUtils;
 import hust.kien.project.model.book.BookGenre;
 import hust.kien.project.service.authorized.LibrarianService;
 import hust.kien.project.service.dynamic.BookGenreSpecificationBuilder;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -62,10 +65,15 @@ public class ManageGenreController {
     private void deleteBookGenre() {
         BookGenre bookGenre = genreContainer.getSelectionModel().getSelectedItem();
 
-        log.info("Deleting book genre: {}", bookGenre);
-        librarianService.delete(bookGenre);
+        Optional<ButtonType> confirmation = AlertUtils.showAndWaitOkCancelAlert(
+            "Ban co chac muon xoa the loai " + bookGenre.getName() + " hay khong?");
 
-        genreContainer.getItems().remove(genreContainer.getSelectionModel().getSelectedIndex());
+        if (confirmation.isPresent() && confirmation.get() == ButtonType.OK) {
+            log.info("Deleting book genre: {}", bookGenre);
+            librarianService.delete(bookGenre);
+
+            genreContainer.getItems().remove(genreContainer.getSelectionModel().getSelectedIndex());
+        }
     }
 
     @FXML

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
@@ -69,6 +70,9 @@
          <children>
             <ImageView fx:id="bookImage" blendMode="DARKEN" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
          </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </Pane>
       <AnchorPane fx:id="extraContainer" layoutX="404.0" layoutY="-8.0" prefWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="360.0" AnchorPane.rightAnchor="-300.0" AnchorPane.topAnchor="20.0">
          <children>

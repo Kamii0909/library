@@ -2,12 +2,14 @@ package hust.kien.project.controller.frame;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 
 @Component
+@Lazy
 public class GenreAuthorController {
     @FXML
     private GridPane mainContainer;

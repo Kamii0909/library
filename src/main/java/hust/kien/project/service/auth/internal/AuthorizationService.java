@@ -7,5 +7,4 @@ public interface AuthorizationService {
     
     AuthorizedContextHolder authorize(LibraryEmployee user);
 
-    LibraryEmployee getCurrentlyLoggedInEmployee();
 }

@@ -10,7 +10,8 @@ import hust.kien.project.model.book.Book;
 import hust.kien.project.model.client.Client;
 import hust.kien.project.model.ticket.ActiveTicket;
 import hust.kien.project.model.ticket.ClosedTicket;
-import hust.kien.project.service.dynamic.GeneralLibrarySpecificationBuilder;
+import hust.kien.project.service.dynamic.GeneralSpecificationBuilder;
+import hust.kien.project.service.dynamic.ticket.ActiveTicketSpecificationBuilder;
 import hust.kien.project.service.internal.LibraryMetadataService;
 import hust.kien.project.service.internal.TicketService;
 
@@ -36,12 +37,16 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     public <T extends LibraryPersistable> void delete(T entity) {
+        if (entity instanceof Client) {
+            dynamicFind(new ActiveTicketSpecificationBuilder().client(((Client) entity)))
+                .forEach(this::closeActiveTicket);
+        }
         metadataService.delete(entity);
     }
 
     @Override
     public <T extends LibraryLocatable> List<T> dynamicFind(
-        GeneralLibrarySpecificationBuilder<T> builder) {
+        GeneralSpecificationBuilder<T> builder) {
         return metadataService.dynamicFind(builder);
     }
 
@@ -57,7 +62,7 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     public <T extends LibraryLocatable> List<T> dynamicFind(
-        GeneralLibrarySpecificationBuilder<T> builder, Pageable pageable) {
+        GeneralSpecificationBuilder<T> builder, Pageable pageable) {
         return metadataService.dynamicFind(builder, pageable);
     }
 

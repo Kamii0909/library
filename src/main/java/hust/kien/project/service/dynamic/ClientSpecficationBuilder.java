@@ -1,8 +1,11 @@
 package hust.kien.project.service.dynamic;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import hust.kien.project.model.client.Client;
+import hust.kien.project.model.client.ClientContactInfo_;
 import hust.kien.project.model.client.ClientRentInfo_;
+import hust.kien.project.model.client.ClientTier;
 import hust.kien.project.model.client.Client_;
 import hust.kien.project.model.client.Subscription_;
 import jakarta.persistence.criteria.JoinType;
@@ -26,6 +29,25 @@ public class ClientSpecficationBuilder extends GeneralLibrarySpecificationBuilde
             LocalDate.now()));
         return this;
     }
+
+    public ClientSpecficationBuilder withTierIn(Collection<ClientTier> tiers) {
+        specList.add(
+            (root, cq, cb) -> root.get(Client_.rentInfo).get(ClientRentInfo_.clientTier).in(tiers));
+        return this;
+    }
+
+    public ClientSpecficationBuilder nameLike(String name) {
+        specList.add((root, cq, cb) -> cb
+            .like(root.get(Client_.contactInfo).get(ClientContactInfo_.name), "%" + name + "%"));
+        return this;
+    }
+
+    public ClientSpecficationBuilder addressLike(String address) {
+        specList.add((root, cq, cb) -> cb
+            .like(root.get(Client_.contactInfo).get(ClientContactInfo_.address), "%" + address + "%"));
+        return this;
+    }
+
 
     @Override
     public ClientCollectionInitBuilder initCollection() {

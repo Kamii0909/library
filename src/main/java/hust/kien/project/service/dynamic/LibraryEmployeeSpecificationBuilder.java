@@ -4,7 +4,7 @@ import hust.kien.project.model.auth.LibraryEmployee;
 import hust.kien.project.model.auth.LibraryEmployee_;
 
 public class LibraryEmployeeSpecificationBuilder extends
-                                                 GeneralLibrarySpecificationBuilder<LibraryEmployee> {
+    GeneralLibrarySpecificationBuilder<LibraryEmployee> {
 
     public LibraryEmployeeSpecificationBuilder withUsername(String username) {
         specList.add((root, cq, cb) -> cb.equal(root.get(LibraryEmployee_.username), username));
@@ -23,15 +23,23 @@ public class LibraryEmployeeSpecificationBuilder extends
     }
 
     @Override
-    @Deprecated
-    public LibraryCollectionInitBuilder<LibraryEmployee> initCollection() {
+    public LibraryEmployeeSpecificationBuilder.LibraryEmployeeCollectionInitBuilder initCollection() {
         return new LibraryEmployeeCollectionInitBuilder();
     }
 
-    public class LibraryEmployeeCollectionInitBuilder extends LibraryCollectionInitBuilder<LibraryEmployee> {
+    public class LibraryEmployeeCollectionInitBuilder
+        extends LibraryCollectionInitBuilder<LibraryEmployee> {
+
+        public LibraryEmployeeCollectionInitBuilder roles() {
+            specList.add((root, cq, cb) -> {
+                root.fetch(LibraryEmployee_.roles);
+                return null;
+            });
+            return this;
+        }
 
         @Override
-        public GeneralLibrarySpecificationBuilder<LibraryEmployee> back() {
+        public GeneralSpecificationBuilder<LibraryEmployee> back() {
             return LibraryEmployeeSpecificationBuilder.this;
         }
 

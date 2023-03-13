@@ -1,5 +1,7 @@
 package hust.kien.project.controller.component;
 
+import static hust.kien.project.controller.component.BookComponentUtils.isIntegerValid;
+import static hust.kien.project.controller.component.BookComponentUtils.setElementBorderFromValidationResult;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import hust.kien.project.controller.utils.AlertUtils;
@@ -10,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -24,6 +27,9 @@ public class AuthorComponentController {
 
     @FXML
     private TextArea nameField;
+
+    @FXML
+    private ToggleButton modifyButton;
 
     @FXML
     private ImageView imageView;
@@ -44,11 +50,10 @@ public class AuthorComponentController {
     }
 
     public void initialize() {
-        nameField.setText(author.getAuthorInfo().getName());
-        ageField.setText(Integer.toString(author.getAuthorInfo().getAge()));
+        setNameAndAgeField(author.getAuthorInfo().getName(), author.getAuthorInfo().getAge());
 
-        Circle circle = new Circle(40, 35,30);
-        
+        Circle circle = new Circle(40, 35, 30);
+
         imageView.setClip(circle);
         imageView.setImage(image);
     }
@@ -70,8 +75,52 @@ public class AuthorComponentController {
 
     }
 
+    private void toggleEditable() {
+        boolean editable = modifyButton.isSelected();
+        nameField.setEditable(editable);
+        ageField.setEditable(editable);
+    }
+
     @FXML
     private void handleModifyAuthor() {
         log.info("Modify author request {}", author);
+        if (modifyButton.isSelected()) {
+            modifyButton.setText("Hoan tat");
+        } else {
+            modifyButton.setText("Sua thong tin");
+            if (validateAndRevertFields()) {
+                commitAuthor();
+            }
+        }
+        toggleEditable();
+    }
+
+
+    @FXML
+    private void validate() {
+        setElementBorderFromValidationResult(ageField, isIntegerValid(ageField.getText()));
+        setElementBorderFromValidationResult(nameField, !nameField.getText().isBlank());
+    }
+
+    private boolean validateAndRevertFields() {
+        if (isIntegerValid(ageField.getText()) && !nameField.getText().isBlank()) {
+            author.getAuthorInfo().setName(nameField.getText());
+            author.getAuthorInfo().setAge(Integer.parseInt(ageField.getText()));
+            return true;
+        } else {
+            setNameAndAgeField(author.getAuthorInfo().getName(), author.getAuthorInfo().getAge());
+            validate();
+            return false;
+        }
+    }
+
+    private void setNameAndAgeField(String name, int age) {
+        nameField.setText(name);
+        ageField.setText(Integer.toString(age));
+    }
+
+    private void commitAuthor() {
+        log.info("Saving author: {}", author);
+        author = librarianService.saveOrUpdate(author);
     }
 }

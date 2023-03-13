@@ -9,12 +9,14 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import hust.kien.project.controller.utils.AlertUtils;
 import hust.kien.project.controller.utils.FxUtils;
 import hust.kien.project.service.auth.AuthorizedContextHolder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -33,7 +35,7 @@ public class MainFrameController {
 	private final ObjectProvider<Region> manageGenreAuthorRegionProvider;
 	private final ObjectProvider<Region> manageTicketRegionProvider;
 	private final ObjectProvider<Region> userInformationRegionProvider;
-	private final ObjectProvider<Region> statisticRegionProvider;
+	private final ObjectProvider<Region> managerFrameRegionProvider;
 	private final ObjectProvider<Region> introductionPageRegionProvider;
 
 
@@ -43,14 +45,14 @@ public class MainFrameController {
 		@Qualifier("manageGenreAuthorRegion") ObjectProvider<Region> manageGenreAuthorRegionProvider,
 		@Qualifier("manageTicketRegion") ObjectProvider<Region> manageTicketRegionProvider,
 		@Qualifier("userInformationRegion") ObjectProvider<Region> userInformationRegionProvider,
-		@Qualifier("statisticRegion") ObjectProvider<Region> statisticRegionProvider,
+		@Qualifier("managerFrameRegion") ObjectProvider<Region> managerFrameRegionProvider,
 		@Qualifier("introductionPageRegion") ObjectProvider<Region> introductionPageRegionProvider) {
 		this.introductionPageRegionProvider = introductionPageRegionProvider;
 		this.manageBookRegionProvider = manageBookRegionProvider;
 		this.manageClientRegionProvider = manageClientRegionProvider;
 		this.manageGenreAuthorRegionProvider = manageGenreAuthorRegionProvider;
 		this.userInformationRegionProvider = userInformationRegionProvider;
-		this.statisticRegionProvider = statisticRegionProvider;
+		this.managerFrameRegionProvider = managerFrameRegionProvider;
 		this.manageTicketRegionProvider = manageTicketRegionProvider;
 	}
 
@@ -76,7 +78,7 @@ public class MainFrameController {
 
 	public void initializeButtonEventListener(AuthorizedContextHolder authenticationPrincipal) {
 		int i = 1;
-		
+
 		if (authenticationPrincipal.getLibrarianService() != null) {
 			initButtonAndAddToMap(FontAwesomeIcon.BOOK, "Quan ly sach",
 				manageBookRegionProvider.getObject(), 10 + (i++) * 51);
@@ -88,7 +90,7 @@ public class MainFrameController {
 		}
 		if (authenticationPrincipal.getManagerService() != null) {
 			initButtonAndAddToMap(FontAwesomeIcon.AREA_CHART, "Thong ke",
-				statisticRegionProvider.getObject(), 10 + (i++) * 51);
+				managerFrameRegionProvider.getObject(), 10 + (i++) * 51);
 		}
 		if (authenticationPrincipal.getAuditService() != null) {
 			initButtonAndAddToMap(FontAwesomeIcon.EDIT, "Quan ly phieu muon",
@@ -124,17 +126,29 @@ public class MainFrameController {
 		button.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 		button.setOnMouseClicked(ev -> changeMainContent(region, navPosition));
 
-
 		Tooltip buttonTooltip = new Tooltip(tooltip);
 		buttonTooltip.setShowDelay(Duration.millis(100));
 		Tooltip.install(button, buttonTooltip);
-
 
 		StackPane stackPane = new StackPane(button);
 		stackPane.getStyleClass().setAll("navButton");
 		FxUtils.setHeigth(40, 40, 40, stackPane);
 
 		return stackPane;
+	}
+
+	@FXML
+	private void handleLogout() {
+		log.info("Log out request");
+		AlertUtils.showAlert("Tinh nang tam thoi chua duoc trien khai", AlertType.INFORMATION);
+	}
+
+	@FXML
+	private void handleModifyUser() {
+		log.info("Modify user request");
+		Region region = userInformationRegionProvider.getObject();
+		mainContent.getChildren().setAll(region);
+		FxUtils.setAnchorPoint(0, 0, 0, 0, region);
 	}
 
 }

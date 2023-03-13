@@ -98,7 +98,7 @@
                   </CheckBox>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#login" prefHeight="44.0" prefWidth="310.0" style="-fx-background-color: #ff7c00;" text="Đăng Nhập" textFill="WHITE">
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#login" prefHeight="44.0" prefWidth="310.0" style="-fx-background-color: #ff7c00;" text="Đăng Nhập" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>

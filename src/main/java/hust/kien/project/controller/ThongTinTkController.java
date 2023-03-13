@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 @Component
+@SuppressWarnings("all")
 public class ThongTinTkController {
 
 	@FXML
@@ -38,11 +39,11 @@ public class ThongTinTkController {
 
 	@FXML
 	void capNhatTaiKhoan(ActionEvent event) {
-
+		// TODO? 
 	}
 
 	@FXML
 	void xoaTaiKhoan(ActionEvent event) {
-
+		// TODO?
 	}
 }
