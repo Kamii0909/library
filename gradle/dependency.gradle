@@ -1,0 +1,44 @@
+dependencyResolutionManagement {
+    versionCatalogs {
+        create('gui') {
+            def javafxVersion = version('javafx', '23')
+
+            def libraries = ['base', 'controls', 'graphics', 'fxml', 'web']
+
+            libraries.forEach {
+                library(it, 'org.openjfx', "javafx-${it}").versionRef(javafxVersion)
+            }
+
+            bundle('javafx', libraries)
+
+            library('controlsfx', 'org.controlsfx', 'controlsfx').version('latest.release')
+
+            library('fontawesome', 'de.jensd', 'fontawesomefx-fontawesome').version('latest.release')
+        }
+
+        create('spring') {
+            def springVersion = version('spring', 'latest.release')
+
+            def libraries = ['data-jpa', 'test']
+
+            libraries.forEach {
+                library("starter-${it}", 'org.springframework.boot', "spring-boot-starter-${it}").versionRef(springVersion)
+            }
+        }
+
+        create('hibernate') {
+            def hibernateVersion = version('hibernate', '[6.+,7)')
+
+            library('dialects','org.hibernate.orm', 'hibernate-community-dialects').versionRef(hibernateVersion)
+
+            library('processor', 'org.hibernate.orm', 'hibernate-jpamodelgen').versionRef(hibernateVersion)
+        }
+
+        create('libs') {
+            library('sqlite', 'org.xerial', 'sqlite-jdbc').version('latest.release')
+
+            library('guava', 'com.google.guava', 'guava').version('33.3.1-jre')
+            
+        }
+    }
+}

@@ -3,6 +3,9 @@ package hust.kien.project.controller;
 import static hust.kien.project.controller.component.BookComponentUtils.setElementBorderFromValidationResult;
 import java.util.List;
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import hust.kien.project.controller.utils.AlertUtils;
 import hust.kien.project.model.book.BookGenre;
@@ -16,11 +19,12 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import lombok.extern.slf4j.Slf4j;
 
 @Component
-@Slf4j
 public class ManageGenreController {
+
+    	private static final Logger log = LoggerFactory.getLogger(ManageGenreController.class);
+
 
     @FXML
     private TextField genreFilter;

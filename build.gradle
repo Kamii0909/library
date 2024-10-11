@@ -1,0 +1,27 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(gui.bundles.javafx) { artifact { classifier = 'win' }}
+    implementation gui.controlsfx
+    implementation gui.fontawesome
+
+    implementation hibernate.dialects
+    implementation libs.sqlite
+    implementation spring.starter.data.jpa
+    annotationProcessor hibernate.processor
+
+    implementation libs.guava
+
+    testImplementation spring.starter.test
+
+}
+
+group = 'hust.kien.project'
+version = '1'
+description = 'library'

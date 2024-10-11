@@ -3,6 +3,9 @@ package hust.kien.project.controller.component;
 import static hust.kien.project.controller.component.BookComponentUtils.isIntegerValid;
 import static hust.kien.project.controller.component.BookComponentUtils.setElementBorderFromValidationResult;
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import hust.kien.project.controller.utils.AlertUtils;
 import hust.kien.project.model.author.Author;
@@ -17,52 +20,51 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class AuthorComponentController {
-
+    
+    private static final Logger log = LoggerFactory.getLogger(AuthorComponentController.class);
+    
     @FXML
     private TextField ageField;
-
+    
     @FXML
     private TextArea nameField;
-
+    
     @FXML
     private ToggleButton modifyButton;
-
+    
     @FXML
     private ImageView imageView;
-
+    
     @FXML
     private StackPane imageContainer;
-
+    
     private Author author;
-
+    
     private Image image;
-
+    
     @Autowired
     private LibrarianService librarianService;
-
+    
     public AuthorComponentController(Author author, Image image) {
         this.author = author;
         this.image = image;
     }
-
+    
     public void initialize() {
         setNameAndAgeField(author.getAuthorInfo().getName(), author.getAuthorInfo().getAge());
-
+        
         Circle circle = new Circle(40, 35, 30);
-
+        
         imageView.setClip(circle);
         imageView.setImage(image);
     }
-
-
+    
     @FXML
     private void handleDeleteAuthor() {
         Optional<ButtonType> response = AlertUtils.showAndWaitOkCancelAlert("Are you sure?");
-
+        
         if (response.isEmpty() || response.get() == ButtonType.CANCEL) {
             // Do nothing
         } else if (response.get() == ButtonType.OK) {
@@ -72,15 +74,15 @@ public class AuthorComponentController {
         } else {
             throw new IllegalStateException("can't be here, should be only OK Cancel and Close");
         }
-
+        
     }
-
+    
     private void toggleEditable() {
         boolean editable = modifyButton.isSelected();
         nameField.setEditable(editable);
         ageField.setEditable(editable);
     }
-
+    
     @FXML
     private void handleModifyAuthor() {
         log.info("Modify author request {}", author);
@@ -94,14 +96,13 @@ public class AuthorComponentController {
         }
         toggleEditable();
     }
-
-
+    
     @FXML
     private void validate() {
         setElementBorderFromValidationResult(ageField, isIntegerValid(ageField.getText()));
         setElementBorderFromValidationResult(nameField, !nameField.getText().isBlank());
     }
-
+    
     private boolean validateAndRevertFields() {
         if (isIntegerValid(ageField.getText()) && !nameField.getText().isBlank()) {
             author.getAuthorInfo().setName(nameField.getText());
@@ -113,12 +114,12 @@ public class AuthorComponentController {
             return false;
         }
     }
-
+    
     private void setNameAndAgeField(String name, int age) {
         nameField.setText(name);
         ageField.setText(Integer.toString(age));
     }
-
+    
     private void commitAuthor() {
         log.info("Saving author: {}", author);
         author = librarianService.saveOrUpdate(author);

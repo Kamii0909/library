@@ -1,18 +1,23 @@
 package hust.kien.project.controller.component.manager;
 
 import java.time.LocalDate;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
 import hust.kien.project.service.authorized.ManagerService;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.text.Text;
-import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Lazy
-@Slf4j
 public class StatisticController {
+
+        private static final Logger log = LoggerFactory.getLogger(StatisticController.class);
+
 
     @FXML
     private DatePicker startDate, endDate;
