@@ -1,6 +1,7 @@
 package hust.kien.project.controller.frame;
 
 import static de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.FILE_ARCHIVE_ALT;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,17 +11,17 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import hust.kien.project.controller.component.AuthorComponentController;
 import hust.kien.project.controller.utils.AlertUtils;
 import hust.kien.project.controller.utils.FxUtils;
 import hust.kien.project.service.auth.AuthorizedContextHolder;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;

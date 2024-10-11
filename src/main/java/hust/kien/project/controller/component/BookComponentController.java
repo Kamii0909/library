@@ -5,6 +5,7 @@ import static hust.kien.project.controller.component.BookComponentUtils.isIntege
 import static hust.kien.project.controller.component.BookComponentUtils.setElementBorderFromValidationResult;
 import static hust.kien.project.controller.component.BookComponentUtils.setTextElementWithMaxLength;
 import static hust.kien.project.controller.component.BookComponentUtils.toggleElementOpacity;
+
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.HashMap;
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import hust.kien.project.controller.ManageBookController;
 import hust.kien.project.controller.utils.AlertUtils;
 import hust.kien.project.controller.utils.LeftAnchorPaneProperty;
 import hust.kien.project.controller.utils.RightAnchorPaneProperty;

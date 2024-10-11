@@ -24,6 +24,10 @@ dependencies {
 
 }
 
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
 group = 'hust.kien.project'
 version = '1'
 description = 'library'
