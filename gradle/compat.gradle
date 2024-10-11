@@ -1,0 +1,4 @@
+compileJava {
+    // use JDK classfile version 66 until ASM catches up (also meant Spring catches up)
+    options.release = 22
+}
