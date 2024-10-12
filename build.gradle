@@ -1,37 +1,4 @@
-plugins {
-    id 'application'
+subprojects {
+    apply plugin: 'java'
+    apply from: '../gradle/compat.gradle'
 }
-
-apply from: './gradle/compat.gradle'
-
-repositories {
-    mavenCentral()
-}
-
-application {
-    mainClass = 'hust.kien.project.LibraryApplication'
-}
-
-dependencies {
-    implementation(gui.bundles.javafx) { artifact { classifier = 'win' }}
-    implementation gui.controlsfx
-    implementation gui.fontawesome
-
-    implementation hibernate.dialects
-    implementation libs.sqlite
-    implementation spring.starter.data.jpa
-    annotationProcessor hibernate.processor
-
-    implementation libs.guava
-
-    testImplementation spring.starter.test
-
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
-group = 'hust.kien.project'
-version = '1'
-description = 'library'

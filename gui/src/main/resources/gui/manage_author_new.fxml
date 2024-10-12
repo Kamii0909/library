@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane style="-fx-background-color: white; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hust.kien.project.gui.controller.ManageAuthorController">
+   <children>
+      <ScrollPane fitToHeight="true" fitToWidth="true" layoutY="120.0" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+         <content>
+            <VBox fx:id="authorContainer" alignment="TOP_CENTER" spacing="5.0">
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <AnchorPane layoutX="41.0" layoutY="-18.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <HBox layoutX="40.0" layoutY="10.0" spacing="10.0" style="-fx-font-size: 14;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <HBox alignment="CENTER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alegreya-sans-light-italic" text="Ten tac gia: " HBox.hgrow="NEVER" />
+               </children>
+            </HBox>
+            <TextField fx:id="nameField" onKeyTyped="#handleFilter" HBox.hgrow="SOMETIMES" />
+            <HBox alignment="CENTER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alegreya-sans-light-italic" text="Tuoi: " HBox.hgrow="NEVER" />
+               </children>
+            </HBox>
+            <TextField fx:id="ageField" onKeyTyped="#handleFilter" HBox.hgrow="SOMETIMES" />
+         </children>
+      </HBox>
+      <Button layoutX="214.0" layoutY="56.0" mnemonicParsing="false" onMouseClicked="#handleAddAuthor" styleClass="alatsi" text="Them tac gia " AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0" />
+   </children>
+</AnchorPane>

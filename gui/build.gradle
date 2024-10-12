@@ -1,0 +1,31 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass = 'hust.kien.project.gui.LibraryApplication'
+}
+
+dependencies {
+    implementation(gui.bundles.javafx) { artifact { classifier = 'win' }}
+    implementation gui.controlsfx
+    implementation gui.fontawesome
+
+    implementation project(':core')
+
+    implementation libs.guava
+
+    testImplementation spring.starter.test
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+group = 'hust.kien.project'
+version = '1'
+description = 'library'

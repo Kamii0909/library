@@ -4,4 +4,6 @@
 
 rootProject.name = 'library'
 
+include('core', 'gui')
+
 apply from: './gradle/dependency.gradle'

@@ -1,0 +1,28 @@
+plugins {
+    id 'java-library'
+}
+
+apply from: '../gradle/compat.gradle'
+
+group = 'hust.kien.project'
+version = '0.0.0'
+description = 'library-core'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation hibernate.dialects
+    implementation libs.sqlite
+    api spring.starter.data.jpa
+    annotationProcessor hibernate.processor
+
+    implementation libs.guava
+
+    testImplementation spring.starter.test
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
