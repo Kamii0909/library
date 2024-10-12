@@ -38,7 +38,8 @@ dependencyResolutionManagement {
             library('sqlite', 'org.xerial', 'sqlite-jdbc').version('latest.release')
 
             library('guava', 'com.google.guava', 'guava').version('33.3.1-jre')
-            
+        
+            library('jspecify', 'org.jspecify', 'jspecify').version('latest.release')
         }
     }
 }

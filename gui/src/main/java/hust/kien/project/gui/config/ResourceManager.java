@@ -56,10 +56,10 @@ public class ResourceManager {
         return new ClassPathResource("image/logo.png");
     }
     
-    @Bean("loginFxml")
-    Resource loginFxml() {
-        return new ClassPathResource("gui/login.fxml");
-    }
+    // @Bean("loginFxml")
+    // Resource loginFxml() {
+    //     return new ClassPathResource("gui/login.fxml");
+    // }
     
     @Bean("manageBookFxml")
     Resource manageBookFxml() {
@@ -99,10 +99,10 @@ public class ResourceManager {
     @Lazy
     @Configuration
     public class NoProxy {
-        @Bean("loginRegion")
-        Region loginRegion(@Qualifier("loginFxml") Resource resource) {
-            return getRegion(resource, "login");
-        }
+        // @Bean("loginRegion")
+        // Region loginRegion(@Qualifier("loginFxml") Resource resource) {
+        //     return getRegion(resource, "login");
+        // }
         
         @Bean("manageBookRegion")
         @Scope(proxyMode = ScopedProxyMode.NO)

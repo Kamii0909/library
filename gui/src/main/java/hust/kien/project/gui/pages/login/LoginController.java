@@ -1,4 +1,4 @@
-package hust.kien.project.gui.controller;
+package hust.kien.project.gui.pages.login;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,7 +33,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 @Lazy
-public final class LoginController implements Initializable, ApplicationEventPublisherAware {
+final class LoginController implements Initializable, ApplicationEventPublisherAware {
 	private final AuthService authService;
 
 	private ApplicationEventPublisher eventPublisher;
