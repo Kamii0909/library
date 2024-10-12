@@ -2,6 +2,7 @@ package hust.kien.project.controller;
 
 import static hust.kien.project.controller.component.BookComponentUtils.isIntegerValid;
 import static hust.kien.project.controller.component.BookComponentUtils.setElementBorderFromValidationResult;
+
 import java.io.IOException;
 import java.util.Collection;
 
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
+
 import hust.kien.project.controller.utils.FxUtils;
 import hust.kien.project.model.author.Author;
 import hust.kien.project.service.authorized.LibrarianService;
@@ -22,7 +23,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-@Component
 public class ManageAuthorController {
     private static final Logger log = LoggerFactory.getLogger(ManageAuthorController.class);
     

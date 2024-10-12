@@ -7,12 +7,13 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
+
 import hust.kien.project.controller.utils.AlertUtils;
 import hust.kien.project.service.auth.AuthService;
 import hust.kien.project.service.auth.AuthorizedContextHolder;
@@ -31,7 +32,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
-@Component
 @Lazy
 public final class LoginController implements Initializable, ApplicationEventPublisherAware {
 	private final AuthService authService;

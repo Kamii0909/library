@@ -2,27 +2,31 @@ package hust.kien.project.view;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 
-@Component
 public class LoginSceneLoader {
-
+    
     private final String applicationTitle;
+    
     private final Scene loginScene;
-
+    
+    private final WindowManagerBean windowManager;
+    
     LoginSceneLoader(
         @Value("${spring.application.ui.login.title}") String applicationTitle,
-        @Qualifier("loginRegion") Region loginRegion) {
-
+        @Qualifier("loginRegion") Region loginRegion,
+        WindowManagerBean windowManager) {
+        
         this.applicationTitle = applicationTitle;
         this.loginScene = new Scene(loginRegion);
+        this.windowManager = windowManager;
     }
-
+    
     public void showLoginScene() {
-        WindowManager.setScene(loginScene, applicationTitle);
-        WindowManager.show();
+        windowManager.setScene(loginScene, applicationTitle);
+        windowManager.show();
     }
-
+    
 }

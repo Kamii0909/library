@@ -8,15 +8,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+
+import hust.kien.project.config.FrameConfig.MainFrameConfig;
+import hust.kien.project.config.FrameConfig.ManagerFrameConfig;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
 
-@Configuration
 @Lazy
 @SuppressWarnings("java:S1118")
+@Import({ MainFrameConfig.class, ManagerFrameConfig.class })
 public class FrameConfig {
     
     private static final Logger log = LoggerFactory.getLogger(FrameConfig.class);

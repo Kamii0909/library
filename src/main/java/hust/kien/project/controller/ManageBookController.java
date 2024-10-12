@@ -30,7 +30,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-@Component
 @Lazy
 public class ManageBookController {
 	

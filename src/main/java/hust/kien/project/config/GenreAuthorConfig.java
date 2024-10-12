@@ -8,13 +8,12 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
 
-@Configuration
 public class GenreAuthorConfig implements BeanFactoryAware {
     
     private static final Logger log = LoggerFactory.getLogger(GenreAuthorConfig.class);

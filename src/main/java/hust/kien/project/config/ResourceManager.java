@@ -14,10 +14,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
 
-@Configuration
 @Lazy
 public class ResourceManager {
     
@@ -97,7 +97,7 @@ public class ResourceManager {
     }
     
     @Lazy
-    @Configuration(proxyBeanMethods = false)
+    @Configuration
     public class NoProxy {
         @Bean("loginRegion")
         Region loginRegion(@Qualifier("loginFxml") Resource resource) {

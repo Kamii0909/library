@@ -1,7 +1,0 @@
-open module library {
-    requires spring.test;
-
-    requires spring.boot.test;
-
-    requires org.junit.jupiter;
-}

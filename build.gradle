@@ -8,6 +8,10 @@ repositories {
     mavenCentral()
 }
 
+application {
+    mainClass = 'hust.kien.project.LibraryApplication'
+}
+
 dependencies {
     implementation(gui.bundles.javafx) { artifact { classifier = 'win' }}
     implementation gui.controlsfx

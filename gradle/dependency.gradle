@@ -3,7 +3,7 @@ dependencyResolutionManagement {
         create('gui') {
             def javafxVersion = version('javafx', '23')
 
-            def libraries = ['base', 'controls', 'graphics', 'fxml', 'web']
+            def libraries = ['base', 'controls', 'graphics', 'fxml', 'web', 'media']
 
             libraries.forEach {
                 library(it, 'org.openjfx', "javafx-${it}").versionRef(javafxVersion)
