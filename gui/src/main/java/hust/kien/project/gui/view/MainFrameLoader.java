@@ -18,8 +18,8 @@ public class MainFrameLoader {
     
     private final double minWidth;
     
-    private final Scene mainFrameScene;
-
+    private final ObjectProvider<Region> mainFrame;
+    
     private final WindowManager windowManager;
     
     MainFrameLoader(
@@ -34,18 +34,24 @@ public class MainFrameLoader {
         this.applicationTitle = applicationName;
         this.minHeight = minHeight;
         this.minWidth = minWidth;
-        this.mainFrameScene = new Scene(mainFrameRegionProvider.getObject(), prefWidth, prefHeight);
+        this.mainFrame = mainFrameRegionProvider;
         this.windowManager = windowManager;
     }
     
     public void showMainFrame() {
         
         Stage stage = windowManager.getStage();
+        Scene scene = stage.getScene();
+        Region newRoot = mainFrame.getObject();
+
+        stage.setWidth(1200);
+        stage.setHeight(700);
         
         stage.setTitle(applicationTitle);
-        stage.setScene(mainFrameScene);
+        scene.setRoot(newRoot);
         stage.setMinHeight(minHeight);
         stage.setMinWidth(minWidth);
+
         stage.centerOnScreen();
     }
     

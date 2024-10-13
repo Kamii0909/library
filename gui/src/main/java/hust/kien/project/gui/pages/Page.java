@@ -16,7 +16,14 @@ public interface Page {
     /**
      * Create the {@link Parent root node} that can be used for display.
      */
-    Parent show();
+    default Parent show() {
+        return component().element();
+    }
+
+    /**
+     * The component that made up this page.
+     */
+    Component<?> component();
     
     /**
      * Called before the {@link Scene} that host this Page switch to another Page.

@@ -3,7 +3,7 @@ package hust.kien.project.gui.view;
 import org.springframework.beans.factory.annotation.Value;
 
 import hust.kien.project.gui.pages.Page;
-import hust.kien.project.gui.pages.login.Login;
+import hust.kien.project.gui.pages.login.LoginPage;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -17,7 +17,7 @@ public class LoginSceneLoader {
     
     LoginSceneLoader(
         @Value("${spring.application.ui.login.title}") String applicationTitle,
-        @Login Page page,
+        LoginPage page,
         WindowManager windowManager) {
         
         this.applicationTitle = applicationTitle;

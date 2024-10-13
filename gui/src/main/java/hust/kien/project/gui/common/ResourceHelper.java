@@ -2,24 +2,26 @@ package hust.kien.project.gui.common;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.function.Function;
 
-import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import hust.kien.project.gui.pages.Fxml;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
 
 @Component
 public final class ResourceHelper {
     
-    private BeanFactory beanFactory;
+    private ApplicationContext context;
     
-    private ResourceHelper(BeanFactory beanFactory) {
-        this.beanFactory = beanFactory;
+    private ResourceHelper(ApplicationContext beanFactory) {
+        this.context = beanFactory;
     }
     
-    public Region loadFxml(Resource fxml) {
+    public Region loadFxml(Resource fxml, Function<ApplicationContext, Fxml<?, ?>> controllerProvider) {
         URL url;
         try {
             url = fxml.getURL();
@@ -28,7 +30,7 @@ public final class ResourceHelper {
         }
         
         FXMLLoader loader = new FXMLLoader(url);
-        loader.setControllerFactory(beanFactory::getBean);
+        loader.setControllerFactory(ignored -> controllerProvider.apply(context));
         
         try {
             return loader.load();

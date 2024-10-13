@@ -16,6 +16,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import hust.kien.project.core.service.auth.AuthorizedContextHolder;
 import hust.kien.project.gui.controller.utils.AlertUtils;
 import hust.kien.project.gui.controller.utils.FxUtils;
+import hust.kien.project.gui.pages.introduction.Introduction;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -45,7 +46,7 @@ public class MainFrameController {
 	
 	private final ObjectProvider<Region> managerFrameRegionProvider;
 	
-	private final ObjectProvider<Region> introductionPageRegionProvider;
+	private final Introduction introductionPage;
 	
 	public MainFrameController(
 		@Qualifier("manageBookRegion") ObjectProvider<Region> manageBookRegionProvider,
@@ -54,8 +55,8 @@ public class MainFrameController {
 		@Qualifier("manageTicketRegion") ObjectProvider<Region> manageTicketRegionProvider,
 		@Qualifier("userInformationRegion") ObjectProvider<Region> userInformationRegionProvider,
 		@Qualifier("managerFrameRegion") ObjectProvider<Region> managerFrameRegionProvider,
-		@Qualifier("introductionPageRegion") ObjectProvider<Region> introductionPageRegionProvider) {
-		this.introductionPageRegionProvider = introductionPageRegionProvider;
+		Introduction introductionPage) {
+		this.introductionPage = introductionPage;
 		this.manageBookRegionProvider = manageBookRegionProvider;
 		this.manageClientRegionProvider = manageClientRegionProvider;
 		this.manageGenreAuthorRegionProvider = manageGenreAuthorRegionProvider;
@@ -76,11 +77,11 @@ public class MainFrameController {
 	private Map<StackPane, Region> navBarButtons = new LinkedHashMap<>();
 	
 	public void initialize() {
-		Region introductionPageRegion = introductionPageRegionProvider.getObject();
+		Region introduction = introductionPage.element();
 		
-		initButtonAndAddToMap(FILE_ARCHIVE_ALT, "Gioi thieu", introductionPageRegion, 10);
+		initButtonAndAddToMap(FILE_ARCHIVE_ALT, "Gioi thieu", introduction, 10);
 		
-		changeMainContent(introductionPageRegion, 10);
+		changeMainContent(introduction, 10);
 	}
 	
 	public void initializeButtonEventListener(AuthorizedContextHolder authenticationPrincipal) {

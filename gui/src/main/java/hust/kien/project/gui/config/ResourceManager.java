@@ -91,18 +91,9 @@ public class ResourceManager {
         return new ClassPathResource("gui/user_information.fxml");
     }
     
-    @Bean("introductionPageFxml")
-    Resource introductionPageFxml() {
-        return new ClassPathResource("gui/introduction.fxml");
-    }
-    
     @Lazy
     @Configuration
     public class NoProxy {
-        // @Bean("loginRegion")
-        // Region loginRegion(@Qualifier("loginFxml") Resource resource) {
-        //     return getRegion(resource, "login");
-        // }
         
         @Bean("manageBookRegion")
         @Scope(proxyMode = ScopedProxyMode.NO)
@@ -133,11 +124,6 @@ public class ResourceManager {
         @Bean("userInformationRegion")
         Region userInformationRegion(@Qualifier("userInformationFxml") Resource resource) {
             return getRegion(resource, "user information");
-        }
-        
-        @Bean("introductionPageRegion")
-        Region introductionPageRegion(@Qualifier("introductionPageFxml") Resource resource) {
-            return getRegion(resource, "introduction");
         }
         
         Region getRegion(Resource resource, String resourceName) {

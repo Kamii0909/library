@@ -15,7 +15,8 @@ import hust.kien.project.gui.controller.ManageBookController;
 import hust.kien.project.gui.controller.ManageGenreController;
 import hust.kien.project.gui.controller.frame.GenreAuthorController;
 import hust.kien.project.gui.controller.frame.MainFrameController;
-import hust.kien.project.gui.pages.login.LoginPageConfiguration;
+import hust.kien.project.gui.pages.introduction.Introduction;
+import hust.kien.project.gui.pages.login.LoginPage;
 import hust.kien.project.gui.view.LoginSceneLoader;
 import hust.kien.project.gui.view.LoginSuccessObserver;
 import hust.kien.project.gui.view.MainFrameLoader;
@@ -27,7 +28,7 @@ import hust.kien.project.gui.view.StageReadyObserver;
 @Configuration
 @Import({
     LoginSceneLoader.class, StageReadyObserver.class, BookComponentConfig.class, ClientFrameConfig.class,
-    MainFrameLoader.class, LoginPageConfiguration.class, ResourceManager.class, ManageAuthorController.class,
+    MainFrameLoader.class, LoginPage.class, Introduction.class, ResourceManager.class, ManageAuthorController.class,
     GenreAuthorConfig.class, NoProxy.class, GenreAuthorController.class, LoginSuccessObserver.class, FrameConfig.class,
     MainFrameController.class, ManageBookController.class, ManageGenreController.class
 })
