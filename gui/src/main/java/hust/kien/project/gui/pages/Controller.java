@@ -8,16 +8,10 @@ import javafx.beans.Observable;
  * 
  * @param T the state (likely a group of {@link Observable}s) this controller
  *          manages.
+ * @param I the interactions that this controller can handle.
  */
-public interface Controller<T> {
+public interface Controller<T, I> {
     T state();
 
-    static Controller<Void> noState() {
-        return new Controller<Void>() {
-            @Override
-            public Void state() {
-                throw new UnsupportedOperationException("This controller has no state");
-            }
-        };
-    }
+    I interactions();
 }

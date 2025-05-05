@@ -1,10 +1,10 @@
 package hust.kien.project.gui.pages;
 
-public abstract class AbstractController<T> implements Controller<T> {
+public abstract class BaseController<T, I> implements Controller<T, I> {
     
     private final T state;
     
-    protected AbstractController(T state) {
+    protected BaseController(T state) {
         this.state = state;
     }
     

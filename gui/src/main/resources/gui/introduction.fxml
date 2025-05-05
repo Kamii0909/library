@@ -10,7 +10,7 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hust.kien.project.gui.pages.introduction.IntroductionFxml">
    <children>
-      <VBox fx:id="vbox" alignment="TOP_CENTER" style="-fx-background-color: #FFF;">
+      <VBox alignment="TOP_CENTER" style="-fx-background-color: #FFF;">
          <children>
             <Label text="GIỚI THIỆU VỀ PHẦN MỀM">
                <font>

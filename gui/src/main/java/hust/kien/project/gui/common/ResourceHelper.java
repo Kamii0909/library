@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-import hust.kien.project.gui.pages.Fxml;
+import hust.kien.project.gui.pages.FxmlBinding;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
 
@@ -21,7 +21,7 @@ public final class ResourceHelper {
         this.context = beanFactory;
     }
     
-    public Region loadFxml(Resource fxml, Function<ApplicationContext, Fxml<?, ?>> controllerProvider) {
+    public Region loadFxml(Resource fxml, Function<ApplicationContext, FxmlBinding<?, ?>> controllerProvider) {
         URL url;
         try {
             url = fxml.getURL();

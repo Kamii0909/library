@@ -42,14 +42,13 @@ public class MainFrameLoader {
         
         Stage stage = windowManager.getStage();
         Scene scene = stage.getScene();
-        Region newRoot = mainFrame.getObject();
 
-        stage.setWidth(1200);
+        stage.setWidth(1000);
         stage.setHeight(700);
         
         stage.setTitle(applicationTitle);
-        scene.setRoot(newRoot);
-        stage.setMinHeight(minHeight);
+        scene.setRoot(mainFrame.getObject());
+        stage.setMinHeight(minHeight); 
         stage.setMinWidth(minWidth);
 
         stage.centerOnScreen();

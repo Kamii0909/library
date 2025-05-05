@@ -1,5 +1,6 @@
 package hust.kien.project.gui.pages.login;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.ApplicationEventPublisher;
 
 import hust.kien.project.core.service.auth.AuthService;
@@ -7,13 +8,13 @@ import hust.kien.project.core.service.auth.AuthorizedContextHolder;
 import hust.kien.project.core.service.auth.BadCredentialException;
 import hust.kien.project.core.service.auth.NoUserFoundException;
 import hust.kien.project.gui.controller.utils.AlertUtils;
-import hust.kien.project.gui.pages.AbstractController;
+import hust.kien.project.gui.pages.BaseController;
 import hust.kien.project.gui.view.event.LoginSuccessEvent;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 
-class LoginController extends AbstractController<State> {
+class LoginController extends BaseController<@NonNull State, @NonNull Actions> implements Actions {
     private final AuthService authService;
     
     private final ApplicationEventPublisher eventPublisher;
@@ -24,7 +25,8 @@ class LoginController extends AbstractController<State> {
         this.eventPublisher = eventPublisher;
     }
     
-    void login(ActionEvent event) {
+    @Override
+    public void login(ActionEvent event) {
         State state = state();
         
         String usernameInput = state.username().get();
@@ -46,8 +48,14 @@ class LoginController extends AbstractController<State> {
         }
     }
     
-    void quenMatKhau(MouseEvent event) {
+    @Override
+    public void quenMatKhau(MouseEvent event) {
         // TODO: do something to change password
         AlertUtils.showAlert("Hãy liên hệ với quản trị viên", AlertType.INFORMATION);
+    }
+    
+    @Override
+    public Actions interactions() {
+        return this;
     }
 }

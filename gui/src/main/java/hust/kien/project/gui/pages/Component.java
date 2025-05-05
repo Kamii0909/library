@@ -1,5 +1,7 @@
 package hust.kien.project.gui.pages;
 
+import org.jspecify.annotations.NonNull;
+
 import javafx.scene.layout.Region;
 
 /**
@@ -11,17 +13,18 @@ import javafx.scene.layout.Region;
  * <li>The way to map states -> UI element</li>
  * <li>Responding to user interactions</li>
  * </ul>
- * The flow of creating a {@link Component}: 
+ * The flow of creating a {@link Component}:
  * <ul>
  * <li>Create the {@link #element() view}
- * <li>Create the {@link #controller() controller}, which also initialize the state.
+ * <li>Create the {@link #controller() controller}, which also initialize the
+ * state.
  * <li>Bind the controller to an external state, if required.
  * </ul>
  * 
- * 
- * @param T the states that this {@link Controller} cares about.
+ * @param T the states that this {@link Component} cares about.
+ * @param I the user interaction this {@link Component} can handle.
  */
-public interface Component<T> {
+public interface Component<@NonNull T, @NonNull I> {
     /**
      * The UI element this component controls.
      */
@@ -30,12 +33,11 @@ public interface Component<T> {
     /**
      * The object reponsible for managing the states and the user interactions.
      */
-    Controller<T> controller();
+    Controller<T, I> controller();
     
     /**
-     * The object responsible for synchronizing controller state and external state.
+     * The object responsible for UI <-> state mapping
      */
-    default DataBinder<T> binder() {
-        return DataBinder.noop();
-    }
+    Binding<T, I> binding();
+    
 }

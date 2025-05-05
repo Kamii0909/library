@@ -21,7 +21,6 @@ public class Author implements LibraryLocatable, LibraryPersistable {
         this.authorInfo = AuthorInfo.builder().name(name).age(age).build();
     }
 
-
     @SuppressWarnings("all")
     public static class AuthorBuilder {
         @SuppressWarnings("all")

@@ -1,16 +1,15 @@
 package hust.kien.project.gui.pages.login;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 
 import hust.kien.project.gui.common.ResourceHelper;
-import hust.kien.project.gui.pages.Component;
-import hust.kien.project.gui.pages.DataBinder;
 import hust.kien.project.gui.pages.FxmlComponent;
 import hust.kien.project.gui.pages.Page;
 
-public class LoginPage extends FxmlComponent<State> implements Page {
+public class LoginPage extends FxmlComponent<@NonNull State, @NonNull Actions> implements Page {
     
     public LoginPage(@Value("classpath:gui/login.fxml") Resource fxml, ResourceHelper helper) {
         super(fxml, helper);
@@ -22,12 +21,7 @@ public class LoginPage extends FxmlComponent<State> implements Page {
     }
     
     @Override
-    public Component<?> component() {
+    public LoginPage component() {
         return this;
-    }
-    
-    @Override
-    public DataBinder<State> binder() {
-        return new RememberMeBinder();
     }
 }

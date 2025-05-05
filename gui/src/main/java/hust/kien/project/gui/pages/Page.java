@@ -23,7 +23,7 @@ public interface Page {
     /**
      * The component that made up this page.
      */
-    Component<?> component();
+    Component<?, ?> component();
     
     /**
      * Called before the {@link Scene} that host this Page switch to another Page.

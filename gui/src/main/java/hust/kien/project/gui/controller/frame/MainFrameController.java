@@ -46,7 +46,7 @@ public class MainFrameController {
 	
 	private final ObjectProvider<Region> managerFrameRegionProvider;
 	
-	private final Introduction introductionPage;
+	private final Introduction introductionTab;
 	
 	public MainFrameController(
 		@Qualifier("manageBookRegion") ObjectProvider<Region> manageBookRegionProvider,
@@ -55,8 +55,8 @@ public class MainFrameController {
 		@Qualifier("manageTicketRegion") ObjectProvider<Region> manageTicketRegionProvider,
 		@Qualifier("userInformationRegion") ObjectProvider<Region> userInformationRegionProvider,
 		@Qualifier("managerFrameRegion") ObjectProvider<Region> managerFrameRegionProvider,
-		Introduction introductionPage) {
-		this.introductionPage = introductionPage;
+		Introduction introductionTab) {
+		this.introductionTab = introductionTab;
 		this.manageBookRegionProvider = manageBookRegionProvider;
 		this.manageClientRegionProvider = manageClientRegionProvider;
 		this.manageGenreAuthorRegionProvider = manageGenreAuthorRegionProvider;
@@ -77,7 +77,7 @@ public class MainFrameController {
 	private Map<StackPane, Region> navBarButtons = new LinkedHashMap<>();
 	
 	public void initialize() {
-		Region introduction = introductionPage.element();
+		Region introduction = introductionTab.element();
 		
 		initButtonAndAddToMap(FILE_ARCHIVE_ALT, "Gioi thieu", introduction, 10);
 		

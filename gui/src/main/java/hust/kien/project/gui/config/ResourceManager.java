@@ -106,11 +106,6 @@ public class ResourceManager {
             return getRegion(resource, "manage client");
         }
         
-        @Bean("manageAuthorRegion")
-        Region manageAuthorRegion(@Qualifier("manageAuthorFxml") Resource resource) {
-            return getRegion(resource, "manage author");
-        }
-        
         @Bean("manageGenreRegion")
         Region manageGenreRegion(@Qualifier("manageGenreFxml") Resource resource) {
             return getRegion(resource, "manage genre");
