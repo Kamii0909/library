@@ -56,11 +56,6 @@ public class ResourceManager {
         return new ClassPathResource("image/logo.png");
     }
     
-    // @Bean("loginFxml")
-    // Resource loginFxml() {
-    //     return new ClassPathResource("gui/login.fxml");
-    // }
-    
     @Bean("manageBookFxml")
     Resource manageBookFxml() {
         return new ClassPathResource("gui/manage_book.fxml");
@@ -69,11 +64,6 @@ public class ResourceManager {
     @Bean("manageClientFxml")
     Resource manageClientFxml() {
         return new ClassPathResource("gui/manage_user.fxml");
-    }
-    
-    @Bean("manageAuthorFxml")
-    Resource manageAuthorFxml() {
-        return new ClassPathResource("gui/manage_author_new.fxml");
     }
     
     @Bean("manageGenreFxml")

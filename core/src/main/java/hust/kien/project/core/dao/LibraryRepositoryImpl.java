@@ -21,11 +21,6 @@ public class LibraryRepositoryImpl<T, ID extends Serializable> extends SimpleJpa
         this.entityManager = entityManager;
     }
 
-    public LibraryRepositoryImpl(Class<T> domainClass, EntityManager em) {
-        super(domainClass, em);
-        this.entityManager = em;
-    }
-
     @Override
     public List<T> findAll(Specification<T> spec, long offset, int maxResults, Sort sort) {
         TypedQuery<T> query = getQuery(spec, sort);

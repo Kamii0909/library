@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import hust.kien.project.core.model.author.Author;
+import hust.kien.project.core.author.Author;
 import hust.kien.project.core.service.authorized.LibrarianService;
 import hust.kien.project.gui.controller.utils.AlertUtils;
 import hust.kien.project.gui.view.event.AuthorDeletedEvent;
@@ -55,7 +55,7 @@ public class AuthorComponentController {
     }
     
     public void initialize() {
-        setNameAndAgeField(author.getAuthorInfo().getName(), author.getAuthorInfo().getAge());
+        setNameAndAgeField(author.name(), author.age());
         
         Circle circle = new Circle(40, 35, 30);
         
@@ -107,11 +107,11 @@ public class AuthorComponentController {
     
     private boolean validateAndRevertFields() {
         if (isIntegerValid(ageField.getText()) && !nameField.getText().isBlank()) {
-            author.getAuthorInfo().setName(nameField.getText());
-            author.getAuthorInfo().setAge(Integer.parseInt(ageField.getText()));
+            author.setName(nameField.getText());
+            author.setAge(Integer.parseInt(ageField.getText()));
             return true;
         } else {
-            setNameAndAgeField(author.getAuthorInfo().getName(), author.getAuthorInfo().getAge());
+            setNameAndAgeField(author.name(), author.age());
             validate();
             return false;
         }

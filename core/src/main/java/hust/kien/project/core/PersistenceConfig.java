@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import hust.kien.project.core.dao.LibraryRepositoryImpl;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "hust.kien.project.core.dao", repositoryBaseClass = LibraryRepositoryImpl.class)
+@EnableJpaRepositories(basePackages = "hust.kien.project.core", repositoryBaseClass = LibraryRepositoryImpl.class)
 public class PersistenceConfig {
 
 }

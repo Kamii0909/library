@@ -1,6 +1,6 @@
 package hust.kien.project.gui.pages.main.components.authors;
 
-import hust.kien.project.core.model.author.Author;
+import hust.kien.project.core.author.Author;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;

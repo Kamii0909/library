@@ -1,6 +1,6 @@
 package hust.kien.project.gui.view.event;
 
-import hust.kien.project.core.model.author.Author;
+import hust.kien.project.core.author.Author;
 import javafx.event.Event;
 import javafx.event.EventType;
 

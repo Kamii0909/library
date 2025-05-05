@@ -86,7 +86,7 @@ public class ManageTicketController {
                 .observableList(librarianService.dynamicFind(new TicketSpecificationBuilder().init())));
         
         bookColumnUI.setCellValueFactory(
-                param -> new ReadOnlyStringWrapper(param.getValue().getBook().getBookInfo().getName()));
+                param -> new ReadOnlyStringWrapper(param.getValue().getBook().getBookInfo().name()));
         clientColumnUI.setCellValueFactory(
                 param -> new ReadOnlyStringWrapper(
                         param.getValue().getClient().getContactInfo().getName()));

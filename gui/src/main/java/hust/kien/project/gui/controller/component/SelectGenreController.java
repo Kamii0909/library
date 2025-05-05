@@ -33,7 +33,7 @@ public class SelectGenreController {
     private final Set<BookGenre> currentGenres;
     
     public SelectGenreController(Book book, LibrarianService librarianService) {
-        this.currentGenres = book.getBookInfo().getBookGenres();
+        this.currentGenres = book.getBookInfo().bookGenres().stream().collect(Collectors.toSet());
         
         this.newGenreStrings = librarianService
                 .dynamicFind(new BookGenreSpecificationBuilder())

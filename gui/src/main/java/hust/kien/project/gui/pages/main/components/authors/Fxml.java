@@ -1,18 +1,12 @@
 package hust.kien.project.gui.pages.main.components.authors;
 
-import java.io.IOException;
-
 import org.jspecify.annotations.NonNull;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.BeanFactoryAnnotationUtils;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
 
-import hust.kien.project.core.model.author.Author;
+import hust.kien.project.core.author.Author;
 import hust.kien.project.core.service.authorized.LibrarianService;
-import hust.kien.project.gui.controller.utils.FxUtils;
 import hust.kien.project.gui.pages.FxmlBinding;
+import hust.kien.project.gui.pages.main.components.authors.components.author.AuthorComponentFactory;
 import hust.kien.project.gui.view.event.AuthorDeletedEvent;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
@@ -23,7 +17,6 @@ import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
@@ -31,10 +24,8 @@ class Fxml extends FxmlBinding<@NonNull State, @NonNull Interactions> implements
     
     private final ApplicationContext context;
     
-    private final ObjectProvider<Region> authorComponentRegionProvider;
-    
-    private final Image defaultAuthorImage;
-    
+    private final AuthorComponentFactory factory;
+        
     @FXML
     private TextField nameField;
     
@@ -48,40 +39,7 @@ class Fxml extends FxmlBinding<@NonNull State, @NonNull Interactions> implements
     Fxml(AuthorsComponent authors, ApplicationContext context) {
         super(authors);
         this.context = context;
-        this.authorComponentRegionProvider = new ObjectProvider<Region>() {
-            
-            @Override
-            public Region getObject() throws BeansException {
-                throw new UnsupportedOperationException("Unimplemented method 'getObject'");
-            }
-            
-            @Override
-            public Region getObject(Object... args) throws BeansException {
-                return (Region) context.getBean("authorComponentRegion", args);
-            }
-            
-            @Override
-            public Region getIfAvailable() throws BeansException {
-                throw new UnsupportedOperationException("Unimplemented method 'getIfAvailable'");
-            }
-            
-            @Override
-            public Region getIfUnique() throws BeansException {
-                throw new UnsupportedOperationException("Unimplemented method 'getIfUnique'");
-            }
-        };
-        
-        Resource imageResource = BeanFactoryAnnotationUtils
-                .qualifiedBeanOfType(context,
-                        Resource.class,
-                        "defaultBookImage");
-        
-        try {
-            this.defaultAuthorImage = FxUtils.renderImage(new Image(imageResource.getInputStream(),
-                    0, 0, true, true), 1);
-        } catch (IOException e) {
-            throw new AssertionError(e);
-        }
+        this.factory = context.getBean(AuthorComponentFactory.class);
     }
     
     @FXML
@@ -139,7 +97,7 @@ class Fxml extends FxmlBinding<@NonNull State, @NonNull Interactions> implements
     }
     
     private Region map(Author author) {
-        return authorComponentRegionProvider.getObject(author, defaultAuthorImage);
+        return factory.createComponent(author).element();
     }
     
     private String validationStyles(boolean isValid) {

@@ -8,7 +8,7 @@ import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import hust.kien.project.core.model.author.Author;
+import hust.kien.project.core.author.Author;
 import hust.kien.project.core.service.authorized.LibrarianService;
 import hust.kien.project.core.service.dynamic.AuthorSpecificationBuilder;
 import hust.kien.project.gui.pages.BaseController;
@@ -47,7 +47,8 @@ class AuthorsController extends BaseController<@NonNull State, @NonNull Interact
         if (!age.isBlank()) {
             boolean ageValid = isIntegerValid(age);
             isAgeValid.set(ageValid);
-            if (!ageValid) return;
+            if (!ageValid)
+                return;
         }
         
         AuthorSpecificationBuilder builder = new AuthorSpecificationBuilder();
@@ -93,10 +94,7 @@ class AuthorsController extends BaseController<@NonNull State, @NonNull Interact
         if (!isAgeValid || !isNameValid)
             return;
         
-        Author author = Author.builder()
-                .name(name)
-                .age(Integer.parseInt(age))
-                .build();
+        Author author = new Author(name, Integer.parseInt(age));
         
         log.info("Adding author {}", author);
         librarianService.saveOrUpdate(author);

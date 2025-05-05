@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.Resource;
 
+import hust.kien.project.core.book.BookFilter;
+import hust.kien.project.core.book.BookSchema;
+import hust.kien.project.core.book.BookService;
 import hust.kien.project.core.model.book.Book;
 import hust.kien.project.core.service.authorized.LibrarianService;
 import hust.kien.project.core.service.dynamic.BookSpecificationBuilder;
@@ -65,7 +68,7 @@ public class ManageBookController {
 	@FXML
 	private Text currentPageText;
 	
-	private final LibrarianService librarianService;
+	private final BookService bookService;
 	
 	private final Image defaultImage;
 	
@@ -77,12 +80,12 @@ public class ManageBookController {
 	
 	private List<Book> filteredBooks;
 	
-	public ManageBookController(LibrarianService librarianService,
+	public ManageBookController(BookService bookService,
 		@Qualifier("defaultBookImage") Resource defaultBookImageResource,
 		@Qualifier("bookComponentRegion") ObjectProvider<AnchorPane> bookComponentRegionProvider,
 		@Qualifier("newBookStage") ObjectProvider<Stage> newBookRegionProvider)
 		throws IOException {
-		this.librarianService = librarianService;
+		this.bookService = bookService;
 		this.defaultImage =
 				FxUtils.renderImage(new Image(defaultBookImageResource.getInputStream(), 0, 0,
 						true, true), 1.4);
@@ -91,8 +94,7 @@ public class ManageBookController {
 	}
 	
 	public void initialize() {
-		filteredBooks = librarianService
-				.dynamicFind(new BookSpecificationBuilder().initCollection().authors().genres().back());
+		filteredBooks = bookService.find(new BookFilter(), new BookSchema().authors().genres());
 		bookContainer.getChildren().setAll(filteredBooks
 				.stream()
 				.limit(10)
@@ -203,16 +205,15 @@ public class ManageBookController {
 		// TODO: debounce
 		log.info("Filtering");
 		
-		BookSpecificationBuilder builder = new BookSpecificationBuilder();
-		
-		builder.initCollection().authors().genres();
+		BookFilter filter = new BookFilter();
+		BookSchema schema = new BookSchema().authors().genres();
 		
 		if (BookComponentUtils.isIntegerValid(stockField.getText())) {
 			int stockMin = Integer.parseInt(stockField.getText());
-			builder.stockBetween(stockMin, 10000);
+			filter.stockBetween(stockMin, 10000);
 		}
 		if (!bookNameField.getText().isBlank()) {
-			builder.nameContains(bookNameField.getText());
+			filter.nameContains(bookNameField.getText());
 		}
 		int yearStart = 0;
 		int yearEnd = 10000;
@@ -222,18 +223,18 @@ public class ManageBookController {
 		if (BookComponentUtils.isIntegerValid(yearEndField.getText())) {
 			yearEnd = Integer.parseInt(yearEndField.getText());
 		}
-		builder.releasedBetween(yearStart, yearEnd);
+		filter.releasedBetween(yearStart, yearEnd);
 		
 		if (!genreFilterBar.getChildren().isEmpty()) {
-			builder.withEachGenreLikeAtLeastOne(genreFilterBar.getChildren().stream()
+			filter.withEachGenreLikeAtLeastOne(genreFilterBar.getChildren().stream()
 					.map(Button.class::cast).map(Button::getText).toList());
 		}
 		
 		if (!authorFilterBar.getChildren().isEmpty()) {
-			builder.fromAllAuthorsWithNameLike(authorFilterBar.getChildren().stream()
+			filter.fromAllAuthorsWithNameLike(authorFilterBar.getChildren().stream()
 					.map(Button.class::cast).map(Button::getText).toList());
 		}
 		
-		return librarianService.dynamicFind(builder);
+		return bookService.find(filter, schema);
 	}
 }

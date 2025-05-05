@@ -9,7 +9,7 @@ public class OutOfStockException extends RuntimeException {
     public OutOfStockException(Book book) {
         super("The book you attempted to borrow is currently out of stock\n" +
             "Details: \n" +
-            "Book name: " + book.getBookInfo().getName() + "\n" +
+            "Book name: " + book.getBookInfo().name() + "\n" +
             "Book id: " + book.getId() + "\n");
 
         this.book = book;

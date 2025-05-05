@@ -9,6 +9,7 @@ import static hust.kien.project.gui.controller.component.BookComponentUtils.togg
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -20,8 +21,7 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import hust.kien.project.core.model.author.Author;
-import hust.kien.project.core.model.author.AuthorInfo;
+import hust.kien.project.core.author.Author;
 import hust.kien.project.core.model.book.Book;
 import hust.kien.project.core.model.book.BookGenre;
 import hust.kien.project.core.model.book.BookInfo;
@@ -157,22 +157,21 @@ public class BookComponentController {
     }
     
     private void renderBasicInformation() {
-        String bookString = book.getBookInfo().getName();
+        String bookString = book.getBookInfo().name();
         
-        book.getBookInfo().getAuthors();
+        book.getBookInfo().authors();
         
         String authorString = book.getBookInfo()
-                .getAuthors()
+                .authors()
                 .stream()
-                .map(Author::getAuthorInfo)
-                .map(AuthorInfo::getName)
+                .map(Author::name)
                 .collect(Collectors.joining(", "));
         
         renderBookAndAuthorNameWithMaxLength(bookString, authorString);
         
-        String stockString = STOCK_STRING + book.getBookStock().getStock();
+        String stockString = STOCK_STRING + book.getBookStock().stock();
         
-        String moneyString = formatter.format(book.getBookStock().getReimburseCost());
+        String moneyString = formatter.format(book.getBookStock().reimburseCost());
         stock.setText(stockString);
         money.setText(moneyString);
     }
@@ -183,13 +182,13 @@ public class BookComponentController {
     }
     
     private void renderExtraInformation() {
-        String yearString = Integer.toString(book.getBookInfo().getReleasedYear());
+        String yearString = Integer.toString(book.getBookInfo().releasedYear());
         
         genresOnUi = new HashMap<>();
         
         releasedYear.setText(yearString);
         book.getBookInfo()
-                .getBookGenres()
+                .bookGenres()
                 .stream()
                 .forEach(this::createTBAndAddToUI);
     }
@@ -279,7 +278,7 @@ public class BookComponentController {
     private void renderNewBookGenres() {
         Collection<BookGenre> currentlyRenderedBookGenres = genresOnUi.values();
         
-        book.getBookInfo().getBookGenres().stream()
+        book.getBookInfo().bookGenres().stream()
                 .filter(bg -> !currentlyRenderedBookGenres.contains(bg))
                 .forEach(bg -> createTBAndAddToUI(bg).setDisable(false));
     }
@@ -361,9 +360,9 @@ public class BookComponentController {
         authorName.setVisible(!editable);
         
         if (editable) {
-            bookName.setText(book.getBookInfo().getName());
+            bookName.setText(book.getBookInfo().name());
         } else {
-            setTextElementWithMaxLength(bookName, book.getBookInfo().getName(), 40);
+            setTextElementWithMaxLength(bookName, book.getBookInfo().name(), 40);
         }
         
         for (ToggleButton genreToggleButton : genresOnUi.keySet()) {
@@ -399,14 +398,14 @@ public class BookComponentController {
         genresOnUi.keySet().removeIf(ToggleButton::isSelected);
         
         log.debug("Book genre set before deleting unselected genres: {{}}",
-                book.getBookInfo().getBookGenres());
+                book.getBookInfo().bookGenres());
         
         // delete selected BookGenres
         book.getBookInfo()
-                .getBookGenres()
+                .bookGenres()
                 .retainAll(genresOnUi.values());
         
-        rerenderBookGenres(book.getBookInfo().getBookGenres());
+        rerenderBookGenres(book.getBookInfo().bookGenres());
         return true;
     }
     
@@ -420,17 +419,17 @@ public class BookComponentController {
     
     private void revertEveryThing() {
         renderBookAndAuthorNameWithMaxLength(
-                defensiveCopy.getBookInfo().getName(),
-                defensiveCopy.getBookInfo().getAuthors()
+                defensiveCopy.getBookInfo().name(),
+                defensiveCopy.getBookInfo().authors()
                         .stream()
-                        .map(a -> a.getAuthorInfo().getName())
+                        .map(a -> a.name())
                         .collect(Collectors.joining(", ")));
-        releasedYear.setText(String.valueOf(defensiveCopy.getBookInfo().getReleasedYear()));
-        money.setText(String.valueOf(defensiveCopy.getBookStock().getReimburseCost()));
+        releasedYear.setText(String.valueOf(defensiveCopy.getBookInfo().releasedYear()));
+        money.setText(String.valueOf(defensiveCopy.getBookStock().reimburseCost()));
         
-        Set<BookGenre> oldBookGenres = defensiveCopy.getBookInfo().getBookGenres();
+        List<BookGenre> oldBookGenres = defensiveCopy.getBookInfo().bookGenres();
         
-        Set<BookGenre> bookGenres = book.getBookInfo().getBookGenres();
+        List<BookGenre> bookGenres = book.getBookInfo().bookGenres();
         bookGenres.retainAll(oldBookGenres);
         rerenderBookGenres(bookGenres);
         
@@ -439,7 +438,7 @@ public class BookComponentController {
     }
     
     private void commitBook() {
-        log.debug("Book Genres set before commit: {{}}", book.getBookInfo().getBookGenres());
+        log.debug("Book Genres set before commit: {{}}", book.getBookInfo().bookGenres());
         defensiveCopy = getDefensiveCopy(book.getBookInfo(), book.getBookStock());
         book = librarianService.saveOrUpdate(book);
     }
@@ -458,21 +457,15 @@ public class BookComponentController {
     
     private Book getDefensiveCopy(BookInfo bookInfo, BookStock bookStock) {
         Book bookCopy = Book.builder()
-                .name(bookInfo.getName())
-                .releasedYear(bookInfo.getReleasedYear())
-                .reimburseCost(bookStock.getReimburseCost())
-                .stock(bookStock.getStock())
+                .name(bookInfo.name())
+                .releasedYear(bookInfo.releasedYear())
+                .reimburseCost(bookStock.reimburseCost())
+                .stock(bookStock.stock())
                 .build();
         
-        bookCopy.getBookInfo().setAuthors(bookInfo
-                .getAuthors()
-                .stream()
-                .collect(Collectors.toSet()));
+        bookCopy.getBookInfo().setAuthors(bookInfo.authors());
         
-        bookCopy.getBookInfo().setBookGenres(bookInfo
-                .getBookGenres()
-                .stream()
-                .collect(Collectors.toSet()));
+        bookCopy.getBookInfo().setBookGenres(bookInfo.bookGenres());
         
         return bookCopy;
     }

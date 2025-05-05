@@ -48,7 +48,7 @@ public class JavaFxApplication extends Application {
 	@Override
 	public void init() throws Exception {
 		
-		Files.createDirectories(Paths.get("./database"));
+		// Files.createDirectories(Paths.get("./database"));
 		
 		String[] args = getParameters().getRaw().toArray(String[]::new);
 		

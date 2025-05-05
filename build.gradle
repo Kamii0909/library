@@ -1,4 +1,0 @@
-subprojects {
-    apply plugin: 'java'
-    apply from: '../gradle/compat.gradle'
-}

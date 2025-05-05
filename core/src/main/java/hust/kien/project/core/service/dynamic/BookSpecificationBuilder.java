@@ -2,9 +2,8 @@ package hust.kien.project.core.service.dynamic;
 
 import java.util.Collection;
 
-import hust.kien.project.core.model.author.Author;
-import hust.kien.project.core.model.author.AuthorInfo_;
-import hust.kien.project.core.model.author.Author_;
+import hust.kien.project.core.author.Author;
+import hust.kien.project.core.author.Author_;
 import hust.kien.project.core.model.book.Book;
 import hust.kien.project.core.model.book.BookGenre;
 import hust.kien.project.core.model.book.BookGenre_;
@@ -61,7 +60,7 @@ public class BookSpecificationBuilder extends GeneralLibrarySpecificationBuilder
 
     public BookSpecificationBuilder fromAllAuthorWithNameLike(String string) {
         specList.add((root, cq, cb) -> cb.like(root.join(Book_.bookInfo).join(BookInfo_.authors)
-            .get(Author_.authorInfo).get(AuthorInfo_.name), "%" + string + "%"));
+            .get(Author_.name), "%" + string + "%"));
         return this;
     }
 

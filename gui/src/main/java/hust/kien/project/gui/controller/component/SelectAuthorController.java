@@ -10,7 +10,7 @@ import org.controlsfx.control.ListSelectionView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import hust.kien.project.core.model.author.Author;
+import hust.kien.project.core.author.Author;
 import hust.kien.project.core.model.book.Book;
 import hust.kien.project.core.service.authorized.LibrarianService;
 import hust.kien.project.core.service.dynamic.AuthorSpecificationBuilder;
@@ -42,11 +42,11 @@ public class SelectAuthorController {
     private Set<Author> newAuthors;
     
     public SelectAuthorController(Book book, LibrarianService librarianService) {
-        this.currentAuthors = book.getBookInfo().getAuthors();
+        this.currentAuthors = book.getBookInfo().authors().stream().collect(Collectors.toSet());
         
         this.allAuthors = librarianService.dynamicFind(new AuthorSpecificationBuilder())
                 .stream()
-                .collect(Collectors.toMap(Author::getId, Function.identity()));
+                .collect(Collectors.toMap(Author::id, Function.identity()));
         this.newAuthors = allAuthors.values()
                 .stream()
                 .filter(a -> !currentAuthors.contains(a))
@@ -65,9 +65,9 @@ public class SelectAuthorController {
     
     private static String getDisplayString(Author author) {
         return String.format("%s(%d tuoi) // %d",
-                author.getAuthorInfo().getName(),
-                author.getAuthorInfo().getAge(),
-                author.getId());
+                author.name(),
+                author.age(),
+                author.id());
     }
     
     private Author parseDisplayStringToAuthor(String string) {
@@ -92,15 +92,15 @@ public class SelectAuthorController {
                 .toList());
         if (BookComponentUtils.isIntegerValid(ageFilterFrom.getText())) {
             authorsToBeDisplayed.removeIf(
-                    a -> a.getAuthorInfo().getAge() < Integer.parseInt(ageFilterFrom.getText()));
+                    a -> a.age() < Integer.parseInt(ageFilterFrom.getText()));
         }
         if (BookComponentUtils.isIntegerValid(ageFilterTo.getText())) {
             authorsToBeDisplayed.removeIf(
-                    a -> a.getAuthorInfo().getAge() > Integer.parseInt(ageFilterTo.getText()));
+                    a -> a.age() > Integer.parseInt(ageFilterTo.getText()));
         }
         if (!nameFilter.getText().isBlank()) {
             authorsToBeDisplayed
-                    .removeIf(a -> !a.getAuthorInfo().getName().contains(nameFilter.getText()));
+                    .removeIf(a -> !a.name().contains(nameFilter.getText()));
         }
         authorSelection.getSourceItems().setAll(authorsToBeDisplayed
                 .stream()

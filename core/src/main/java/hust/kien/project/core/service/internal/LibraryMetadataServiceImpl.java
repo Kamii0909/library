@@ -40,7 +40,7 @@ public class LibraryMetadataServiceImpl implements LibraryMetadataService {
         if (entity instanceof BookGenre) {
             BookGenre bg = getReference(BookGenre.class, ((BookGenre) entity).getName());
             bg.getBooksWithThisGenre()
-                .forEach(book -> book.getBookInfo().getBookGenres().remove(bg));
+                .forEach(book -> book.getBookInfo().removeGenre(bg));
         } else if (entity instanceof Client) {
             Client client = getReference(Client.class, ((Client) entity).getId());
             assert client.getRentInfo().getActiveTickets().isEmpty() : new IllegalStateException(

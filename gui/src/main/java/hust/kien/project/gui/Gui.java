@@ -17,6 +17,7 @@ import hust.kien.project.gui.controller.frame.MainFrameController;
 import hust.kien.project.gui.pages.introduction.Introduction;
 import hust.kien.project.gui.pages.login.LoginPage;
 import hust.kien.project.gui.pages.main.components.authors.AuthorsComponent;
+import hust.kien.project.gui.pages.main.components.authors.components.author.AuthorComponentFactory;
 import hust.kien.project.gui.view.LoginSceneLoader;
 import hust.kien.project.gui.view.LoginSuccessObserver;
 import hust.kien.project.gui.view.MainFrameLoader;
@@ -30,7 +31,8 @@ import hust.kien.project.gui.view.StageReadyObserver;
     LoginSceneLoader.class, StageReadyObserver.class, BookComponentConfig.class, ClientFrameConfig.class,
     MainFrameLoader.class, LoginPage.class, Introduction.class, ResourceManager.class,
     GenreAuthorConfig.class, NoProxy.class, GenreAuthorController.class, LoginSuccessObserver.class, FrameConfig.class,
-    MainFrameController.class, ManageBookController.class, ManageGenreController.class, AuthorsComponent.class
+    MainFrameController.class, ManageBookController.class, ManageGenreController.class, AuthorsComponent.class,
+    AuthorComponentFactory.class
 })
 @SpringBootApplication
 public class Gui {

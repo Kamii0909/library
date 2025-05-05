@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import hust.kien.project.core.model.author.Author;
+import hust.kien.project.core.author.Author;
 import hust.kien.project.gui.controller.component.AuthorComponentController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
