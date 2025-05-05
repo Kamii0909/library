@@ -3,7 +3,6 @@ package hust.kien.project.core;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import org.hibernate.HibernateException;
 import org.hibernate.type.SqlTypes;
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.java.AbstractClassJavaType;

@@ -16,7 +16,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import hust.kien.project.core.service.auth.AuthorizedContextHolder;
 import hust.kien.project.gui.controller.utils.AlertUtils;
 import hust.kien.project.gui.controller.utils.FxUtils;
-import hust.kien.project.gui.pages.introduction.Introduction;
+import hust.kien.project.gui.pages.main.Introduction;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -136,7 +136,7 @@ public class MainFrameController {
 		Button button = new Button();
 		button.setGraphic(fontAwesomeIconView);
 		button.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-		button.setOnMouseClicked(ev -> changeMainContent(region, navPosition));
+		button.setOnMouseClicked(_ -> changeMainContent(region, navPosition));
 		
 		Tooltip buttonTooltip = new Tooltip(tooltip);
 		buttonTooltip.setShowDelay(Duration.millis(100));

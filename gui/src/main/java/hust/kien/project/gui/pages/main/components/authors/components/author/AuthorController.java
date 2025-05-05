@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import hust.kien.project.core.author.Author;
 import hust.kien.project.core.author.AuthorService;
 import hust.kien.project.core.author.AuthorUpdateRequest;
-import hust.kien.project.core.service.authorized.LibrarianService;
 import hust.kien.project.gui.controller.component.BookComponentUtils;
 import hust.kien.project.gui.controller.utils.AlertUtils;
 import hust.kien.project.gui.pages.Controller;
@@ -21,21 +20,13 @@ import javafx.scene.control.ButtonType;
 class AuthorController implements Controller<State, Interactions>, Interactions {
     private static final Logger log = LoggerFactory.getLogger(AuthorController.class);
 
-    private final LibrarianService librarianService;
-
     private final AuthorService authorService;
 
     private final State state;
 
     private Author author;
 
-    public AuthorController(
-            LibrarianService librarianService,
-            AuthorService authorService,
-            State state,
-            Author author) {
-
-        this.librarianService = librarianService;
+    public AuthorController(AuthorService authorService, State state, Author author) {
         this.authorService = authorService;
         this.state = state;
         this.author = author;
@@ -60,7 +51,7 @@ class AuthorController implements Controller<State, Interactions>, Interactions 
         if (response.isEmpty() || response.get() == ButtonType.CANCEL) {
             // Do nothing
         } else if (response.get() == ButtonType.OK) {
-            librarianService.delete(author);
+            authorService.delete(author);
             state.onDeleted().run();
             log.info("Delete author request: {{}}", author);
         } else {

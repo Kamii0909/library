@@ -10,7 +10,6 @@ import org.springframework.core.io.Resource;
 
 import hust.kien.project.core.author.Author;
 import hust.kien.project.core.author.AuthorService;
-import hust.kien.project.core.service.authorized.LibrarianService;
 import hust.kien.project.gui.controller.utils.FxUtils;
 import hust.kien.project.gui.pages.ComponentFactory;
 import hust.kien.project.gui.view.event.AuthorDeletedEvent;
@@ -37,12 +36,9 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 
 public class AuthorComponentFactory
-        implements
-        ComponentFactory<@NonNull State, @NonNull Interactions, @NonNull AuthorComponent, @NonNull Author> {
+        implements ComponentFactory<@NonNull State, @NonNull Interactions, @NonNull AuthorComponent, @NonNull Author> {
 
     private final URL authorCss;
-
-    private final LibrarianService librarianService;
 
     private final AuthorService authorService;
 
@@ -51,7 +47,6 @@ public class AuthorComponentFactory
     public AuthorComponentFactory(
             @Value("classpath:gui/component/author/author.css") Resource authorCss,
             @Qualifier("defaultBookImage") Resource defaultImage,
-            LibrarianService librarianService,
             AuthorService authorService) {
         try {
             this.authorCss = authorCss.getURL();
@@ -60,7 +55,6 @@ public class AuthorComponentFactory
         } catch (IOException e) {
             throw new AssertionError(e);
         }
-        this.librarianService = librarianService;
         this.authorService = authorService;
 
     }
@@ -106,7 +100,7 @@ public class AuthorComponentFactory
                 isNameValid,
                 isAgeValid);
 
-        AuthorController controller = new AuthorController(librarianService, authorService, state, author);
+        AuthorController controller = new AuthorController(authorService, state, author);
         authorName.setOnKeyTyped(_ -> controller.validate());
         authorAgeNumber.setOnKeyTyped(_ -> controller.validate());
 
