@@ -22,10 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import hust.kien.project.core.author.Author;
+import hust.kien.project.core.book.BookInfo;
+import hust.kien.project.core.book.BookStock;
 import hust.kien.project.core.model.book.Book;
 import hust.kien.project.core.model.book.BookGenre;
-import hust.kien.project.core.model.book.BookInfo;
-import hust.kien.project.core.model.book.BookStock;
 import hust.kien.project.core.service.authorized.LibrarianService;
 import hust.kien.project.gui.controller.utils.AlertUtils;
 import hust.kien.project.gui.controller.utils.LeftAnchorPaneProperty;

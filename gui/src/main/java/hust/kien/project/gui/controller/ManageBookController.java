@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.Resource;
 
-import hust.kien.project.core.book.BookFilter;
 import hust.kien.project.core.book.BookSchema;
 import hust.kien.project.core.book.BookService;
+import hust.kien.project.core.book.internal.BookFilter;
 import hust.kien.project.core.model.book.Book;
 import hust.kien.project.gui.controller.component.BookComponentUtils;
 import hust.kien.project.gui.controller.utils.AlertUtils;

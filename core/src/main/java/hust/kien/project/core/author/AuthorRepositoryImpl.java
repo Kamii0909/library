@@ -7,7 +7,9 @@ import hust.kien.project.core.dao.SimpleCrudRepository;
 import jakarta.persistence.EntityManager;
 
 @Repository
-class AuthorRepositoryImpl extends SimpleCrudRepository<@NonNull Author, @NonNull Long> implements AuthorRepository {
+class AuthorRepositoryImpl extends SimpleCrudRepository<@NonNull Author, @NonNull AuthorId>
+        implements AuthorRepository {
+
     public AuthorRepositoryImpl(EntityManager entityManager) {
         super(Author.class, entityManager);
     }

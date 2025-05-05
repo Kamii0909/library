@@ -15,29 +15,25 @@ import javafx.scene.layout.Region;
  * </ul>
  * The flow of creating a {@link Component}:
  * <ul>
- * <li>Create the {@link #element() view}
- * <li>Create the {@link #controller() controller}, which also initialize the
- * state.
+ * <li>Create the {@link #element() view}.
+ * <li>Initialize the {@link #state() state}.
  * <li>Bind the controller to an external state, if required.
  * </ul>
  * 
  * @param T the states that this {@link Component} cares about.
  * @param I the user interaction this {@link Component} can handle.
  */
-public interface Component<@NonNull T, @NonNull I> {
+public interface Component<@NonNull T, @NonNull I> extends Controller<T, I> {
     /**
      * The UI element this component controls.
      */
     Region element();
-    
-    /**
-     * The object reponsible for managing the states and the user interactions.
-     */
-    Controller<T, I> controller();
-    
+
     /**
      * The object responsible for UI <-> state mapping
      */
-    Binding<T, I> binding();
-    
+    default Binding<T, I> binding() {
+        throw new UnsupportedOperationException();
+    }
+
 }

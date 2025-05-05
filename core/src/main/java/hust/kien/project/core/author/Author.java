@@ -1,10 +1,8 @@
 package hust.kien.project.core.author;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -13,8 +11,6 @@ import org.jspecify.annotations.Nullable;
 
 import hust.kien.project.core.LocalDateAsStringType;
 import hust.kien.project.core.book.BookId;
-import hust.kien.project.core.model.LibraryLocatable;
-import hust.kien.project.core.model.LibraryPersistable;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -25,10 +21,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 
 @Entity
-public class Author implements LibraryLocatable, LibraryPersistable, ReadonlyAuthor {
+public class Author implements ReadonlyAuthor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private AuthorId id;
 
     private String name;
 
@@ -84,7 +80,7 @@ public class Author implements LibraryLocatable, LibraryPersistable, ReadonlyAut
     }
 
     @Override
-    public Long id() {
+    public AuthorId id() {
         return id;
     }
 
@@ -94,8 +90,7 @@ public class Author implements LibraryLocatable, LibraryPersistable, ReadonlyAut
     }
 
     @Override
-    public int age() {
-        return (int) ChronoUnit.YEARS.between(Objects.requireNonNullElse(dateOfBirth, LocalDate.now()),
-                LocalDate.now());
+    public @Nullable LocalDate dateOfBirth() {
+        return dateOfBirth;
     }
 }

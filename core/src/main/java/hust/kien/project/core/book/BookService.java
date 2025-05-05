@@ -1,10 +1,16 @@
 package hust.kien.project.core.book;
 
-import org.jspecify.annotations.NonNull;
+import java.util.List;
 
-import hust.kien.project.core.model.book.Book;
-import hust.kien.project.core.service.CrudService;
+import hust.kien.project.core.book.internal.BookFilter;
 
-public interface BookService extends CrudService<@NonNull Book, @NonNull BookFilter, @NonNull BookSchema> {
-    
+public interface BookService {
+
+    ReadonlyBook create(BookCreationRequest request);
+
+    ReadonlyBook update(BookUpdateRequest request);
+
+    BookMetadata delete(BookId bookId);
+
+    List<ReadonlyBook> find(BookFilter filter);
 }

@@ -17,7 +17,7 @@ dependencies {
     annotationProcessor hibernate.processor
 
     implementation libs.guava
-    api libs.jspecify
+    compileOnlyApi libs.jspecify
 
     testImplementation spring.starter.test
 }

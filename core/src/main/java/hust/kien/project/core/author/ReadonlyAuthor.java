@@ -1,21 +1,23 @@
 package hust.kien.project.core.author;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
-import hust.kien.project.core.model.book.Book;
+import org.jspecify.annotations.Nullable;
 
 public interface ReadonlyAuthor {
-    Long id();
+    AuthorId id();
 
     String name();
 
-    int age();
+    default int age() {
+        LocalDate dob = dateOfBirth();
+        if (dob == null)
+            return -1;
 
-    /**
-     * If this {@link ReadonlyAuthor} is created without specifying this edge,
-     * accessing this property will throw.
-     */
-    default List<Book> books() {
-        throw new UnsupportedOperationException();
+        return (int) ChronoUnit.YEARS.between(dob, LocalDate.now());
     }
+
+    @Nullable
+    LocalDate dateOfBirth();
 }

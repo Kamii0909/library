@@ -6,14 +6,13 @@ import java.net.URL;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-import hust.kien.project.gui.pages.Controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
 
 @Component
 public final class ResourceHelper {
 
-    public Region loadFxml(Resource fxml, Controller<?, ?> controller) {
+    public Region loadFxml(Resource fxml, Object controller) {
         URL url;
         try {
             url = fxml.getURL();

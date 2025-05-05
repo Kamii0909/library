@@ -1,25 +1,17 @@
 package hust.kien.project.core.author;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.jspecify.annotations.NonNull;
 
-import hust.kien.project.core.service.CrudService;
-import hust.kien.project.core.service.VoidSchema;
+public interface AuthorService {
 
-public interface AuthorService extends CrudService<@NonNull Author, @NonNull AuthorFilter, @NonNull VoidSchema> {
+    ReadonlyAuthor create(AuthorCreationRequest request);
 
-    List<@NonNull Author> find(AuthorFilter filter);
+    ReadonlyAuthor update(AuthorUpdateRequest request);
 
-    default Stream<@NonNull Author> findStream(AuthorFilter filter) {
-        return findStream(filter, VoidSchema.get());
-    }
+    ReadonlyAuthor delete(AuthorId id);
 
-    @Override
-    default List<@NonNull Author> find(AuthorFilter filter, VoidSchema schema) {
-        return find(filter);
-    }
+    List<@NonNull ReadonlyAuthor> find(AuthorFilter filter);
 
-    Author update(AuthorUpdateRequest request);
 }

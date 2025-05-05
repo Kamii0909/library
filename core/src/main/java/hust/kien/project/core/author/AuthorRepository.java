@@ -6,6 +6,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 import hust.kien.project.core.dao.CrudRepository;
 
 @NoRepositoryBean
-interface AuthorRepository extends CrudRepository<@NonNull Author, @NonNull Long> {
+interface AuthorRepository extends CrudRepository<@NonNull Author, @NonNull AuthorId> {
     
 }

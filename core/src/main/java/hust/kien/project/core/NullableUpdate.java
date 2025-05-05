@@ -1,6 +1,6 @@
 package hust.kien.project.core;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Specifying an update to a new value or to {@code null}, disambiguate from no

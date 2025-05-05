@@ -1,11 +1,12 @@
-package hust.kien.project.core.model.book;
+package hust.kien.project.core.book;
 
 import java.util.List;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import hust.kien.project.core.author.Author;
+import hust.kien.project.core.author.AuthorId;
+import hust.kien.project.core.model.book.BookGenre;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -24,7 +25,7 @@ public class BookInfo {
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "books_id"))
     @Fetch(FetchMode.SUBSELECT)
-    private List<Author> authors;
+    private List<AuthorId> authors;
     
     @Deprecated
     protected BookInfo() {
@@ -66,7 +67,7 @@ public class BookInfo {
     }
     
     @Deprecated
-    public List<Author> authors() {
+    public List<AuthorId> authors() {
         return this.authors;
     }
     
@@ -76,7 +77,7 @@ public class BookInfo {
     }
     
     @Deprecated
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(List<AuthorId> authors) {
         this.authors = authors;
     }
     

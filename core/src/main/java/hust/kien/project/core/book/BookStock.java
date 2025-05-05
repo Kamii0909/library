@@ -1,4 +1,4 @@
-package hust.kien.project.core.model.book;
+package hust.kien.project.core.book;
 
 import java.util.Collections;
 import java.util.List;

@@ -16,7 +16,7 @@ import hust.kien.project.core.service.auth.BadCredentialException;
 import hust.kien.project.core.service.auth.NoUserFoundException;
 import hust.kien.project.gui.common.ResourceHelper;
 import hust.kien.project.gui.controller.utils.AlertUtils;
-import hust.kien.project.gui.pages.FxmlComponent;
+import hust.kien.project.gui.pages.SimpleFxmlComponent;
 import hust.kien.project.gui.pages.Page;
 import hust.kien.project.gui.view.event.LoginSuccessEvent;
 import javafx.event.ActionEvent;
@@ -27,7 +27,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class LoginPage extends FxmlComponent<@NonNull LoginPage> implements Page {
+public class LoginPage extends SimpleFxmlComponent<@NonNull LoginPage> implements Page {
 
     private @FXML TextField usernameInputField;
     private @FXML PasswordField passwordInputField;

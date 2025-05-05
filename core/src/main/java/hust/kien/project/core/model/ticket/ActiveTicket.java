@@ -1,13 +1,15 @@
 package hust.kien.project.core.model.ticket;
 
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-
 import java.time.LocalDate;
+
+import org.hibernate.annotations.JavaType;
+
+import hust.kien.project.core.LocalDateAsStringType;
+import jakarta.persistence.Entity;
 
 @Entity
 public class ActiveTicket extends Ticket {
-    @Convert(converter = LocalDateConverter.class)
+    @JavaType(LocalDateAsStringType.class)
     private LocalDate endDate;
 
     private static LocalDate $default$endDate() {

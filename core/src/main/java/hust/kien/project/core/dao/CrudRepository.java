@@ -5,7 +5,6 @@ import java.util.List;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
@@ -14,12 +13,14 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @param S  the type of {@code Schema}, which is a fetching hint.
  */
 @NoRepositoryBean
-public interface CrudRepository<@NonNull T, @NonNull ID> extends JpaRepository<T, ID> {
+public interface CrudRepository<@NonNull T, @NonNull ID> {
     T persist(T entity);
 
     T merge(T entity);
 
     void delete(T entity);
+
+    void deleteById(ID id);
 
     /**
      * @param id
@@ -31,5 +32,4 @@ public interface CrudRepository<@NonNull T, @NonNull ID> extends JpaRepository<T
     List<T> find(Iterable<ID> ids);
 
     List<T> find(Specification<T> filter);
-
 }

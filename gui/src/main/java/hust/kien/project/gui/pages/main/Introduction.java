@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 
 import hust.kien.project.gui.common.ResourceHelper;
-import hust.kien.project.gui.pages.BasicComponent;
+import hust.kien.project.gui.pages.SimpleComponent;
 import javafx.concurrent.Worker.State;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
-public class Introduction extends BasicComponent<@NonNull Introduction> {
+public class Introduction extends SimpleComponent<@NonNull Introduction> {
 
     @FXML
     private WebView webView;
