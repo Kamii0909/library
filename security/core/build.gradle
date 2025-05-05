@@ -1,0 +1,20 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'hust.kien.project'
+version = '0.0.0'
+description = 'security-core'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api libs.jspecify
+    implementation "org.springframework.boot:spring-boot-starter-security:latest.release"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

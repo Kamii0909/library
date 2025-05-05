@@ -27,7 +27,7 @@ dependencyResolutionManagement {
         }
 
         create('hibernate') {
-            def hibernateVersion = version('hibernate', '[6.+,7)')
+            def hibernateVersion = version('hibernate', '[6.0,7.0)')
 
             library('dialects','org.hibernate.orm', 'hibernate-community-dialects').versionRef(hibernateVersion)
 
@@ -37,7 +37,7 @@ dependencyResolutionManagement {
         create('libs') {
             library('sqlite', 'org.xerial', 'sqlite-jdbc').version('latest.release')
 
-            library('guava', 'com.google.guava', 'guava').version('33.3.1-jre')
+            library('guava', 'com.google.guava', 'guava').version('33.4.7-jre')
         
             library('jspecify', 'org.jspecify', 'jspecify').version('latest.release')
         }

@@ -6,7 +6,6 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import hust.kien.project.core.dao.book.BookRepository;
 import hust.kien.project.core.model.book.Book;
 
 @Service
@@ -21,12 +20,12 @@ class BookServiceImpl implements BookService {
     
     @Override
     public @NonNull Book create(Book entity) {
-        return bookRepository.save(entity);
+        return bookRepository.persist(entity);
     }
     
     @Override
     public @NonNull Book update(Book entity) {
-        return bookRepository.save(entity);
+        return bookRepository.merge(entity);
     }
     
     @Override
@@ -37,7 +36,20 @@ class BookServiceImpl implements BookService {
     
     @Override
     public List<@NonNull Book> find(BookFilter filter, BookSchema schema) {
-        return bookRepository.findAll(filter.build(), schema);
+        List<@NonNull Book> books = bookRepository.find(filter.build());
+        
+        if (books.isEmpty())
+            return books;
+        
+        if (schema.isAuthors())
+            books.get(0).getBookInfo().authors().size();
+        if (schema.isGenres())
+            books.get(0).getBookInfo().bookGenres().size();
+        if (schema.isCompletedContracts())
+            books.get(0).getBookStock().completedContracts().size();
+        if (schema.isOngoingContracts())
+            books.get(0).getBookStock().ongoingContracts().size();
+        
+        return books;
     }
-    
 }

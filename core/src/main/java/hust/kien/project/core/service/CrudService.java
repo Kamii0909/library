@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 
 import org.jspecify.annotations.NonNull;
 
-import jakarta.persistence.EntityGraph;
 import jakarta.persistence.criteria.CriteriaQuery;
 
 /**
@@ -15,8 +14,8 @@ import jakarta.persistence.criteria.CriteriaQuery;
  * 
  * @apiNote Both {@code Filter} and {@code Schema} is heavily inspired by
  *          GraphQL.
- * @implNote {@code Filter} is implemented on top of {@link CriteriaQuery} and
- *           {@code Schema} is implemented on top of {@link EntityGraph}
+ * @implNote {@code Filter} is implemented on top of {@link CriteriaQuery}.
+ *           {@code Schema} is just fetching hints.
  * @param T the entity type
  * @param F the type of {@code Filter}
  * @param S the type of {@code Schema}

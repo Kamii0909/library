@@ -1,9 +1,0 @@
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(23)
-    }
-}
-compileJava {
-    // use JDK classfile version 66 until ASM catches up (also meant Spring catches up)
-    options.release = 22
-}

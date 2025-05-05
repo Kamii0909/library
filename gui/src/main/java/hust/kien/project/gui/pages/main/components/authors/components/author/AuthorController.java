@@ -2,12 +2,16 @@ package hust.kien.project.gui.pages.main.components.authors.components.author;
 
 import static hust.kien.project.gui.controller.component.BookComponentUtils.isIntegerValid;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import hust.kien.project.core.author.Author;
+import hust.kien.project.core.author.AuthorService;
+import hust.kien.project.core.author.AuthorUpdateRequest;
 import hust.kien.project.core.service.authorized.LibrarianService;
 import hust.kien.project.gui.controller.component.BookComponentUtils;
 import hust.kien.project.gui.controller.utils.AlertUtils;
@@ -16,35 +20,43 @@ import javafx.scene.control.ButtonType;
 
 class AuthorController implements Controller<State, Interactions>, Interactions {
     private static final Logger log = LoggerFactory.getLogger(AuthorController.class);
-    
+
     private final LibrarianService librarianService;
-    
+
+    private final AuthorService authorService;
+
     private final State state;
-    
+
     private Author author;
-    
-    public AuthorController(LibrarianService librarianService, State state, Author author) {
+
+    public AuthorController(
+            LibrarianService librarianService,
+            AuthorService authorService,
+            State state,
+            Author author) {
+
         this.librarianService = librarianService;
+        this.authorService = authorService;
         this.state = state;
         this.author = author;
         state.name().set(author.name());
         state.age().set(Integer.toString(author.age()));
     }
-    
+
     @Override
     public State state() {
         return state;
     }
-    
+
     @Override
     public Interactions interactions() {
         return this;
     }
-    
+
     @Override
     public void handleDeleteAuthor() {
         Optional<ButtonType> response = AlertUtils.showAndWaitOkCancelAlert("Are you sure?");
-        
+
         if (response.isEmpty() || response.get() == ButtonType.CANCEL) {
             // Do nothing
         } else if (response.get() == ButtonType.OK) {
@@ -55,7 +67,7 @@ class AuthorController implements Controller<State, Interactions>, Interactions 
             throw new IllegalStateException("can't be here, should be only OK Cancel and Close");
         }
     }
-    
+
     @Override
     public void handleModifyAuthor() {
         log.info("Modify author request {}", author);
@@ -63,38 +75,46 @@ class AuthorController implements Controller<State, Interactions>, Interactions 
             // modifyButton.setText("Hoan tat");
         } else {
             // modifyButton.setText("Sua thong tin");
-            if (validateAndRevertFields()) {
-                commitAuthor();
+            AuthorUpdateRequest request = validateAndRevertFields();
+            if (request != null) {
+                commitAuthor(request);
             }
         }
     }
-    
-    private boolean validateAndRevertFields() {
-        if (BookComponentUtils.isIntegerValid(state.age().get()) && !state.name().get().isBlank()) {
-            author.setName(state.name().get());
-            author.setAge(Integer.parseInt(state.age().get()));
-            return true;
-        } else {
-            setNameAndAgeField(author.name(), author.age());
-            validate();
-            return false;
+
+    private @Nullable AuthorUpdateRequest validateAndRevertFields() {
+        String newName = state.name().get();
+        String newAgeString = state.age().get();
+
+        if (BookComponentUtils.isIntegerValid(newAgeString) && !newName.isBlank()) {
+
+            int newAge = Integer.parseInt(newAgeString);
+            AuthorUpdateRequest request = new AuthorUpdateRequest(author.id());
+            request.setName(newName);
+            request.setDob(LocalDate.now().minusYears(newAge));
+
+            return request;
         }
+
+        setNameAndAgeField(author.name(), author.age());
+        validate();
+        return null;
     }
-    
+
     private void setNameAndAgeField(String name, int age) {
         state.name().set(name);
         state.age().set(Integer.toString(age));
     }
-    
-    private void commitAuthor() {
+
+    private void commitAuthor(AuthorUpdateRequest request) {
         log.info("Saving author: {}", author);
-        author = librarianService.saveOrUpdate(author);
+        author = authorService.update(request);
     }
-    
+
     @Override
     public void validate() {
         state.isAgeValid().set(isIntegerValid(state.age().get()));
         state.isNameValid().set(!state.name().get().isBlank());
     }
-    
+
 }

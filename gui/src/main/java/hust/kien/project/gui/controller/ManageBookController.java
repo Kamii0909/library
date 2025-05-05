@@ -15,8 +15,6 @@ import hust.kien.project.core.book.BookFilter;
 import hust.kien.project.core.book.BookSchema;
 import hust.kien.project.core.book.BookService;
 import hust.kien.project.core.model.book.Book;
-import hust.kien.project.core.service.authorized.LibrarianService;
-import hust.kien.project.core.service.dynamic.BookSpecificationBuilder;
 import hust.kien.project.gui.controller.component.BookComponentUtils;
 import hust.kien.project.gui.controller.utils.AlertUtils;
 import hust.kien.project.gui.controller.utils.FxUtils;
@@ -112,7 +110,7 @@ public class ManageBookController {
 	@FXML
 	private void handleAddGenreFilter() {
 		Button button = new Button(genreFilterText.getText());
-		button.setOnMouseClicked(ev -> {
+		button.setOnMouseClicked(_ -> {
 			genreFilterBar.getChildren().remove(button);
 			handleFilter();
 		});

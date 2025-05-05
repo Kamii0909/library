@@ -19,6 +19,8 @@ public class LocalDateConverter implements AttributeConverter<LocalDate, String>
 
     @Override
     public LocalDate convertToEntityAttribute(String dbData) {
+        if (dbData == null)
+            return null;
         return LocalDate.parse(dbData);
     }
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 
 import hust.kien.project.core.author.Author;
+import hust.kien.project.core.author.AuthorService;
 import hust.kien.project.core.service.authorized.LibrarianService;
 import hust.kien.project.gui.controller.utils.FxUtils;
 import hust.kien.project.gui.pages.ComponentFactory;
@@ -36,18 +37,22 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 
 public class AuthorComponentFactory
-    implements ComponentFactory<@NonNull State, @NonNull Interactions, @NonNull AuthorComponent, hust.kien.project.core.author.Author> {
-    
+        implements
+        ComponentFactory<@NonNull State, @NonNull Interactions, @NonNull AuthorComponent, @NonNull Author> {
+
     private final URL authorCss;
-    
+
     private final LibrarianService librarianService;
-    
+
+    private final AuthorService authorService;
+
     private final Image defaultImage;
-    
+
     public AuthorComponentFactory(
-        @Value("classpath:gui/component/author/author.css") Resource authorCss,
-        @Qualifier("defaultBookImage") Resource defaultImage,
-        LibrarianService librarianService) {
+            @Value("classpath:gui/component/author/author.css") Resource authorCss,
+            @Qualifier("defaultBookImage") Resource defaultImage,
+            LibrarianService librarianService,
+            AuthorService authorService) {
         try {
             this.authorCss = authorCss.getURL();
             this.defaultImage = FxUtils.renderImage(new Image(defaultImage.getInputStream(),
@@ -56,72 +61,73 @@ public class AuthorComponentFactory
             throw new AssertionError(e);
         }
         this.librarianService = librarianService;
-        
+        this.authorService = authorService;
+
     }
-    
+
     @Override
     public AuthorComponent createComponent(Author author) {
         return createNewUIElement(defaultImage, author);
     }
-    
+
     private AuthorComponent createNewUIElement(Image image, Author author) {
         StackPane imageContainer = imageContainer(image);
         AnchorPane.setTopAnchor(imageContainer, 5.0);
         AnchorPane.setLeftAnchor(imageContainer, 10.0);
-        
+
         TextArea authorName = authorName();
         AnchorPane.setLeftAnchor(authorName, 80.0);
         AnchorPane.setRightAnchor(authorName, 120.0);
         AnchorPane.setTopAnchor(authorName, 20.0);
-        
+
         TextField authorAgeNumber = ageNumber();
-        
+
         TextFlow authorAge = authorAge(ageText(), authorAgeNumber);
         AnchorPane.setLeftAnchor(authorAge, 80.0);
         AnchorPane.setTopAnchor(authorAge, 4.0);
         AnchorPane.setRightAnchor(authorAge, 140.0);
-        
+
         Button delete = deleteButton();
         ToggleButton edit = editButton();
-        
+
         VBox actions = actionContainer(delete, edit);
         AnchorPane.setRightAnchor(actions, 15.0);
         AnchorPane.setTopAnchor(actions, 5.0);
-        
+
         BooleanProperty isNameValid = new SimpleBooleanProperty(true);
         BooleanProperty isAgeValid = new SimpleBooleanProperty(true);
-        
+
         authorName.editableProperty().bind(edit.selectedProperty());
         authorAgeNumber.editableProperty().bind(edit.selectedProperty());
-        
+
         State state = new State(authorName.textProperty(), authorAgeNumber.textProperty(),
                 () -> authorName.fireEvent(new AuthorDeletedEvent(author)),
                 edit.selectedProperty(),
                 isNameValid,
                 isAgeValid);
-        
-        AuthorController controller = new AuthorController(librarianService, state, author);
+
+        AuthorController controller = new AuthorController(librarianService, authorService, state, author);
         authorName.setOnKeyTyped(_ -> controller.validate());
         authorAgeNumber.setOnKeyTyped(_ -> controller.validate());
-        
+
         delete.setOnMouseClicked(_ -> controller.handleDeleteAuthor());
         edit.setOnMouseClicked(_ -> controller.handleModifyAuthor());
-        
+
         StringBinding nameStyles = Bindings.createStringBinding(() -> validationStyles(isNameValid.get()), isNameValid);
         StringBinding ageStyles = Bindings.createStringBinding(() -> validationStyles(isAgeValid.get()), isAgeValid);
-        
+
         authorName.styleProperty().bind(nameStyles);
         authorAgeNumber.styleProperty().bind(ageStyles);
-        
+
         AnchorPane root = new AnchorPane();
         root.setCursor(Cursor.CROSSHAIR);
         root.setStyle("-fx-background-color: white; -fx-background-radius: 20;");
         root.getStylesheets().add(authorCss.toString());
         root.getChildren().addAll(imageContainer, authorName, authorAge, actions);
-        
+
         return new AuthorComponent(root, controller);
     }
-    
+
     private VBox actionContainer(Button delete, ToggleButton edit) {
         VBox actions = new VBox(delete, edit);
         actions.setAlignment(Pos.CENTER);
@@ -129,14 +135,14 @@ public class AuthorComponentFactory
         actions.setLayoutY(15.0);
         return actions;
     }
-    
+
     private ToggleButton editButton() {
         ToggleButton edit = new ToggleButton("Sua thong tin");
         edit.setMnemonicParsing(false);
         edit.getStyleClass().addAll("modify-button", "alatsi");
         return edit;
     }
-    
+
     private Button deleteButton() {
         Button delete = new Button("Xóa tác giả");
         delete.setMnemonicParsing(false);
@@ -145,7 +151,7 @@ public class AuthorComponentFactory
         delete.getStyleClass().addAll("delete-button", "alatsi");
         return delete;
     }
-    
+
     private TextFlow authorAge(Text ageText, TextField authorAgeNumber) {
         TextFlow authorAge = new TextFlow(ageText, authorAgeNumber);
         authorAge.setLayoutX(80.0);
@@ -153,7 +159,7 @@ public class AuthorComponentFactory
         authorAge.setTextAlignment(TextAlignment.CENTER);
         return authorAge;
     }
-    
+
     private TextField ageNumber() {
         TextField authorAgeNumber = new TextField();
         authorAgeNumber.setAlignment(Pos.TOP_LEFT);
@@ -161,7 +167,7 @@ public class AuthorComponentFactory
         authorAgeNumber.setPrefHeight(20.0);
         return authorAgeNumber;
     }
-    
+
     private Text ageText() {
         Text ageText = new Text("Tuổi: ");
         ageText.setStrokeType(StrokeType.OUTSIDE);
@@ -170,7 +176,7 @@ public class AuthorComponentFactory
         ageText.getStyleClass().addAll("goto-regular", "author-age");
         return ageText;
     }
-    
+
     private TextArea authorName() {
         TextArea authorName = new TextArea();
         authorName.setEditable(false);
@@ -182,23 +188,21 @@ public class AuthorComponentFactory
         authorName.getStyleClass().addAll("alatsi", "author-name");
         return authorName;
     }
-    
+
     private StackPane imageContainer(Image image) {
         ImageView imageView = new ImageView(image);
-        
+
         Circle circle = new Circle(40, 35, 30);
         imageView.setClip(circle);
-        
+
         StackPane imageContainer = new StackPane(imageView);
         imageContainer.setLayoutX(10.0);
         imageContainer.setLayoutY(5.0);
-        
+
         return imageContainer;
     }
-    
+
     private String validationStyles(boolean isValid) {
-        return isValid ?
-                "-fx-boder-color: none" :
-                "-fx-border-color: red; -fx-border-radius: 6; -fx-border-width: 1.5";
+        return isValid ? "-fx-boder-color: none" : "-fx-border-color: red; -fx-border-radius: 6; -fx-border-width: 1.5";
     }
 }
