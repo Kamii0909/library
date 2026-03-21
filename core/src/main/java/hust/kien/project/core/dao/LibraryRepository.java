@@ -18,6 +18,6 @@ public interface LibraryRepository<T, ID extends Serializable>
 
     @Override
     default void deleteAll() {
-        throw new UnsupportedOperationException("Don't delete all");
+        throw new UnsupportedOperationException("Don't delete activeClients");
     }
 }

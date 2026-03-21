@@ -1,8 +1,9 @@
 package hust.kien.project.core.author;
 
-import java.util.List;
+import com.google.common.annotations.Beta;
+import hust.kien.project.core.book.BookId;
 
-import org.jspecify.annotations.NonNull;
+import java.util.List;
 
 public interface AuthorService {
 
@@ -12,6 +13,8 @@ public interface AuthorService {
 
     ReadonlyAuthor delete(AuthorId id);
 
-    List<@NonNull ReadonlyAuthor> find(AuthorFilter filter);
+    List<ReadonlyAuthor> find(AuthorFilter filter);
 
+    @Beta
+    List<ReadonlyAuthor> authorsOf(BookId bookId);
 }

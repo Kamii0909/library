@@ -1,0 +1,4 @@
+tasks.named('wrapper', Wrapper.class) {
+    // use if you need to debug
+//    it.distributionType = DistributionType.ALL
+}

@@ -1,7 +1,7 @@
 package hust.kien.project.core.service.dynamic;
 
-import hust.kien.project.core.model.auth.LibraryEmployee;
-import hust.kien.project.core.model.auth.LibraryEmployee_;
+import hust.kien.project.core.auth.LibraryEmployee;
+import hust.kien.project.core.auth.LibraryEmployee_;
 
 public class LibraryEmployeeSpecificationBuilder extends
     GeneralLibrarySpecificationBuilder<LibraryEmployee> {

@@ -1,30 +1,21 @@
 package hust.kien.project.core.author;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import hust.kien.project.core.LocalDateAsStringType;
+import jakarta.persistence.*;
 import org.hibernate.annotations.JavaType;
 import org.jspecify.annotations.Nullable;
 
-import hust.kien.project.core.LocalDateAsStringType;
-import hust.kien.project.core.book.BookId;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import java.time.LocalDate;
+import java.util.Objects;
 
-@Entity
-public class Author implements ReadonlyAuthor {
+import static hust.kien.project.core.Utils.idRequired;
+
+@Entity(name = "Author")
+@Table(name = "Author")
+class Author implements ReadonlyAuthor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private AuthorId id;
+    private @Nullable Long id;
 
     private String name;
 
@@ -32,56 +23,35 @@ public class Author implements ReadonlyAuthor {
     @Column(name = "date_of_birth")
     private @Nullable LocalDate dateOfBirth;
 
-    @ElementCollection
-    @CollectionTable(name = "Book_Author", joinColumns = @JoinColumn(name = "authors_id"))
-    @Column(name = "books_id")
-    @Fetch(FetchMode.SUBSELECT)
-    private List<BookId> books;
-
     @Deprecated
-    @SuppressWarnings("all")
+    @SuppressWarnings("activeClients")
     protected Author() {
         // For Hibernate
     }
+
+    Author(String name, @Nullable LocalDate dob) {
+        this.name = name;
+        this.dateOfBirth = dob;
+    }
+
 
     @SuppressWarnings("null")
     public Author(String name, int age) {
         this.name = name;
         this.dateOfBirth = LocalDate.now().minusYears(age);
-        this.books = new ArrayList<>();
-    }
-
-    void replaceBooks(List<BookId> bookIds) {
-        this.books.clear();
-        this.books.addAll(bookIds);
-    }
-
-    void addBook(BookId bookId) {
-        List<BookId> books = this.books;
-
-        if (!books.contains(bookId))
-            books.add(bookId);
-    }
-
-    void removeBook(BookId bookId) {
-        List<BookId> books = this.books;
-
-        if (!books.remove(bookId)) {
-            throw new IllegalArgumentException("Book " + bookId + " not found in Author " + id);
-        }
     }
 
     void setName(String name) {
         this.name = name;
     }
 
-    void setDateOfBirth(LocalDate dob) {
+    void setDateOfBirth(@Nullable LocalDate dob) {
         this.dateOfBirth = dob;
     }
 
     @Override
     public AuthorId id() {
-        return id;
+        return new AuthorId(idRequired(id));
     }
 
     @Override

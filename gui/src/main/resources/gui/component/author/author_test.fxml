@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox spacing="5.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<VBox spacing="5.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane style="-fx-background-color: white; -fx-background-radius: 20;">
          <children>
@@ -24,7 +24,7 @@
                   <Rectangle2D />
                </viewport>
                <image>
-                  <Image url="@../../../../../../../../../../../../Linh%20tinh/Art/@soraneko_hino_01.jpg" />
+                  <Image url="@../../../image/default_book_image.png" />
                </image>
             </ImageView>
             <TextField layoutX="82.0" layoutY="26.0" prefWidth="120.0" style="-fx-font-size: 18;" styleClass="alatsi" text="Ten tac gia" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="26.0" />
@@ -78,9 +78,6 @@
                <viewport>
                   <Rectangle2D />
                </viewport>
-               <image>
-                  <Image url="@../../../../../../../../../../../../Linh%20tinh/Art/@soraneko_hino_01.jpg" />
-               </image>
             </ImageView>
             <TextField layoutX="82.0" layoutY="26.0" prefWidth="120.0" style="-fx-font-size: 18;" styleClass="alatsi" text="Ten tac gia" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="26.0" />
             <TextArea maxHeight="40.0" prefHeight="40.0" prefWidth="140.0" style="-fx-font-size: 14;" styleClass="alatsi" text="Nguyễn Nhật Ánh" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="20.0">

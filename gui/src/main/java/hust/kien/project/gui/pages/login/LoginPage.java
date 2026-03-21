@@ -1,42 +1,49 @@
 package hust.kien.project.gui.pages.login;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.core.io.Resource;
-
 import hust.kien.project.core.service.auth.AuthService;
 import hust.kien.project.core.service.auth.AuthorizedContextHolder;
 import hust.kien.project.core.service.auth.BadCredentialException;
 import hust.kien.project.core.service.auth.NoUserFoundException;
 import hust.kien.project.gui.common.ResourceHelper;
 import hust.kien.project.gui.controller.utils.AlertUtils;
-import hust.kien.project.gui.pages.SimpleFxmlComponent;
+import hust.kien.project.gui.pages.Namespace;
 import hust.kien.project.gui.pages.Page;
 import hust.kien.project.gui.view.event.LoginSuccessEvent;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ReadOnlyProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import org.jspecify.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.io.Resource;
 
-public class LoginPage extends SimpleFxmlComponent<@NonNull LoginPage> implements Page {
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Map;
 
-    private @FXML TextField usernameInputField;
-    private @FXML PasswordField passwordInputField;
-    private @FXML CheckBox rememberMeCheckBox;
+import static hust.kien.project.gui.pages.Namespace.*;
 
-    private State state;
+public class LoginPage implements Page {
 
     private final AuthService authService;
     private final ApplicationEventPublisher eventPublisher;
+    private final Parent element;
+
+    private final StringProperty username;
+    private final StringProperty password;
+    private final BooleanProperty rememberMe;
 
     @SuppressWarnings("null")
     public LoginPage(
@@ -44,36 +51,35 @@ public class LoginPage extends SimpleFxmlComponent<@NonNull LoginPage> implement
             ResourceHelper helper,
             AuthService authService,
             ApplicationEventPublisher eventPublisher) {
-        super(fxml, helper);
+
         this.authService = authService;
         this.eventPublisher = eventPublisher;
-    }
 
-    @FXML
-    public void initialize() {
-        State state = initializeState();
+        FXMLLoader loader = helper.load(fxml, this);
+        this.element = loader.getRoot();
+
+        ObservableMap<String, Object> namespace = loader.getNamespace();
+        this.username = textField(namespace, "usernameInputField").textProperty();
+        this.password = passwordField(namespace, "passwordInputField").textProperty();
+        this.rememberMe = checkBox(namespace, "rememberMeCheckBox").selectedProperty();
+
         Credentials credentials = readFromFile();
         if (credentials != null) {
-            state.username().setValue(credentials.username);
-            state.password().setValue(credentials.password);
+            this.username.setValue(credentials.username);
+            this.password.setValue(credentials.password);
         }
     }
 
-    private State initializeState() {
-        return new State(
-                usernameInputField.textProperty(),
-                passwordInputField.textProperty(),
-                rememberMeCheckBox.selectedProperty());
-    }
 
     private record Credentials(String username, String password) {
     }
 
     private static @Nullable Credentials readFromFile() {
         try {
-            var lines = Files.lines(new File("remember.txt").toPath()).toList();
-            if (lines.size() != 2)
+            var lines = Files.readAllLines(new File("remember.txt").toPath());
+            if (lines.size() != 2) {
                 return null;
+            }
             return new Credentials(lines.get(0), lines.get(1));
         } catch (IOException e) {
             return null;
@@ -82,8 +88,8 @@ public class LoginPage extends SimpleFxmlComponent<@NonNull LoginPage> implement
 
     @FXML
     private void login(ActionEvent event) {
-        String usernameInput = state.username().get();
-        String passwordInput = state.password().get();
+        String usernameInput = this.username.get();
+        String passwordInput = this.password.get();
 
         AuthorizedContextHolder auth;
         try {
@@ -96,7 +102,7 @@ public class LoginPage extends SimpleFxmlComponent<@NonNull LoginPage> implement
         }
         eventPublisher.publishEvent(new LoginSuccessEvent(auth));
 
-        if (state.rememberMe().get()) {
+        if (this.rememberMe.get()) {
             // TODO: do something to remember user
         }
     }
@@ -108,7 +114,7 @@ public class LoginPage extends SimpleFxmlComponent<@NonNull LoginPage> implement
     }
 
     @Override
-    public LoginPage component() {
-        return this;
+    public ReadOnlyProperty<Parent> root() {
+        return new SimpleObjectProperty<>(element);
     }
 }

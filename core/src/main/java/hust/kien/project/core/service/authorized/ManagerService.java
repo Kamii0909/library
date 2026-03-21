@@ -3,7 +3,7 @@ package hust.kien.project.core.service.authorized;
 import java.time.LocalDate;
 import java.util.List;
 
-import hust.kien.project.core.model.auth.LibraryEmployee;
+import hust.kien.project.core.auth.LibraryEmployee;
 
 public interface ManagerService extends AuthorizedService {
 

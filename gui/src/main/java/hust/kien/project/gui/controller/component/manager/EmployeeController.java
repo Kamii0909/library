@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import hust.kien.project.core.model.auth.LibraryEmployee;
-import hust.kien.project.core.model.auth.LibraryRole;
+import hust.kien.project.core.auth.LibraryEmployee;
+import hust.kien.project.core.auth.LibraryRole;
 import hust.kien.project.core.service.authorized.ManagerService;
 import hust.kien.project.gui.controller.utils.AlertUtils;
 import javafx.beans.binding.Bindings;
@@ -95,11 +95,11 @@ public class EmployeeController {
                 }
             }
             
-            LibraryEmployee employee = LibraryEmployee.builder()
-                    .employeeName(nameField.getText())
-                    .username(usernameField.getText())
-                    .roles(rolesField.getCheckModel().getCheckedItems())
-                    .build();
+            LibraryEmployee employee = new LibraryEmployee(
+                    usernameField.getText(),
+                    nameField.getText(),
+                    rolesField.getCheckModel().getCheckedItems()
+            );
             managerService.createUser(employee, passwordField.getText());
             employeeAccountContainer.setItems(observableList(managerService.getAllEmployees()));
         }

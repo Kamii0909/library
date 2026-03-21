@@ -1,28 +1,20 @@
 package hust.kien.project.core.service.auth.internal;
 
-import java.util.EnumMap;
-import java.util.Map;
+import hust.kien.project.core.auth.LibraryEmployee;
+import hust.kien.project.core.auth.LibraryRole;
+import hust.kien.project.core.service.auth.AuthorizedContextHolder;
+import hust.kien.project.core.service.authorized.AuthorizedService;
+import hust.kien.project.core.service.authorized.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hust.kien.project.core.model.auth.LibraryEmployee;
-import hust.kien.project.core.model.auth.LibraryRole;
-import hust.kien.project.core.service.auth.AuthorizedContextHolder;
-import hust.kien.project.core.service.authorized.AuditService;
-import hust.kien.project.core.service.authorized.AuthorizedService;
-import hust.kien.project.core.service.authorized.LibrarianService;
-import hust.kien.project.core.service.authorized.ManagerService;
+import java.util.EnumMap;
+import java.util.Map;
 
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
 
     private static LibraryEmployee currentlyLoggedInEmployee;
-
-    @Autowired
-    private AuditService auditService;
-
-    @Autowired
-    private LibrarianService librarianService;
 
     @Autowired
     private ManagerService managerService;
@@ -44,16 +36,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     private AuthorizedService getService(LibraryRole role) {
-        switch (role) {
-            case MANAGER:
-                return managerService;
-            case AUDIT:
-                return auditService;
-            case LIBRARIAN:
-                return librarianService;
-        }
-        throw new IllegalArgumentException(
-            "Authorization Service Exception: role not manager, audit or librarian");
+        return switch (role) {
+            case MANAGER -> managerService;
+            case AUDIT -> null;
+            case LIBRARIAN -> null;
+        };
     }
 
     public static LibraryEmployee getCurrentlyLoggedInEmployee() {

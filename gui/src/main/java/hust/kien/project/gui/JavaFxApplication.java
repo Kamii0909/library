@@ -21,7 +21,19 @@ public class JavaFxApplication extends Application {
 	private ConfigurableApplicationContext coreContext;
 	
 	private ConfigurableApplicationContext guiContext;
-	
+
+	@Override
+	public void init() throws Exception {
+
+		// Files.createDirectories(Paths.get("./database"));
+
+		String[] args = getParameters().getRaw().toArray(String[]::new);
+
+		this.coreContext = new SpringApplicationBuilder(CoreService.class)
+				.web(WebApplicationType.NONE)
+				.run(args);
+	}
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -31,8 +43,8 @@ public class JavaFxApplication extends Application {
 				ac ->
 				{
 					ac.registerBean(Application.class, () -> JavaFxApplication.this);
-					ac.registerBean(Parameters.class, () -> getParameters());
-					ac.registerBean(HostServices.class, () -> getHostServices());
+					ac.registerBean(Parameters.class, this::getParameters);
+					ac.registerBean(HostServices.class, this::getHostServices);
 					ac.registerBean(WindowManager.class, () -> new WindowManager(primaryStage));
 				};
 				
@@ -43,18 +55,6 @@ public class JavaFxApplication extends Application {
 				.run(args);
 		
 		this.guiContext.publishEvent(new StageReadyEvent(primaryStage));
-	}
-	
-	@Override
-	public void init() throws Exception {
-		
-		// Files.createDirectories(Paths.get("./database"));
-		
-		String[] args = getParameters().getRaw().toArray(String[]::new);
-		
-		this.coreContext = new SpringApplicationBuilder(CoreService.class)
-				.web(WebApplicationType.NONE)
-				.run(args);
 	}
 	
 	@Override

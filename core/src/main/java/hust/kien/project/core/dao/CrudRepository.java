@@ -2,18 +2,16 @@ package hust.kien.project.core.dao;
 
 import java.util.List;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
- * @param T  the entity type
- * @param ID the ID type
- * @param S  the type of {@code Schema}, which is a fetching hint.
+ * @param <T>  the entity type
+ * @param <ID> the ID type
  */
 @NoRepositoryBean
-public interface CrudRepository<@NonNull T, @NonNull ID> {
+public interface CrudRepository<T, ID> {
     T persist(T entity);
 
     T merge(T entity);
@@ -23,7 +21,6 @@ public interface CrudRepository<@NonNull T, @NonNull ID> {
     void deleteById(ID id);
 
     /**
-     * @param id
      * @return null if entity with {@code id} is not found.
      */
     @Nullable

@@ -2,17 +2,17 @@ package hust.kien.project.core.dao;
 
 import java.util.List;
 
-import org.jspecify.annotations.NonNull;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 import jakarta.persistence.EntityManager;
 
-public abstract class SimpleCrudRepository<@NonNull T, @NonNull ID> extends SimpleJpaRepository<T, ID>
+public abstract class SimpleCrudRepository<T, ID> extends SimpleJpaRepository<T, ID>
         implements CrudRepository<T, ID> {
 
-    private final EntityManager entityManager;
+    protected final EntityManager entityManager;
 
     protected SimpleCrudRepository(Class<T> entityClass, EntityManager entityManager) {
         super(entityClass, entityManager);
@@ -20,13 +20,14 @@ public abstract class SimpleCrudRepository<@NonNull T, @NonNull ID> extends Simp
     }
 
     @Override
+    @CanIgnoreReturnValue
     public T persist(T entity) {
         entityManager.persist(entity);
         return entity;
     }
 
     @Override
-    public @NonNull T merge(@NonNull T entity) {
+    public T merge(T entity) {
         return entityManager.merge(entity);
     }
 
@@ -36,23 +37,23 @@ public abstract class SimpleCrudRepository<@NonNull T, @NonNull ID> extends Simp
     }
 
     @Override
-    public @Nullable T find(@NonNull ID id) {
+    public @Nullable T find(ID id) {
         return entityManager.find(getDomainClass(), id);
     }
 
     @Override
-    public List<T> find(Iterable<@NonNull ID> ids) {
+    public List<T> find(Iterable<ID> ids) {
         return findAllById(ids);
     }
 
     @Override
-    @SuppressWarnings("null")
     public void deleteById(@Nullable ID id) {
+        if (id == null) return;
         super.deleteById(id);
     }
 
     @Override
-    public void delete(@NonNull T entity) {
+    public void delete(T entity) {
         super.delete(entity);
     }
 }

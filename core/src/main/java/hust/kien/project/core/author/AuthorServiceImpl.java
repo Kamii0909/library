@@ -1,18 +1,15 @@
 package hust.kien.project.core.author;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Stream;
-
-import org.jspecify.annotations.NonNull;
+import hust.kien.project.core.NullableUpdate;
+import hust.kien.project.core.Utils;
+import hust.kien.project.core.book.BookId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import hust.kien.project.core.NullableUpdate;
-import hust.kien.project.core.author.AuthorUpdateRequest.BookChanges;
-import hust.kien.project.core.author.AuthorUpdateRequest.BookChanges.Diff;
-import hust.kien.project.core.author.AuthorUpdateRequest.BookChanges.Replace;
-import hust.kien.project.core.book.BookId;
+import java.time.LocalDate;
+import java.util.List;
+
+import static hust.kien.project.core.Utils.covarianceCast;
 
 @Service
 class AuthorServiceImpl implements AuthorService {
@@ -23,30 +20,31 @@ class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author create(Author entity) {
-        return repository.persist(entity);
+    public Author create(AuthorCreationRequest request) {
+        Author author = new Author(request.name(), request.dateOfBirth());
+        return repository.persist(author);
     }
 
     @Override
-    public Author update(Author entity) {
-        return repository.merge(entity);
+    public Author delete(AuthorId authorId) {
+        Long id = authorId.id();
+        Author author = repository.find(id);
+
+        if (author == null) {
+            throw authorNotFound(authorId);
+        }
+
+        repository.deleteById(id);
+        return author;
+    }
+
+    private IllegalArgumentException authorNotFound(AuthorId id) {
+        return new IllegalArgumentException("Author " + id + " not found");
     }
 
     @Override
-    public Author delete(Author entity) {
-        repository.delete(entity);
-        return entity;
-    }
-
-    @Override
-    public List<@NonNull Author> find(AuthorFilter filter) {
-        return repository.find(filter.build());
-    }
-
-    @Override
-    public Stream<@NonNull Author> findStream(AuthorFilter filter) {
-        // FIXME
-        return find(filter).stream();
+    public List<ReadonlyAuthor> find(AuthorFilter filter) {
+        return covarianceCast(repository.find(filter.build()));
     }
 
     @Override
@@ -67,23 +65,14 @@ class AuthorServiceImpl implements AuthorService {
         if (dob != null)
             author.setDateOfBirth(dob.value());
 
-        BookChanges changes = request.bookChanges();
-        if (changes != null) {
-            switch (changes) {
-                case Diff diff -> {
-                    for (BookId bookId : diff.adds()) {
-                        author.addBook(bookId);
-                    }
-
-                    for (BookId bookId : diff.removes()) {
-                        author.removeBook(bookId);
-                    }
-                }
-                case Replace replace -> author.replaceBooks(replace.all());
-            }
-        }
-
         return repository.merge(author);
     }
+
+
+    @Override
+    public List<ReadonlyAuthor> authorsOf(BookId bookId) {
+        return covarianceCast(repository.authorsOf(bookId));
+    }
+
 
 }

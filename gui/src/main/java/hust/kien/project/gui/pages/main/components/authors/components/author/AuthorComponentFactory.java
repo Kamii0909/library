@@ -1,15 +1,7 @@
 package hust.kien.project.gui.pages.main.components.authors.components.author;
 
-import java.io.IOException;
-import java.net.URL;
-
-import org.jspecify.annotations.NonNull;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-
-import hust.kien.project.core.author.Author;
 import hust.kien.project.core.author.AuthorService;
+import hust.kien.project.core.author.ReadonlyAuthor;
 import hust.kien.project.gui.controller.utils.FxUtils;
 import hust.kien.project.gui.pages.ComponentFactory;
 import hust.kien.project.gui.view.event.AuthorDeletedEvent;
@@ -34,9 +26,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+
+import java.io.IOException;
+import java.net.URL;
 
 public class AuthorComponentFactory
-        implements ComponentFactory<@NonNull State, @NonNull Interactions, @NonNull AuthorComponent, @NonNull Author> {
+        implements ComponentFactory<AuthorComponent, ReadonlyAuthor> {
 
     private final URL authorCss;
 
@@ -60,11 +58,11 @@ public class AuthorComponentFactory
     }
 
     @Override
-    public AuthorComponent createComponent(Author author) {
+    public AuthorComponent createComponent(ReadonlyAuthor author) {
         return createNewUIElement(defaultImage, author);
     }
 
-    private AuthorComponent createNewUIElement(Image image, Author author) {
+    private AuthorComponent createNewUIElement(Image image, ReadonlyAuthor author) {
         StackPane imageContainer = imageContainer(image);
         AnchorPane.setTopAnchor(imageContainer, 5.0);
         AnchorPane.setLeftAnchor(imageContainer, 10.0);
@@ -185,6 +183,9 @@ public class AuthorComponentFactory
 
     private StackPane imageContainer(Image image) {
         ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(60);
+        imageView.setFitHeight(60);
+        imageView.setPreserveRatio(true);
 
         Circle circle = new Circle(40, 35, 30);
         imageView.setClip(circle);

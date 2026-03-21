@@ -1,17 +1,8 @@
 package hust.kien.project.gui.controller.component;
 
-import static hust.kien.project.gui.controller.component.BookComponentUtils.setElementBorderFromValidationResult;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import hust.kien.project.core.model.client.Client;
-import hust.kien.project.core.model.client.ClientTier;
-import hust.kien.project.core.service.authorized.LibrarianService;
+import hust.kien.project.core.client.ClientCreationRequest;
+import hust.kien.project.core.client.ClientService;
+import hust.kien.project.core.client.Tier;
 import hust.kien.project.gui.controller.utils.AlertUtils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -22,10 +13,19 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static hust.kien.project.gui.controller.component.BookComponentUtils.setElementBorderFromValidationResult;
 
 public class NewClientController {
     
     private static final Logger log = LoggerFactory.getLogger(NewClientController.class);
+
+    private final ClientService clientService;
     
     @FXML
     private TextField nameUI, addressUI;
@@ -34,14 +34,16 @@ public class NewClientController {
     private DatePicker dateStartUI, dateEndUI;
     
     @FXML
-    private ChoiceBox<ClientTier> tierUI;
-    
-    @Autowired
-    private LibrarianService librarianService;
-    
+    private ChoiceBox<Tier> tierUI;
+
+
+    public NewClientController(ClientService clientService) {
+        this.clientService = clientService;
+    }
+
     public void initialize() {
-        tierUI.setItems(FXCollections.observableList(List.of(ClientTier.values())));
-        tierUI.getSelectionModel().select(ClientTier.NORMAL);
+        tierUI.setItems(FXCollections.observableList(List.of(Tier.values())));
+        tierUI.getSelectionModel().select(Tier.NORMAL);
         dateStartUI.setValue(LocalDate.now());
         dateEndUI.setValue(LocalDate.now());
     }
@@ -67,14 +69,13 @@ public class NewClientController {
             alert.show();
             return;
         }
-        Client client = Client.builder()
-                .name(nameUI.getText()).address(addressUI.getText())
-                .startDate(dateStartUI.getValue()).endDate(dateEndUI.getValue())
-                .tier(tierUI.getSelectionModel().getSelectedItem())
-                .build();
+        ClientCreationRequest request = new ClientCreationRequest(
+                nameUI.getText(),
+                addressUI.getText(),
+                "Not implemented");
         
-        log.info("Saving client: {}", client);
-        librarianService.saveOrUpdate(client);
+        log.info("Saving client: {}", request);
+        clientService.create(request);
         
         Window window = nameUI.getScene().getWindow();
         window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));

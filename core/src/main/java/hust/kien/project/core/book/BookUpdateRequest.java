@@ -13,6 +13,7 @@ public final class BookUpdateRequest {
     private @Nullable String name;
     private @Nullable NullableUpdate<LocalDate> releasedDate;
     private @Nullable List<AuthorId> authors;
+    private @Nullable List<String> genres;
 
     public BookUpdateRequest(BookId id) {
         this.id = id;
@@ -27,11 +28,15 @@ public final class BookUpdateRequest {
     }
 
     public void setReleasedDate(LocalDate releasedDate) {
-        this.releasedDate = new NullableUpdate<LocalDate>(releasedDate);
+        this.releasedDate = new NullableUpdate<>(releasedDate);
     }
 
     public void setAuthors(List<AuthorId> authors) {
         this.authors = authors;
+    }
+
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
     }
 
     public @Nullable String name() {
@@ -44,5 +49,9 @@ public final class BookUpdateRequest {
 
     public @Nullable List<AuthorId> authors() {
         return authors;
+    }
+
+    public @Nullable List<String> genres() {
+        return genres;
     }
 }

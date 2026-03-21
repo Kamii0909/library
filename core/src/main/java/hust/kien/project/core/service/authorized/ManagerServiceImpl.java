@@ -1,34 +1,31 @@
 package hust.kien.project.core.service.authorized;
 
+import hust.kien.project.core.auth.EmployeeService;
+import hust.kien.project.core.auth.LibraryEmployee;
+import hust.kien.project.core.service.internal.AccountingService;
+import org.springframework.stereotype.Service;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import hust.kien.project.core.model.auth.LibraryEmployee;
-import hust.kien.project.core.service.dynamic.LibraryEmployeeSpecificationBuilder;
-import hust.kien.project.core.service.internal.AccountingService;
-import hust.kien.project.core.service.internal.LibraryMetadataService;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {
 
-    @Autowired
-    private LibraryMetadataService metadataService;
+    private final EmployeeService metadataService;
+    private final AccountingService accountingService;
 
-    @Autowired
-    private AccountingService accountingService;
+    private final MessageDigest encryptor;
 
-    private MessageDigest encryptor;
-
-    public ManagerServiceImpl() {
+    public ManagerServiceImpl(EmployeeService metadataService, AccountingService accountingService) {
+        this.metadataService = metadataService;
+        this.accountingService = accountingService;
         try {
             encryptor = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            throw new AssertionError(e);
         }
     }
 
@@ -48,7 +45,7 @@ public class ManagerServiceImpl implements ManagerService {
 
         employee.setEncryptedPassword(encryptor.digest());
 
-        metadataService.saveOrUpdate(employee);
+        metadataService.create(employee);
     }
 
     @Override
@@ -58,22 +55,17 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public void deleteUser(String username) {
-        metadataService.delete(
-            metadataService.dynamicFind(
-                new LibraryEmployeeSpecificationBuilder().withUsername(username)).get(0));
+        metadataService.delete(username);
     }
 
     @Override
     public boolean isUsernameExist(String username) {
-        return !metadataService
-            .dynamicFind(new LibraryEmployeeSpecificationBuilder().withUsername(username))
-            .isEmpty();
+        return metadataService.findById(username) != null;
     }
 
     @Override
     public List<LibraryEmployee> getAllEmployees() {
-        return metadataService
-            .dynamicFind(new LibraryEmployeeSpecificationBuilder().initCollection().roles().back());
+        return metadataService.all();
     }
 
     private byte[] generateRandomSalt(int size) {

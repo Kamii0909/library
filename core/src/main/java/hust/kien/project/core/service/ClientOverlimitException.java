@@ -1,21 +1,22 @@
 package hust.kien.project.core.service;
 
-import hust.kien.project.core.model.client.Client;
+import hust.kien.project.core.client.CurrentSubscription;
+import hust.kien.project.core.client.ReadonlyClient;
 
 public class ClientOverlimitException extends RuntimeException {
 
-    private final transient Client client;
+    private final transient ReadonlyClient client;
 
-    public ClientOverlimitException(Client client) {
-        super("A client with " + client.getRentInfo().getClientTier()
+    public ClientOverlimitException(ReadonlyClient client, CurrentSubscription subscription) {
+        super("A client with " + subscription.tier()
             + " can only borrow a maximum of "
-            + client.getRentInfo().getClientTier().getMaximumCanBorrow()
+            + subscription.tier().maximumCanBorrow()
             + " at the same time");
-            
+
         this.client = client;
     }
 
-    public Client getClient() {
+    public ReadonlyClient getClient() {
         return client;
     }
 

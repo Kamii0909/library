@@ -1,7 +1,7 @@
-dependencyResolutionManagement {
+(scriptTarget as Settings).dependencyResolutionManagement {
     versionCatalogs {
         create('gui') {
-            def javafxVersion = version('javafx', '23')
+            def javafxVersion = version('javafx', '25.0.2')
 
             def libraries = ['base', 'controls', 'graphics', 'fxml', 'web', 'media']
 
@@ -19,26 +19,27 @@ dependencyResolutionManagement {
         create('spring') {
             def springVersion = version('spring', 'latest.release')
 
+            library('bom', 'org.springframework.boot', 'spring-boot-dependencies').versionRef(springVersion)
+
             def libraries = ['data-jpa', 'test']
 
             libraries.forEach {
-                library("starter-${it}", 'org.springframework.boot', "spring-boot-starter-${it}").versionRef(springVersion)
+                library("starter-${it}", 'org.springframework.boot', "spring-boot-starter-${it}")
+                        .versionRef(springVersion)
             }
         }
 
         create('hibernate') {
-            def hibernateVersion = version('hibernate', '[6.0,7.0)')
+            library('dialects', 'org.hibernate.orm', 'hibernate-community-dialects').withoutVersion()
 
-            library('dialects','org.hibernate.orm', 'hibernate-community-dialects').versionRef(hibernateVersion)
-
-            library('processor', 'org.hibernate.orm', 'hibernate-jpamodelgen').versionRef(hibernateVersion)
+            library('processor', 'org.hibernate.orm', 'hibernate-processor').withoutVersion()
         }
 
         create('libs') {
             library('sqlite', 'org.xerial', 'sqlite-jdbc').version('latest.release')
 
-            library('guava', 'com.google.guava', 'guava').version('33.4.7-jre')
-        
+            library('guava', 'com.google.guava', 'guava').version('33.5.0-jre')
+
             library('jspecify', 'org.jspecify', 'jspecify').version('latest.release')
         }
     }

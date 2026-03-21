@@ -1,5 +1,7 @@
 package hust.kien.project.gui.pages;
 
+import javafx.beans.property.ReadOnlyProperty;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -8,22 +10,16 @@ import javafx.scene.Scene;
  * <ul>
  * <li>Loading (initializing) a root node, possibly from FXML.</li>
  * <li>Managing the state of the displayable content.</li>
- * <li>Mapping the current state to an UI element (the root node).</li>
+ * <li>Mapping the current state to a UI element (the root node).</li>
  * <li>Gracefully discarding states.</li>
  * </ul>
  */
 public interface Page {
-    /**
-     * Create the {@link Parent root node} that can be used for display.
-     */
-    default Parent show() {
-        return component().element();
-    }
 
     /**
-     * The component that made up this page.
+     * The root that made up this page.
      */
-    Component<?, ?> component();
+    ReadOnlyProperty<Parent> root();
     
     /**
      * Called before the {@link Scene} that host this Page switch to another Page.

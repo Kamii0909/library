@@ -1,16 +1,5 @@
 package hust.kien.project.gui.controller.frame;
 
-import static de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.FILE_ARCHIVE_ALT;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
-
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import hust.kien.project.core.service.auth.AuthorizedContextHolder;
@@ -18,6 +7,7 @@ import hust.kien.project.gui.controller.utils.AlertUtils;
 import hust.kien.project.gui.controller.utils.FxUtils;
 import hust.kien.project.gui.pages.main.Introduction;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -28,6 +18,16 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import static de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.FILE_ARCHIVE_ALT;
 
 @Lazy
 public class MainFrameController {
@@ -73,21 +73,23 @@ public class MainFrameController {
 	
 	@FXML
 	private VBox navBar;
-	
-	private Map<StackPane, Region> navBarButtons = new LinkedHashMap<>();
-	
+
+	private Map<StackPane, Node> navBarButtons = new LinkedHashMap<>();
+
+	@FXML
 	public void initialize() {
-		Region introduction = introductionTab.element();
-		
-		initButtonAndAddToMap(FILE_ARCHIVE_ALT, "Gioi thieu", introduction, 10);
-		
-		changeMainContent(introduction, 10);
+
+		introductionTab.element().subscribe(introduction -> {
+			initButtonAndAddToMap(FILE_ARCHIVE_ALT, "Gioi thieu", introduction, 10);
+
+			changeMainContent(introduction, 10);
+		});
 	}
 	
 	public void initializeButtonEventListener(AuthorizedContextHolder authenticationPrincipal) {
 		int i = 1;
 		
-		if (authenticationPrincipal.getLibrarianService() != null) {
+		if (authenticationPrincipal.isLibrarian()) {
 			initButtonAndAddToMap(FontAwesomeIcon.BOOK, "Quan ly sach",
 					manageBookRegionProvider.getObject(), 10 + (i++) * 51);
 			initButtonAndAddToMap(FontAwesomeIcon.CUBES, "Quan ly the loai",
@@ -96,11 +98,11 @@ public class MainFrameController {
 					manageClientRegionProvider.getObject(), 10 + (i++) * 51);
 			
 		}
-		if (authenticationPrincipal.getManagerService() != null) {
+		if (authenticationPrincipal.isManager()) {
 			initButtonAndAddToMap(FontAwesomeIcon.AREA_CHART, "Thong ke",
 					managerFrameRegionProvider.getObject(), 10 + (i++) * 51);
 		}
-		if (authenticationPrincipal.getAuditService() != null) {
+		if (authenticationPrincipal.isAuditor()) {
 			initButtonAndAddToMap(FontAwesomeIcon.EDIT, "Quan ly phieu muon",
 					manageTicketRegionProvider.getObject(), 10 + (i++) * 51);
 		}
@@ -109,7 +111,7 @@ public class MainFrameController {
 	
 	private void initButtonAndAddToMap(FontAwesomeIcon icon,
 		String tooltip,
-		Region region,
+		Node region,
 		int navPosition) {
 		StackPane stackPane = createStackPane(icon, tooltip, region, navPosition);
 		navPosition += 50;
@@ -118,7 +120,7 @@ public class MainFrameController {
 		navBarButtons.put(stackPane, region);
 	}
 	
-	private void changeMainContent(Region region, int top) {
+	private void changeMainContent(Node region, int top) {
 		mainContent.getChildren().setAll(region);
 		FxUtils.setAnchorPoint(top, null, null, null, navigator);
 		FxUtils.setAnchorPoint(0, 0, 0, 0, region);
@@ -127,7 +129,7 @@ public class MainFrameController {
 	
 	private StackPane createStackPane(FontAwesomeIcon icon,
 		String tooltip,
-		Region region,
+		Node region,
 		int navPosition) {
 		
 		FontAwesomeIconView fontAwesomeIconView = new FontAwesomeIconView(icon);

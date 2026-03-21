@@ -1,21 +1,20 @@
 package hust.kien.project.gui.pages.main.components.authors.components.author;
 
-import static hust.kien.project.gui.controller.component.BookComponentUtils.isIntegerValid;
-
-import java.time.LocalDate;
-import java.util.Optional;
-
-import org.jspecify.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import hust.kien.project.core.author.Author;
 import hust.kien.project.core.author.AuthorService;
 import hust.kien.project.core.author.AuthorUpdateRequest;
+import hust.kien.project.core.author.ReadonlyAuthor;
 import hust.kien.project.gui.controller.component.BookComponentUtils;
 import hust.kien.project.gui.controller.utils.AlertUtils;
 import hust.kien.project.gui.pages.Controller;
 import javafx.scene.control.ButtonType;
+import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.LocalDate;
+import java.util.Optional;
+
+import static hust.kien.project.gui.controller.component.BookComponentUtils.isIntegerValid;
 
 class AuthorController implements Controller<State, Interactions>, Interactions {
     private static final Logger log = LoggerFactory.getLogger(AuthorController.class);
@@ -24,9 +23,9 @@ class AuthorController implements Controller<State, Interactions>, Interactions 
 
     private final State state;
 
-    private Author author;
+    private ReadonlyAuthor author;
 
-    public AuthorController(AuthorService authorService, State state, Author author) {
+    public AuthorController(AuthorService authorService, State state, ReadonlyAuthor author) {
         this.authorService = authorService;
         this.state = state;
         this.author = author;
@@ -51,7 +50,7 @@ class AuthorController implements Controller<State, Interactions>, Interactions 
         if (response.isEmpty() || response.get() == ButtonType.CANCEL) {
             // Do nothing
         } else if (response.get() == ButtonType.OK) {
-            authorService.delete(author);
+            authorService.delete(author.id());
             state.onDeleted().run();
             log.info("Delete author request: {{}}", author);
         } else {

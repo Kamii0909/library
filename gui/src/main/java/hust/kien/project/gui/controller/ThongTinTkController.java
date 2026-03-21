@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 @Component
-@SuppressWarnings("all")
+@SuppressWarnings("activeClients")
 public class ThongTinTkController {
 
 	@FXML

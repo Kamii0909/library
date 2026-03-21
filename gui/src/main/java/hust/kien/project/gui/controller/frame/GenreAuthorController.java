@@ -1,5 +1,6 @@
 package hust.kien.project.gui.controller.frame;
 
+import javafx.scene.Node;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -18,8 +19,8 @@ public class GenreAuthorController {
     private final AuthorsComponent authorRegionProvider;
 
     public GenreAuthorController(
-        @Qualifier("manageGenreRegion") ObjectProvider<Region> genreRegionProvider,
-        AuthorsComponent authorRegionProvider) {
+            @Qualifier("manageGenreRegion") ObjectProvider<Region> genreRegionProvider,
+            AuthorsComponent authorRegionProvider) {
         this.genreRegionProvider = genreRegionProvider;
         this.authorRegionProvider = authorRegionProvider;
     }
@@ -27,8 +28,15 @@ public class GenreAuthorController {
 
     public void initialize() {
         Region genreRegion = genreRegionProvider.getObject();
-        Region authorRegion = authorRegionProvider.element();
         mainContainer.add(genreRegion, 0, 0);
-        mainContainer.add(authorRegion, 1, 0);
+
+        authorRegionProvider.element().subscribe(authorRegion -> {
+
+            mainContainer.getChildren().removeIf(
+                    node -> GridPane.getColumnIndex(node) == 1
+                            && GridPane.getRowIndex(node) == 0);
+
+            mainContainer.add(authorRegion, 1, 0);
+        });
     }
 }

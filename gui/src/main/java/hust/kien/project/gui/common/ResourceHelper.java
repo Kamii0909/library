@@ -30,4 +30,22 @@ public final class ResourceHelper {
         }
     }
 
+    public FXMLLoader load(Resource fxml, Object controller) {
+        URL url;
+        try {
+            url = fxml.getURL();
+        } catch (IOException e) {
+            throw new AssertionError("Resource" + fxml + " not available", e);
+        }
+
+        FXMLLoader loader = new FXMLLoader(url);
+        loader.setController(controller);
+
+        try {
+            loader.load();
+            return loader;
+        } catch (IOException e) {
+            throw new AssertionError("Invalid fxml from " + fxml, e);
+        }
+    }
 }

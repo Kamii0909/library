@@ -6,12 +6,17 @@ repositories {
     mavenCentral()
 }
 
+
+group = 'hust.kien.project'
+version = '1'
+description = 'library'
+
 application {
     mainClass = 'hust.kien.project.gui.LibraryApplication'
 }
 
 dependencies {
-    implementation(gui.bundles.javafx) { artifact { classifier = 'win' }}
+    implementation(gui.bundles.javafx) { artifact { classifier = 'win' } }
     implementation gui.controlsfx
     implementation gui.fontawesome
 
@@ -25,7 +30,3 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-group = 'hust.kien.project'
-version = '1'
-description = 'library'

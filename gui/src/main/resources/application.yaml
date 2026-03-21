@@ -1,39 +1,12 @@
 spring:
-  main: 
+  main:
     web-application-type: none
   profiles:
     active: dev
-  datasource:
-    driver-class-name: org.sqlite.JDBC
-    url: jdbc:sqlite:database/library.db?jdbc.explicit_readonly=true
-    hikari:
-      auto-commit: false
-      minimum-idle: 1
-      maximum-pool-size: 1
-      poolName: SQLite Pool - Main application
-  jpa:
-    # generate-ddl: true
-    hibernate:
-      # ddl-auto: create
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
-    show-sql: true
-    properties:
-      hibernate:
-        "[current_session_context_class]": org.springframework.orm.hibernate5.SpringSessionContext
-        jpa:
-      # javax: 
-      #   persistence:
-      #     schema-generation:
-      #       create-source: metadata
-      #       scripts:
-      #         action: create
-      #         create-target: src/main/resources/ddl_jpa_creation.sql
   application:
     ui:
       login:
-        title: Log in 
+        title: Log in
       mainFrame:
         title: Book Renting Application
         min:
@@ -46,6 +19,6 @@ logging:
   level:
     org:
       springframework:
-        # transaction: trace
+      # transaction: trace
   file:
     name: log/app.log

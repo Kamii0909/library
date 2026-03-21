@@ -1,33 +1,26 @@
 package hust.kien.project.core.book.internal;
 
-import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-
+import hust.kien.project.core.LocalDateAsStringType;
+import hust.kien.project.core.book.BookId;
+import hust.kien.project.core.book.ReadonlyBook;
+import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.JavaType;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import hust.kien.project.core.LocalDateAsStringType;
-import hust.kien.project.core.author.AuthorId;
-import hust.kien.project.core.book.BookEdges;
-import hust.kien.project.core.book.BookId;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+import static hust.kien.project.core.Utils.idRequired;
 
 @Entity
-class Book implements BookEdges {
+class Book implements ReadonlyBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BookId id;
+    private @Nullable Long id;
 
     private String name;
 
@@ -35,10 +28,10 @@ class Book implements BookEdges {
     private @Nullable LocalDate releasedDate;
 
     @ElementCollection
-    @CollectionTable(name = "Book_Author", joinColumns = @JoinColumn(name = "books_id"))
-    @Column(name = "authors_id")
+    @CollectionTable(name = "Book_BookGenre", joinColumns = @JoinColumn(name = "book_id"))
+    @Column(name = "genre")
     @Fetch(FetchMode.SUBSELECT)
-    private List<AuthorId> authors;
+    private List<String> genres;
 
     @SuppressWarnings("null")
     protected Book() {
@@ -46,15 +39,15 @@ class Book implements BookEdges {
     }
 
     @SuppressWarnings("null")
-    Book(String name, @Nullable LocalDate releasedDate, List<@NonNull AuthorId> authors) {
+    Book(String name, @Nullable LocalDate releasedDate, List<String> genres) {
         this.name = name;
         this.releasedDate = releasedDate;
-        this.authors = authors;
+        this.genres = genres;
     }
 
     @Override
     public BookId id() {
-        return id;
+        return BookId.of(idRequired(id));
     }
 
     @Override
@@ -67,9 +60,8 @@ class Book implements BookEdges {
         return releasedDate;
     }
 
-    @Override
-    public List<@NonNull AuthorId> authors() {
-        return Collections.unmodifiableList(authors);
+    public List<String> genres() {
+        return Collections.unmodifiableList(genres);
     }
 
     void setName(String name) {
@@ -80,7 +72,4 @@ class Book implements BookEdges {
         this.releasedDate = releasedDate;
     }
 
-    void setAuthors(List<AuthorId> authors) {
-        this.authors = authors;
-    }
 }

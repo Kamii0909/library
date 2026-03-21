@@ -1,0 +1,1 @@
+Not validated: Client subscription must outlast ticket end date

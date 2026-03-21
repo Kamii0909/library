@@ -3,6 +3,7 @@ package hust.kien.project.core;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import org.hibernate.community.dialect.SQLiteDialect;
 import org.hibernate.type.SqlTypes;
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.java.AbstractClassJavaType;
@@ -21,6 +22,10 @@ public class LocalDateAsStringType extends AbstractClassJavaType<LocalDate> {
 
     @Override
     public JdbcType getRecommendedJdbcType(JdbcTypeIndicators indicators) {
+        if (!(indicators.getDialect() instanceof SQLiteDialect)) {
+            throw new UnsupportedOperationException(
+                    "This JavaType is only used for SQLite since it doesn't have any datetime data type.");
+        }
         return indicators.getTypeConfiguration().getJdbcTypeRegistry().getDescriptor(SqlTypes.VARCHAR);
     }
 

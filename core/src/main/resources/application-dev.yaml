@@ -1,0 +1,36 @@
+spring:
+  main:
+    web-application-type: none
+  datasource:
+    url: jdbc:sqlite:D:/Studying/Code/Java/Project/Library/library/database/library.db
+    hikari:
+      auto-commit: false
+      minimum-idle: 1
+      maximum-pool-size: 1
+      poolName: SQLite Pool - Main application
+  jpa:
+    # generate-ddl: true
+    #    hibernate.ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate.connection.provider_disables_autocommit: true
+      jpa:
+      # javax:
+      #   persistence:
+      #     schema-generation:
+      #       create-source: metadata
+      #       scripts:
+      #         action: create
+      #         create-target: src/main/resources/ddl_jpa_creation.sql
+      hibernate:
+        format_sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+logging:
+  level:
+    org:
+      springframework:
+      # transaction: trace
+  file:
+    name: log/app.log

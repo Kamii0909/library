@@ -11,6 +11,9 @@ repositories {
 }
 
 dependencies {
+    implementation(platform(spring.bom))
+    annotationProcessor(platform(spring.bom))
+
     implementation hibernate.dialects
     implementation libs.sqlite
     api spring.starter.data.jpa
@@ -20,8 +23,9 @@ dependencies {
     compileOnlyApi libs.jspecify
 
     testImplementation spring.starter.test
+    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 }
 
-tasks.named('test') {
+tasks.named('test', Test.class) {
     useJUnitPlatform()
 }

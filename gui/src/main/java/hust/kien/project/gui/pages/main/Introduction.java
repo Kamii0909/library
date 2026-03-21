@@ -4,37 +4,29 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import org.jspecify.annotations.NonNull;
+import hust.kien.project.gui.pages.InterfaceComponent;
+import hust.kien.project.gui.pages.ImmutableNode;
+import hust.kien.project.gui.pages.Namespace;
+import javafx.fxml.FXMLLoader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 
 import hust.kien.project.gui.common.ResourceHelper;
-import hust.kien.project.gui.pages.SimpleComponent;
 import javafx.concurrent.Worker.State;
 import javafx.fxml.FXML;
-import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
-public class Introduction extends SimpleComponent<@NonNull Introduction> {
+public class Introduction implements InterfaceComponent {
 
-    @FXML
-    private WebView webView;
-
-    private final Region element;
+    private final ImmutableNode element;
 
     @SuppressWarnings("null")
     public Introduction(@Value("classpath:gui/introduction.fxml") Resource fxml, ResourceHelper helper) {
-        this.element = helper.loadFxml(fxml, this);
-    }
+        FXMLLoader loader = helper.load(fxml, this);
+        this.element = new ImmutableNode(loader.getRoot());
 
-    @Override
-    public Region element() {
-        return element;
-    }
-
-    @FXML
-    public void initialize() {
+        WebView webView = Namespace.webView(loader.getNamespace(), "webView");
         WebEngine engine = webView.getEngine();
 
         engine.loadContent(readFile());
@@ -42,6 +34,11 @@ public class Introduction extends SimpleComponent<@NonNull Introduction> {
             if (newState == State.SUCCEEDED)
                 engine.reload();
         });
+    }
+
+    @Override
+    public ImmutableNode element() {
+        return element;
     }
 
     private static String readFile() {

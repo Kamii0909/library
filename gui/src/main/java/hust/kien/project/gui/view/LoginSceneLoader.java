@@ -1,5 +1,7 @@
 package hust.kien.project.gui.view;
 
+import hust.kien.project.gui.pages.InterfaceElement;
+import javafx.scene.Parent;
 import org.springframework.beans.factory.annotation.Value;
 
 import hust.kien.project.gui.pages.Page;
@@ -28,11 +30,20 @@ public class LoginSceneLoader {
     public void showLoginScene() {
         Stage stage = windowManager.getStage();
         stage.setTitle(applicationTitle);
+
+        Parent root = page.root().getValue();
+
         Scene scene = stage.getScene();
-        if (scene == null)
-            stage.setScene(new Scene(page.show()));
-        else
-            scene.setRoot(page.show());
+        if (scene == null) {
+            scene = new Scene(root);
+            stage.setScene(scene);
+        } else {
+            scene.setRoot(root);
+        }
+
+        Scene finalScene = scene;
+        page.root().subscribe((_, newRoot) -> finalScene.setRoot(newRoot));
+
         windowManager.show();
     }
     

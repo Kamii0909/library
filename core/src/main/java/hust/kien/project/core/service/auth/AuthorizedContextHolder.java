@@ -1,12 +1,9 @@
 package hust.kien.project.core.service.auth;
 
-import java.util.Map;
-
-import hust.kien.project.core.model.auth.LibraryRole;
-import hust.kien.project.core.service.authorized.AuditService;
+import hust.kien.project.core.auth.LibraryRole;
 import hust.kien.project.core.service.authorized.AuthorizedService;
-import hust.kien.project.core.service.authorized.LibrarianService;
-import hust.kien.project.core.service.authorized.ManagerService;
+
+import java.util.Map;
 
 public class AuthorizedContextHolder {
 
@@ -24,15 +21,16 @@ public class AuthorizedContextHolder {
         return username;
     }
 
-    public LibrarianService getLibrarianService() {
-        return (LibrarianService) authorizedServices.get(LibraryRole.LIBRARIAN);
+    public boolean isLibrarian() {
+        return authorizedServices.containsKey(LibraryRole.LIBRARIAN);
     }
 
-    public ManagerService getManagerService() {
-        return (ManagerService) authorizedServices.get(LibraryRole.MANAGER);
+    public boolean isManager() {
+        return authorizedServices.containsKey(LibraryRole.MANAGER);
     }
 
-    public AuditService getAuditService() {
-        return (AuditService) authorizedServices.get(LibraryRole.AUDIT);
+
+    public boolean isAuditor() {
+        return authorizedServices.containsKey(LibraryRole.AUDIT);
     }
 }

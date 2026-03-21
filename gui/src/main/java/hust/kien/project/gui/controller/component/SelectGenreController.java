@@ -1,22 +1,19 @@
 package hust.kien.project.gui.controller.component;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import org.controlsfx.control.ListSelectionView;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import hust.kien.project.core.model.book.Book;
-import hust.kien.project.core.model.book.BookGenre;
-import hust.kien.project.core.service.authorized.LibrarianService;
-import hust.kien.project.core.service.dynamic.BookGenreSpecificationBuilder;
+import hust.kien.project.core.book.BookService;
+import hust.kien.project.core.book.BookService.BookWithGenres;
+import hust.kien.project.core.book.ReadonlyBook;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import org.controlsfx.control.ListSelectionView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class SelectGenreController {
     
@@ -28,42 +25,32 @@ public class SelectGenreController {
     @FXML
     private TextField filterTextField;
     
-    private final Map<String, BookGenre> newGenreStrings;
+    private final Set<String> currentGenres;
     
-    private final Set<BookGenre> currentGenres;
-    
-    public SelectGenreController(Book book, LibrarianService librarianService) {
-        this.currentGenres = book.getBookInfo().bookGenres().stream().collect(Collectors.toSet());
-        
-        this.newGenreStrings = librarianService
-                .dynamicFind(new BookGenreSpecificationBuilder())
-                .stream()
-                .filter(bg -> !currentGenres.contains(bg))
-                .collect(Collectors.toMap(BookGenre::getName, Function.identity()));
+    public SelectGenreController(List<String> genres) {
+        this.currentGenres = new HashSet<>(genres);
     }
     
     public void initialize() {
-        genreSelection.getSourceItems().addAll(newGenreStrings.keySet());
+
     }
     
     @FXML
     private void handleFilterByName() {
-        genreSelection
-                .getSourceItems()
-                .setAll(newGenreStrings
-                        .keySet()
-                        .stream()
-                        .filter(name -> name.contains(filterTextField.getText()))
-                        .toList());
+        log.error("NOT IMPLEMENTED");
+//        genreSelection
+//                .getSourceItems()
+//                .setAll(newGenreStrings
+//                        .keySet()
+//                        .stream()
+//                        .filter(name -> name.contains(filterTextField.getText()))
+//                        .toList());
     }
     
     @FXML
     private void handleCompleted() {
         
-        currentGenres.addAll(genreSelection.getTargetItems()
-                .stream()
-                .map(newGenreStrings::get)
-                .toList());
+        currentGenres.addAll(genreSelection.getTargetItems());
         
         log.debug("Select genre - after selection, genre Set: {{}}", currentGenres);
         

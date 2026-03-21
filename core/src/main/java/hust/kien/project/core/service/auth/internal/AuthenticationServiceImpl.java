@@ -1,40 +1,40 @@
 package hust.kien.project.core.service.auth.internal;
 
+import hust.kien.project.core.auth.EmployeeService;
+import hust.kien.project.core.auth.LibraryEmployee;
+import hust.kien.project.core.service.auth.BadCredentialException;
+import hust.kien.project.core.service.auth.NoUserFoundException;
+import org.springframework.stereotype.Service;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import hust.kien.project.core.model.auth.LibraryEmployee;
-import hust.kien.project.core.service.auth.BadCredentialException;
-import hust.kien.project.core.service.auth.NoUserFoundException;
-import hust.kien.project.core.service.dynamic.LibraryEmployeeSpecificationBuilder;
-import hust.kien.project.core.service.internal.LibraryMetadataService;
-
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    @Autowired
-    private LibraryMetadataService metadataService;
+    private final EmployeeService metadataService;
 
-    private MessageDigest encryptor;
+    private final MessageDigest encryptor;
 
-    @Override
-    public LibraryEmployee authenticate(String username, String password)
-        throws NoUserFoundException, BadCredentialException {
+    public AuthenticationServiceImpl(EmployeeService metadataService) {
+        this.metadataService = metadataService;
         try {
             encryptor = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            throw new AssertionError(e);
         }
+    }
 
-        LibraryEmployee employee = metadataService
-            .dynamicFind(new LibraryEmployeeSpecificationBuilder().withUsername(username))
-            .stream().findAny().orElseThrow(() -> new NoUserFoundException(username));
+    @Override
+    public LibraryEmployee authenticate(String username, String password)
+            throws NoUserFoundException, BadCredentialException {
 
 
+        LibraryEmployee employee = metadataService.findById(username);
+        if (employee == null) {
+            throw new NoUserFoundException(username);
+        }
 
         encryptor.update(password.getBytes());
         encryptor.update(employee.getSalt());
